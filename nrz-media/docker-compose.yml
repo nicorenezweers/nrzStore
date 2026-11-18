@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-media_app_1
+      APP_PORT: 8380
+    container_name: nrz-media_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzMedia ist kein eigenes Image: hooks/pre-start
+    # laedt Server, statisches ffmpeg, Sprachaufnahmen und Schriften fuer die Architektur dieses
+    # Geraets aus dem Paket-Repo nrzMedia-umbrel nach ${APP_DATA_DIR}/app – ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-media_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzmedia"]
+    stop_grace_period: 20s
+    ports:
+      # Nur-API-Port: /api/v1 und /mcp, jede Anfrage mit API-Schluessel, ohne Oberflaeche und
+      # Anmeldung (z. B. fuer Skripte oder allein per NetBird freigeben).
+      - "8381:8381/tcp"
+    environment:
+      - TZ=Europe/Zurich
+      # Datenbank (nrzmedia.db), Videos (media/), Uploads und Zwischenspeicher.
+      - NRZMEDIA_DATA_DIR=/data
+      # Konten, Einstellungen und KI-Schluessel sind mit SQLCipher verschluesselt. Schluessel ist
+      # der APP_SEED dieser Installation (aus dem Umbrel-Seed) – keine Schluesseldatei im Datenordner.
+      - NRZMEDIA_DB_KEY=${APP_SEED}
+      - NRZMEDIA_VOICES_DIR=/app/voices
+      - NRZMEDIA_FONTS_DIR=/app/fonts
+      - NRZMEDIA_FFMPEG=/app/ffmpeg
+      - NRZMEDIA_ADDRESS=0.0.0.0
+      - NRZMEDIA_PORT=8380
+      - NRZMEDIA_API_PORT=8381
+      # Oeffentliche Adresse ueber den NetBird-Reverse-Proxy: Anmeldung und Aenderungen von dort
+      # gelten als eigene Seite (sonst "Anfrage von einer fremden Seite abgewiesen").
+      - NRZMEDIA_ALLOWED_ORIGINS=https://media.zweers.ch
+      # Anmeldung im Browser nur mit zweitem Faktor (TOTP).
+      - NRZMEDIA_REQUIRE_2FA=true
+      # Render-Threads je Export (0 = alle Kerne).
+      - NRZMEDIA_RENDER_THREADS=0
+      - NRZMEDIA_LOG=info,rocket=warn,_=warn
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzmedia", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

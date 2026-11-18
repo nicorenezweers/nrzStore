@@ -1,0 +1,79 @@
+manifestVersion: 1
+id: nrz-git
+category: developer
+name: nrzGit
+version: "1.0.0"
+tagline: Git-Plattform wie Forgejo - komplett in Rust
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-git/icon.png
+port: 8390
+path: ""
+description: >-
+  nrzGit ist eine selbst gehostete Git-Plattform wie Forgejo, komplett in
+  Rust: Server mit Rocket, Oberflaeche als WebAssembly-App mit Dioxus und
+  rust-ui, in Grautoenen wie die anderen nrz-Apps. Benutzer, Issues und Pull
+  Requests liegen in einer SQLite-Datei, die Repositories als normale
+  Git-Repositories im Datenordner.
+
+
+  ## Was die App kann
+
+  - **Repositories** - anlegen mit README, .gitignore und Lizenz, forken,
+  von GitHub, Forgejo und Co. migrieren oder spiegeln, Web-Editor,
+  Codesuche, Blame, Branches, Tags, Archive.
+
+  - **Git ueber HTTP und SSH** - Klonen und Pushen mit Passwort oder
+  Zugriffstoken, eingebauter SSH-Server auf Port 2380, Deploy-Keys,
+  Branch-Schutz.
+
+  - **Issues und Pull Requests** - Labels, Meilensteine, Zuweisungen,
+  Reaktionen, Reviews mit Zeilenkommentaren, Merge, Rebase, Squash und
+  Fast-Forward, Kanban-Projekte.
+
+  - **Releases, Wiki und Webhooks** - Anhaenge, RSS/Atom, Wiki als eigenes
+  Git-Repository, Webhooks fuer Forgejo/Gitea, Slack, Discord, Matrix und
+  ntfy.
+
+  - **Teams** - Organisationen mit Teams und Rechten,
+  Zwei-Faktor-Anmeldung, Aktivitaet, Benachrichtigungen, Verwaltung.
+
+  - **MCP-Server fuer Agenten** - nrzCode, Claude Code, Codex, Gemini,
+  OpenCode, Kilo und Grok arbeiten mit einem Token direkt in nrzGit
+  (Einstellungen -> MCP).
+
+  - **Ports** - welche Ports die Apps in allen Repositories schon belegen,
+  Konflikte, freie Ports und Reservierungen.
+
+  - **Container-Registry** - Images mit docker push/pull je Benutzer und
+  Organisation.
+
+
+  - **Public Public** - zweite Instanz nur zum Lesen auf Port 8391 fuer das
+  Internet: nur Repositories und Images, die per Knopf freigegeben sind.
+
+
+  - **KI-Zugaenge** - Tokens fuer genau ein Repository, mit Recht und
+  Ablaufdatum.
+
+
+  - **nrzStore.json** - Apps halten ihren Store-Eintrag aus dem eigenen
+  Repository aktuell, Anleitung unter /nrzgit.txt.
+
+
+  ## Erste Schritte
+
+  Nach der Installation das erste Konto anlegen - es wird Administrator.
+  Danach Repositories anlegen oder migrieren. Klonen ueber
+  `http://<umbrel>:8390/<besitzer>/<repo>.git` oder per SSH ueber
+  `ssh://git@<umbrel>:2380/<besitzer>/<repo>.git` (SSH-Schluessel in den
+  Einstellungen hinterlegen).
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzGit
+submitter: nrz
+submission: http://100.78.107.162:8101/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzGit
+support: http://100.78.107.162:8390/nicorenezweers/nrzGit/issues
+dependencies: []
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

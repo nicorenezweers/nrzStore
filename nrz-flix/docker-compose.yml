@@ -1,0 +1,59 @@
+services:
+  # Injected by umbrelOS. Kein umbrelOS-Login davor (settings.yml): nrzFlix und alle
+  # Jellyfin-Apps melden sich mit dem Jellyfin-Konto an.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-flix_web_1
+      APP_PORT: 8590
+    container_name: nrz-flix_app_proxy_1
+
+  web:
+    # nrzFlix-Image (amd64 + arm64) aus der Registry von nrzGit; localhost:8390 = nrzGit auf diesem
+    # Geraet, Docker erlaubt dort HTTP ohne Einstellung. Basis ist das offizielle Jellyfin-Image
+    # (.NET, Schriften, jellyfin-ffmpeg); nrzFlix startet, ueberwacht und aktualisiert Jellyfin.
+    image: localhost:8390/nicorenezweers/nrzflix:1.0.0@sha256:1c0cbed7f837dc767190fcff5e66ec697389fa528e36e448596d9ffa1486619f
+    container_name: nrz-flix_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    # Jellyfin braucht zum sauberen Beenden etwas Zeit (Datenbank).
+    stop_grace_period: 60s
+    environment:
+      - TZ=Europe/Zurich
+      - IP=0.0.0.0
+      - PORT=8590
+      - RUST_LOG=info
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      # nrzFlix: Einstellungen, geladene Jellyfin-/ffmpeg-Versionen, Datenbank-Sicherungen.
+      - ${APP_DATA_DIR}/data:/data
+      # Jellyfin-Daten im Layout der offiziellen Umbrel-App (/config), damit uebernommene
+      # Daten ohne Pfadaenderung laufen.
+      - ${APP_DATA_DIR}/data/jellyfin-config:/config
+      # Das Image deklariert /cache als Volume; fest einhaengen, sonst legt Docker bei jedem
+      # Update ein neues anonymes Volume an. (Jellyfin nutzt /config/cache.)
+      - ${APP_DATA_DIR}/data/jellyfin-cache:/cache
+      # Medien wie bei der offiziellen Jellyfin-App (/downloads), dazu Home nur lesend.
+      - ${UMBREL_ROOT}/data/storage/downloads:/downloads
+      - ${UMBREL_ROOT}/home:/media:ro
+      # Hierhin kopiert „Instanz uebernehmen“ Medien (in umbrelOS unter Home/nrzFlix sichtbar).
+      - ${UMBREL_ROOT}/home/nrzFlix:/nrzflix-media
+      # Nur lesend: App-Daten anderer Umbrel-Apps, um Jellyfin-Instanzen zu erkennen und zu
+      # uebernehmen (z. B. die offizielle Jellyfin-App unter app-data/jellyfin/data/config).
+      - ${UMBREL_ROOT}/app-data:/import/app-data:ro
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzflix", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

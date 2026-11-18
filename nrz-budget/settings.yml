@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# nrzBudget hat eigene Konten (Onboarding, Anmeldung, Registrierung).
+appProxyAuthEnabled: false

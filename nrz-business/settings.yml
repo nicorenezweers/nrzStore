@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# nrzBusiness hat eine eigene Anmeldung (Passwort aus dem Onboarding, optional Zwei-Faktor-Code).
+appProxyAuthEnabled: false

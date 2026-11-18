@@ -1,0 +1,91 @@
+manifestVersion: 1
+id: nrz-bunker
+category: social
+name: nrzBunker
+version: "1.0.0"
+tagline: "Communities wie Reddit, Feed wie X, Ende-zu-Ende-DMs - komplett in Rust"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-bunker/icon.png
+port: 8520
+path: ""
+description: >-
+  nrzBunker verbindet ein Forum im Stil von Reddit mit einem Feed im Stil von X
+  und Ende-zu-Ende verschluesselten Direktnachrichten. Server und Oberflaechen
+  sind komplett in Rust geschrieben, die Oberflaeche nutzt nrzUI wie alle
+  nrzApps.
+
+
+  ## Was die App kann
+
+
+  - **Communities** - Communities unter /r/name gruenden, abonnieren und
+  moderieren, Beitraege mit Titel, Text (Markdown) oder Link, verschachtelte
+  Kommentare, Abstimmen mit Karma, Sortierung nach Angesagt, Neu, Top und Meist
+  kommentiert, oeffentliches Moderationsprotokoll.
+
+
+  - **Feed** - kurze Beitraege wie bei X: folgen, liken, reposten, zitieren,
+  Lesezeichen, Hashtags und Trends, "Fuer dich" und "Folge ich", Mitteilungen
+  in Echtzeit, Suche ueber Meilisearch.
+
+
+  - **Privat** - Direktnachrichten Ende-zu-Ende verschluesselt (X25519 und
+  XChaCha20-Poly1305 im Browser), das Passwort verlaesst den Browser nie, alle
+  Inhalte liegen verschluesselt auf dem Server.
+
+
+  - **Passwort vergessen** - jedes Konto bekommt bei der Registrierung einen
+  Wiederherstellungscode, damit setzt man ohne E-Mail ein neues Passwort. Wer
+  keinen Code hat, bekommt vom Owner einen Reset-Code (24 Stunden gueltig).
+  Hinweis: Bisherige Direktnachrichten sind danach nicht mehr lesbar, weil sie
+  mit dem alten Passwort verschluesselt sind.
+
+
+  - **Keine Uploads** - Profilbilder, Banner und Bilder kommen nur als Link von
+  Cubeupload, Postimages, Catbox, Pixeldrain, Imgbox, Pasteboard,
+  FreeImage.host, Vgy.me, ImgBB oder Imgur und werden vor dem Anzeigen
+  automatisch geprueft.
+
+
+  - **GIFs** - GIFs von GIPHY und Tenor als Link oder ueber die GIF-Suche in
+  Beitraegen, Kommentaren und Nachrichten (API-Schluessel in der
+  Admin-Oberflaeche unter "GIFs").
+
+
+  - **KI-Moderation** - ein Team aus KI-Agenten (OpenRouter, xAI Grok oder
+  Anthropic Claude) prueft jeden Inhalt sofort: Triage, Regel-Richter,
+  Strafmass, Bildpruefer und automatisch entschiedene Einsprueche, dazu die
+  menschlichen Moderatoren der Communities.
+
+
+  - **Zwei Oberflaechen** - die oeffentliche Seite (darf ins Internet) hat
+  keinerlei Admin-Funktionen. Die Admin-Oberflaeche laeuft auf Port 8521 und
+  ist nur im eigenen Netz erreichbar. Nur der Owner (Konto `nrz`) kann dort
+  Konten loeschen und Reset-Codes ausstellen, weitere Admins nicht.
+
+
+  - **Rechtliches** - Impressum und Datenschutzerklaerung (Cloudflare Tunnel,
+  NetBird, Google AdSense) auf jeder Seite verlinkt, Google AdSense mit
+  Einwilligungsfenster.
+
+
+  ## Erste Schritte
+
+
+  Admin-Oberflaeche unter http://umbrel.local:8521 mit Benutzer `nrz` und dem
+  hier angezeigten Passwort oeffnen und unter "KI-Team" einen API-Schluessel
+  (OpenRouter, xAI oder Anthropic) eintragen. nrzBunker ist der neue Name von
+  nrzForum (und der Nachfolger von Bunker); als neue App startet es mit leeren
+  Daten, nrzForum und Bunker werden nicht uebernommen.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzBunker
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzBunker
+support: http://100.78.107.162:8390/nicorenezweers/nrzBunker/issues
+dependencies:
+  - nrz-git
+defaultUsername: "nrz"
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

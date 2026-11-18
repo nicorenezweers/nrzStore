@@ -1,0 +1,104 @@
+manifestVersion: 1
+id: nrz-bench
+category: developer
+name: nrzBench
+version: "1.0.0"
+tagline: "Benchmarks, Spiele-FPS, PC-Builder und KI-Redaktion: KI, Grafikkarten, CPUs, Programmiersprachen"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-bench/icon.png
+port: 8550
+path: ""
+description: >-
+  nrzBench sammelt automatisch die Ergebnisse vieler Test-Seiten und macht
+  daraus eine schlichte Rangliste: ein nrzBench-Score von 0 bis 100 pro
+  KI-Modell, Grafikkarte, Prozessor, Arbeitsspeicher, SSD, Smartphone und
+  Programmiersprache. Dazu Spiele-Benchmarks (FPS je Grafikkarte), ein PC-Builder,
+  Seiten fuer jede PC-Kombination, KI-Preise und eine KI-Redaktion mit mehreren
+  Reportern. Komplett in Rust (Dioxus fullstack, nrzUI-Thema).
+
+
+  ## Was die App kann
+
+
+  - **PC-Builder** - Prozessor und Grafikkarte waehlen, beim Arbeitsspeicher und
+  Laufwerk nur die Groesse: Die App nimmt passende Riegel (DDR4/DDR5, RDIMM) und
+  das Laufwerk mit dem besten Preis-Leistungs-Verhaeltnis. Mainboard, Netzteil,
+  Gehaeuse und Kuehler erscheinen als Hinweise mit Richtpreis. Der Builder zeigt
+  Build-Score, FPS in beliebten Spielen, Bottleneck, Verbrauch und den ganzen
+  Preis (fehlende Preise geschaetzt). Jede Zusammenstellung hat einen kurzen
+  Link mit Vorschaubild.
+
+
+  - **PC-Kombinationen** - eigene Seiten fuer Grafikkarte + Prozessor +
+  Arbeitsspeicher ("RTX 5090 + Ryzen 5 5600G + 16 GB") und dieselbe Kombination
+  in jedem Spiel ("... Fortnite"): FPS, Bottleneck, reicht der Speicher, Preis.
+
+
+  - **Spiele-Benchmarks** - FPS-Schaetzungen fuer 77 Spiele in 1080p, 1440p und
+  4K. Eigene Seiten je Spiel und Grafikkarte ("Cyberpunk 2077 mit GTX 1050 Ti"),
+  Vergleich zweier Grafikkarten in einem Spiel, FPS-Rechner fuer Grafikkarte und
+  Prozessor, Bottleneck-Rechner. Die Werte stammen aus einem eigenen Modell, das
+  an Messwerten kalibriert ist, und sind als Schaetzung gekennzeichnet.
+
+
+  - **KI-Preise und Preis-Leistung** - Preis je 1 Mio. Tokens (Eingabe, Ausgabe)
+  fuer rund 270 KI-Modelle und eine Rangliste nach Kosten-Intelligenz-Index
+  (100 = marktueblich). Preise fliessen nicht in den nrzBench-Score ein.
+
+
+  - **Bester PC fuer dein Budget** - jede Woche neu gerechnet, von 300 bis
+  40 000 Euro (ab 5 000 auch Threadripper-Workstations). Richtpreise von PassMark,
+  umgerechnet in die Waehrung der Sprache (Euro, Dollar, Yen ...).
+
+
+  - **Viele Bereiche, viele Quellen** - KI-Modelle, Grafikkarten, Prozessoren,
+  Mainboard-Plattformen, Arbeitsspeicher, SSDs und Festplatten, Smartphones und
+  Programmiersprachen (Geschwindigkeit, Speichereffizienz, Beliebtheit laut
+  TIOBE Index). Neue Eintraege erscheinen von selbst.
+
+
+  - **KI-Redaktion** - mehrere Reporter mit eigenem Namen, Themen und Takt
+  (z. B. "Dieter beobachtet die Top 5 im Programmieren und schreibt nur, wenn
+  sich dort etwas tut"), wahlweise ueber OpenRouter, OpenAI, xAI, Anthropic,
+  Claude Code oder Codex; Artikel in allen Sprachen.
+
+
+  - **Technische Daten und Bilder** - Datenblatt und, wo vorhanden, ein frei
+  lizenziertes Bild von Wikimedia Commons; jede Seite hat ein eigenes
+  Vorschaubild zum Teilen. Vergleichsseiten
+  stellen die Daten nebeneinander.
+
+
+  - **Faire, zukunftssichere Wertung** - jede Plattform hat eine Stimme, die
+  Spitzengruppe liegt bei rund 60 Punkten und die Skala wandert mit dem Feld
+  mit. Die Formel steht unter Methodik in der Fusszeile.
+
+
+  - **Datenbank im Hintergrund** - jede Quelle nach ihrem Takt, Seiten werden
+  zwischengespeichert, wer uns drosselt, wird in Ruhe gelassen.
+
+
+  - **40 Sprachen und SEO** (alle europaeischen Sprachen, Preise in der Waehrung
+  des Sprachraums), Admin-Seite (Port 8551) fuer KI-Redaktion, AdSense,
+  Affiliate, Wikipedia/Bilder und einen Index aller Seiten. Die Daten sind
+  exklusiv (keine oeffentliche API).
+
+
+  ## Oeffentliche Adresse
+
+
+  Fuer Suchmaschinen die oeffentliche Adresse (z. B. https://bench.example.com)
+  in der Admin-Seite eintragen (oder in die Datei data/public_url.txt im
+  App-Ordner schreiben). Ohne Angabe wird die Adresse aus der Anfrage genommen.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzBench
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzBench
+support: http://100.78.107.162:8390/nicorenezweers/nrzBench/issues
+dependencies:
+  - nrz-git
+defaultUsername: "admin"
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

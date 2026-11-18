@@ -1,0 +1,5 @@
+dependencies: {}
+autoStart: true
+# nrzGameHost hat eine eigene Anmeldung (Admin-Konto bei der Ersteinrichtung, optional Gastzugang).
+# Die direkten Ports 8601/8602 umgehen den App-Proxy ohnehin.
+appProxyAuthEnabled: false

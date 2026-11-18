@@ -1,0 +1,31 @@
+manifestVersion: 1
+id: nrz-simulation
+category: Gaming
+name: nrzSimulation
+version: "1.0.0"
+tagline: Gott-Sandkasten im Browser - erschaffe Welten und sieh ihnen beim Leben zu
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-simulation/icon.png
+port: 8800
+path: ""
+description: >-
+  nrzSimulation ist ein Gott-Sandkasten, der komplett im Browser laeuft -
+  selbst in Rust geschrieben (Bevy, WebAssembly). Du formst eine prozedural
+  erzeugte Welt, setzt Voelker hinein und greifst mit goettlichen Kraeften
+  ein, waehrend die Simulation weiterlaeuft.
+
+
+  Alles laeuft im Browser: kein Konto, keine Daten auf dem Geraet. Spielstaende
+  liegen im Browser (localStorage). Das Geraet liefert nur die fertigen Dateien
+  aus.
+releaseNotes: "Erste Version."
+developer: nrz
+website: https://zweers.ch
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzSimulation
+support: http://100.78.107.162:8390/nicorenezweers/nrzSimulation/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

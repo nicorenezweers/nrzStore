@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# Eigene Anmeldung in der App; Kobo und KOReader kommen nicht durch die umbrelOS-Anmeldung.
+appProxyAuthEnabled: false

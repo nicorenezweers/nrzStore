@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+FILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/app-files/nrzgit"
+
+# nrzGit kommt ohne eigenes Image: Programm (amd64/arm64, mit Oberflaeche) und Rocket.toml liegen
+# unter hooks/app-files (umbrelOS kopiert bei Updates nur hooks/) und werden bei jedem Start nach
+# app/ kopiert. Der Container ist buildpack-deps:bookworm-scm (git, curl, ssh).
+case "$(uname -m)" in
+  x86_64 | amd64) ARCH=amd64 ;;
+  aarch64 | arm64) ARCH=arm64 ;;
+  *) echo "nrzGit: unsupported architecture $(uname -m)" >&2; exit 1 ;;
+esac
+
+mkdir -p "${APP_DIR}/app" "${APP_DIR}/data"
+(cd "${FILES}" && grep -E " (nrzgit-${ARCH}\.gz|Rocket\.toml)$" SHA256SUMS | sha256sum -c --quiet -)
+gunzip -c "${FILES}/nrzgit-${ARCH}.gz" > "${APP_DIR}/app/nrzgit.new"
+chmod 755 "${APP_DIR}/app/nrzgit.new"
+mv -f "${APP_DIR}/app/nrzgit.new" "${APP_DIR}/app/nrzgit"
+cp "${FILES}/Rocket.toml" "${APP_DIR}/app/Rocket.toml"
+chmod -R a+rX "${APP_DIR}/app"
+
+# Datenbank, Repositories und SSH-Hostschluessel schreibt der Container als 1000.
+chown 1000:1000 "${APP_DIR}/data" 2>/dev/null || true

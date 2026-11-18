@@ -1,0 +1,71 @@
+manifestVersion: 1
+id: nrz-business
+category: finance
+name: nrzBusiness
+version: "1.0.0"
+tagline: Buchhaltung, Rechnungen, EÜR und Umsatzsteuer für Creator - GoBD- und DSGVO-orientiert
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-business/icon.png
+port: 8530
+path: ""
+description: >-
+  nrzBusiness ist die Buchhaltung für dein eigenes Creator-Business in
+  Deutschland (Einzelunternehmen, EÜR) - inspiriert von Akaunting, komplett
+  in Rust (axum + Dioxus/WebAssembly mit nrzUI) und nur für eine Person
+  gemacht.
+
+
+  ## Was die App kann
+
+  - **Schnell startklar** - die Einrichtung legt nur dein Konto an; Firma,
+  Steuer und Bank trägst du später ein, die Übersicht zeigt, was noch fehlt.
+
+  - **Dokumente** - Posteingang zum Prüfen und Ablegen, Volltextsuche im
+  Text von PDFs, Tags mit Regeln, Datum und Absender automatisch, Zeitleiste,
+  Erinnerungen und KI-Vorschläge (nach dem Vorbild von nrzPaper).
+
+  - **Einnahmen & Ausgaben** - Buchungen mit Belegen, Kategorien für
+  Influencer (Kooperationen, Plattform-Auszahlungen, Spenden, Affiliate,
+  Barter, Ads, Equipment) mit SKR 03/04-Konten, Bankimport (CSV von Bank
+  und PayPal), Zahlungskonten.
+
+  - **Rechnungen & Angebote** - fortlaufende Nummern, PDF nach § 14 UStG,
+  XRechnung (EN 16931), Kleinunternehmer, Reverse Charge EU, Drittland,
+  Zahlungen, Stornorechnungen.
+
+  - **Berichte** - Anlage EÜR, Vermögensübersicht/Bilanz mit GuV,
+  Umsatzsteuer-Voranmeldung mit Kennzahlen und Zusammenfassender Meldung,
+  Anlagen mit AfA, Kleinunternehmer-Grenzen und Steuerrücklage.
+
+  - **Für Steuerberater und Finanzamt** - DATEV-Buchungsstapel, GoBD-Export
+  (Z3/GDPdU), Belege-ZIP, CSV-Listen, Komplettsicherung.
+
+  - **GoBD** - Festschreibung, Storno statt Löschen, unveränderbare
+  Rechnungen, Protokoll mit Hash-Kette, SHA-256 je Beleg,
+  Verfahrensdokumentation als Vorlage.
+
+  - **DSGVO** - alles verschlüsselt (SQLCipher AES-256, Schlüssel aus
+  APP_SEED), Argon2id, Zwei-Faktor-Anmeldung, Auskunft, Einschränkung und
+  Anonymisierung von Kontakten, Verarbeitungsverzeichnis als Vorlage.
+
+  - **Frag Dieter** - KI-Assistent, der nur Fragen beantwortet und nichts
+  ändert; jeder Anbieter (auch lokal mit Ollama), Namen pseudonymisiert.
+
+
+  ## Hinweis
+
+  Keine Steuerberatung. Software kann vom Finanzamt nicht "zertifiziert"
+  werden - GoBD-Konformität entsteht aus Software plus deiner
+  Verfahrensdokumentation. ELSTER-Werte werden angezeigt, die Übermittlung
+  machst du in Mein ELSTER.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzBusiness
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzBusiness
+support: http://100.78.107.162:8390/nicorenezweers/nrzBusiness/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

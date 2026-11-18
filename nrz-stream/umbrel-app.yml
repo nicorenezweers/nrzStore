@@ -1,0 +1,74 @@
+manifestVersion: 1
+id: nrz-stream
+category: media
+name: nrzStream
+version: "1.0.0"
+tagline: "Multistream-Zentrale: Twitch + YouTube, Ko-fi, Dieter-KI und OBS-Overlays"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-stream/icon.png
+port: 8650
+path: ""
+description: >-
+  nrzStream ist deine Stream-Zentrale fuer Twitch und YouTube gleichzeitig - komplett in
+  Rust (Server axum + Turso, Oberflaeche und Overlays Dioxus/nrzUI). Alle Daten liegen auf
+  diesem Geraet.
+
+
+  ## Was die App kann
+
+
+  - **Ein Chat fuer alles** - Twitch- und YouTube-Chat zusammen, mit Abzeichen, Farben und
+  7TV-, BTTV- und FFZ-Emotes. Schreiben, antworten, loeschen, Timeout und Bann direkt aus dem
+  Dashboard.
+
+
+  - **Unterstuetzer im Blick** - eigene Tabs fuer Spenden (Ko-fi, Super Chats, Bits), Subs und
+  Mitglieder sowie Follower und YouTube-Abonnenten, mit Summen und Zaehlern.
+
+
+  - **Ko-fi** - Spenden per Webhook, Links in Nachrichten sind klickbar und oeffnen sicher in
+  einem neuen Tab, private Spenden bleiben in Overlays anonym.
+
+
+  - **Dieter** - Chat-Bot und KI-Moderator (Claude) fuer Twitch und YouTube: erkennt kritische
+  Nachrichten, markiert oder handelt selbst, Befehle, wiederkehrende Nachrichten und Antworten.
+
+
+  - **Alles protokolliert** - jede Nachricht jedes Nutzers wird gespeichert und ist
+  durchsuchbar, inklusive Nutzerprofil mit Nachrichten, Spenden und Moderation.
+
+
+  - **OBS-Overlays** - Alerts mit Text-to-Speech, Chat, Timer und Subathon-Timer, Zaehler,
+  Spendenziel, eigene HTML-Widgets. Bearbeitbar im Editor, per KI-Prompt oder mit Claude Code
+  ueber den eingebauten MCP-Server (z. B. aus nrzCode).
+
+
+  ## Erste Schritte
+
+
+  1. Mit dem hier angezeigten Passwort anmelden.
+
+  2. Unter Einstellungen Twitch und YouTube verbinden (Code-Anmeldung, keine Weiterleitungs-URL
+  noetig) und den Ko-fi-Token eintragen.
+
+  3. Unter Leinwand die Overlay-URL kopieren und in OBS als Browserquelle (1920x1080) einfuegen.
+
+
+  ## Hinweis zu Ko-fi
+
+
+  Ko-fi braucht eine oeffentlich erreichbare HTTPS-Adresse fuer den Webhook. Dafuer gibt es den
+  eigenen Port 8651, auf dem nur Webhooks und Overlays erreichbar sind - diesen Port ueber einen
+  Reverse-Proxy oder NetBird freigeben und die Adresse in den Einstellungen eintragen.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzStream
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzStream
+support: http://100.78.107.162:8390/nicorenezweers/nrzStream/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

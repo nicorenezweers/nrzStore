@@ -1,0 +1,43 @@
+services:
+  # Injected by umbrelOS. nrzDownloader hat eine eigene Anmeldung (erstes Konto beim ersten Öffnen).
+  app_proxy:
+    environment:
+      APP_HOST: nrz-downloader_web_1
+      APP_PORT: 8610
+      PROXY_AUTH_ADD: "false"
+    container_name: nrz-downloader_app_proxy_1
+
+  web:
+    # Multi-Arch-Image (amd64 + arm64) aus der Registry von nrzGit. localhost:8390 = nrzGit auf
+    # diesem Gerät; Docker erlaubt dort HTTP ohne Einstellung.
+    image: localhost:8390/nicorenezweers/nrz-downloader:1.0.0@sha256:e6ee5bb103a52ba34549cc7b9989dc38719e73a29c7905990c77195b34f43200
+    container_name: nrz-downloader_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=info,tower_http=warn
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    ports:
+      # Click'n'Load (JDownloader-Protokoll) für Browser-Erweiterungen und Webseiten
+      - "9666:9666/tcp"
+    volumes:
+      # Datenbank, JDownloader mit Plugins, Konten und Einstellungen
+      - ${APP_DATA_DIR}/data:/data
+      # Gemeinsamer Download-Ordner von umbrelOS (in der Dateien-App unter „Downloads“)
+      - ${UMBREL_ROOT}/data/storage/downloads:/downloads
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 40s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

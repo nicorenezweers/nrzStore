@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the admin UI (port 8440) behind the Umbrel login.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-nrzwebsite_app_1
+      APP_PORT: 8440
+    container_name: nrz-nrzwebsite_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzWebsite ist kein eigenes Image: hooks/pre-start
+    # laedt das Programm (CSS und Schrift sind eingebettet) fuer die Architektur dieses Geraets
+    # aus dem nrzWebsite-Repo auf nrzGit (Zweig umbrel) nach ${APP_DATA_DIR}/app – ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-nrzwebsite_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzwebsite"]
+    stop_grace_period: 10s
+    environment:
+      - TZ=Europe/Zurich
+      # site.json (Inhalte, Websites, Einstellungen), stats.json, media/ (Bilder)
+      - DATA_DIR=/data
+      # Persoenliche Seite: direkt auf dem Host veroeffentlicht (ohne Umbrel-Login), nur lesen.
+      - PUBLIC_ADDRESS=0.0.0.0
+      - PUBLIC_PORT=8441
+      # Admin nur ueber den App-Proxy (Umbrel-Login), nicht direkt veroeffentlicht.
+      - ADMIN_ADDRESS=0.0.0.0
+      - ADMIN_PORT=8440
+      - ADMIN_AUTH=umbrel
+      # Gehostete Websites: je ein eigener Port aus diesem Bereich (unten veroeffentlicht).
+      - SITE_PORTS=15000-15100
+      # Oeffentliche Adresse der persoenlichen Seite (Canonical, Sitemap, RSS, Vorschaubilder).
+      - PUBLIC_URL=https://zweers.ch
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    ports:
+      - "8441:8441/tcp"
+      - "15000-15100:15000-15100/tcp"
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzwebsite", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

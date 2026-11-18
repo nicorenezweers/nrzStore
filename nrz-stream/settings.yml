@@ -1,0 +1,5 @@
+dependencies: {}
+autoStart: true
+# nrzStream hat eine eigene Anmeldung. OBS-Overlays (?key=), TTS-Audio, der Ko-fi-Webhook und der
+# MCP-Server (API-Token) muessen ohne umbrelOS-Login erreichbar sein.
+appProxyAuthEnabled: false

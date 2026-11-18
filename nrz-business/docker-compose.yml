@@ -1,0 +1,50 @@
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-business_app_1
+      APP_PORT: 8080
+    container_name: nrz-business_app_proxy_1
+
+  app:
+    # Pinned upstream Debian (multi-arch manifest list). The nrzBusiness server and
+    # web app are not an image: hooks/pre-start loads them for this device's
+    # architecture from the nrzBusiness repo on nrzGit (branch umbrel, tag there).
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-business_app_1
+    restart: unless-stopped
+    init: true
+    # umbrelOS creates app directories as 1000:1000; hooks/pre-start makes sure
+    # data/ exists with that owner before the container starts.
+    user: "1000:1000"
+    stop_grace_period: 20s
+    command: ["/app/nrzbusiness-server"]
+    environment:
+      - TZ=Europe/Berlin
+      - NRZBUSINESS_ADDR=0.0.0.0:8080
+      - NRZBUSINESS_DATA=/data
+      - NRZBUSINESS_PUBLIC=/app/public
+      # The whole database (bookings, invoices, receipts) is encrypted with SQLCipher
+      # (AES-256). The key is derived from this install's APP_SEED – no key file sits
+      # next to the database.
+      - NRZBUSINESS_DB_KEY=${APP_SEED}
+      # Forces a fresh container per release.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzbusiness-server", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

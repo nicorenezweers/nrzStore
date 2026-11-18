@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <rect width="256" height="256" rx="56" fill="#18181b"/>
+  <!-- coin behind, offset to the top right -->
+  <circle cx="170" cy="96" r="50" fill="#52525b"/>
+  <circle cx="170" cy="96" r="36" fill="none" stroke="#18181b" stroke-width="5" opacity="0.55"/>
+  <!-- card in front -->
+  <rect x="54" y="74" width="114" height="130" rx="16" fill="#e4e4e7" stroke="#18181b" stroke-width="5"/>
+  <!-- pie chart: three quarters plus one slice pulled out -->
+  <path d="M108 141 L108 107 A34 34 0 1 0 142 141 Z" fill="#52525b"/>
+  <path d="M115 134 L115 100 A34 34 0 0 1 149 134 Z" fill="#52525b"/>
+</svg>

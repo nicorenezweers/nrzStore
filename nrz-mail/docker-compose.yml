@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-mail_app_1
+      APP_PORT: 8330
+    container_name: nrz-mail_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzMail ist kein eigenes Image mehr: hooks/pre-start
+    # laedt das Programm (Oberflaeche eingebettet), Zertifikate und Rocket.toml fuer die Architektur
+    # dieses Geraets aus dem nrzMail-Repo auf nrzGit (Zweig umbrel) nach ${APP_DATA_DIR}/app –
+    # ohne Registry-Login. Im Container lauscht nrzMail auf 8330, umbrelOS veroeffentlicht 8360.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-mail_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzmail"]
+    stop_grace_period: 15s
+    environment:
+      - TZ=Europe/Zurich
+      # Encrypted database nrzmail.db: messages, raw mails, attachments, search index.
+      - NRZMAIL_DATA_DIR=/data
+      # The whole database is encrypted with SQLCipher. The key is this
+      # install's APP_SEED, derived from the Umbrel seed - so no key file sits
+      # next to the database in the data folder.
+      - NRZMAIL_DB_KEY=${APP_SEED}
+      - NRZMAIL_CONFIG=/app/Rocket.toml
+      - NRZMAIL_ADDRESS=0.0.0.0
+      - NRZMAIL_PORT=8330
+      # debian-slim hat keine Zertifikate: die aus dem Paket (TLS zu Mail-Servern und KI)
+      - SSL_CERT_FILE=/app/ca-certificates.crt
+      - NRZMAIL_LOG=info,rocket::server=warn,rocket::launch::_=warn,rocket::shield=warn
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzmail", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

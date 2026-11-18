@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# Eigene Anmeldung in der App (Git-Clients brauchen den direkten Zugang ohne umbrelOS-Login).
+appProxyAuthEnabled: false

@@ -1,0 +1,60 @@
+manifestVersion: 1
+id: nrz-flix
+category: "media"
+name: "nrzFlix"
+version: "1.0.0"
+tagline: "Jellyfin mit nrzUI - eingebaut, aktualisiert sich selbst, neue Oberflaeche auf allen Geraeten"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-flix/icon.png"
+port: 8590
+path: ""
+description: >-
+  nrzFlix ist Jellyfin mit neuer Oberflaeche: Jellyfin laeuft eingebaut in nrzFlix (Rust), und
+  das gesamte Frontend ist nrzUI - am PC, am Handy und am Fernseher.
+
+
+  ## So funktioniert es
+
+
+  - **Jellyfin eingebaut** - nrzFlix startet und ueberwacht Jellyfin selbst. Updates kommen
+  direkt aus nrzFlix: per Knopf oder automatisch nachts, mit Sicherung der Datenbank und
+  automatischer Rueckkehr zur alten Version, falls die neue nicht startet. Der
+  umbrelOS-App-Store wird fuer Jellyfin-Updates nicht gebraucht.
+
+
+  - **nrzUI ueberall** - nrzUI liegt dort, wo Jellyfin-Clients ihre Oberflaeche laden (/web).
+  Browser, die Jellyfin-App fuer Android und iOS, die LG-TV-App und Jellyfin Desktop zeigen
+  deshalb nrzUI: Start mit Weiterschauen, Als Naechstes und Neu, Bibliotheken, Detailseiten,
+  Suche, Favoriten und ein Player mit Direktwiedergabe oder HLS, Tonspuren, Untertiteln und
+  naechster Folge. Am Fernseher mit Fernbedienungs-Steuerung, am Handy als Web-App.
+
+
+  - **Native Apps laufen weiter** - die API geht unveraendert an Jellyfin, darum funktionieren
+  auch Android TV, Swiftfin, Findroid, Kodi und Co. (mit ihrer eigenen Oberflaeche).
+
+
+  - **Verwaltung in nrzUI** - Jellyfin (Version, Updates, Neustart, Protokoll), aktive
+  Geraete, Bibliotheken, Benutzer, Aufgaben. Die originale Jellyfin-Verwaltung bleibt unter
+  /nrz/klassisch/web erreichbar.
+
+
+  ## Erste Schritte
+
+
+  Beim ersten Oeffnen richtest du Jellyfin direkt in nrzFlix ein - oder uebernimmst eine
+  bestehende Jellyfin-Instanz mit den drei Punkten Benutzer, Konfiguration und Medien: die
+  Jellyfin-App aus umbrelOS (vorher stoppen, sie bleibt unveraendert), einen Jellyfin-Datenordner
+  auf diesem Geraet oder einen anderen Jellyfin-Server im Netz (Adresse + Admin-Konto).
+  Kopierte Medien liegen in Home/nrzFlix. Weitere Medien: /downloads (umbrelOS-Downloads) und
+  /media (Home, nur lesend). Jellyfin-Apps verbinden sich mit http://umbrel.local:8590.
+releaseNotes: "Erste Version."
+developer: nrz
+website: "http://100.78.107.162:8390/nicorenezweers/nrzFlix"
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: "http://100.78.107.162:8390/nicorenezweers/nrzFlix"
+support: "http://100.78.107.162:8390/nicorenezweers/nrzFlix/issues"
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

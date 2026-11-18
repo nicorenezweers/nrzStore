@@ -1,0 +1,67 @@
+services:
+  # Injected by umbrelOS. nrzAnalytics hat eigene Konten, die umbrelOS-Anmeldung ist aus
+  # (settings.yml), damit Tracking und geteilte Dashboards ohne umbrelOS-Login gehen.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-analytics_web_1
+      APP_PORT: 8580
+    container_name: nrz-analytics_app_proxy_1
+
+  web:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzAnalytics ist kein eigenes Image: hooks/pre-start
+    # laedt das statische Programm (Rust, axum + SQLite, Oberflaeche Dioxus/WASM eingebettet) fuer
+    # die Architektur dieses Geraets aus dem nrzAnalytics-Repo (Zweig umbrel) nach ${APP_DATA_DIR}/app.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-analytics_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /data
+    command: ["/app/nrzanalytics"]
+    stop_grace_period: 20s
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=warn,nrzanalytics=info
+      # Oberflaeche + API (ueber den umbrelOS app_proxy).
+      - NRZANALYTICS_BIND=0.0.0.0:8580
+      # Nur oeffentliche Teile: Tracking-Skript /js/*, /api/event, geteilte Dashboards /share/*,
+      # Stats-API /api/v1 + /api/v2 und /api/health.
+      - NRZANALYTICS_PUBLIC_BIND=0.0.0.0:8581
+      # SQLite (analytics.db) und GeoIP-Datenbank (geoip/, DB-IP Lite) liegen hier.
+      - NRZANALYTICS_DATA_DIR=/data
+      # Admin `admin` mit dem in umbrelOS angezeigten Passwort (wird bei jedem Start gesetzt).
+      - NRZANALYTICS_ADMIN_EMAIL=admin
+      - NRZANALYTICS_ADMIN_PASSWORD=${APP_PASSWORD}
+      # Server-Geheimnis (Sitzungen, Signaturen), pro Installation fest.
+      - NRZANALYTICS_SECRET=${APP_SEED}
+      # Vor dem Server stehen app_proxy bzw. ein Reverse-Proxy: Client-IP aus X-Forwarded-For.
+      - NRZANALYTICS_TRUST_PROXY=true
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    ports:
+      # Oeffentlicher Tracking-Port: Websites muessen Skript und Ereignis-API ohne umbrelOS-Login
+      # erreichen. Hierauf zeigt ein Reverse-Proxy oder NetBird; die Oberflaeche ist hier nicht
+      # erreichbar.
+      - "8581:8581/tcp"
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      # Das Programm prueft /api/health selbst (kein curl im Image noetig).
+      test: ["CMD", "/app/nrzanalytics", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

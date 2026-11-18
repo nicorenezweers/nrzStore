@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Ordner anlegen, bevor Docker sie als root erzeugt: nrzDownloader läuft als 1000:1000.
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+ROOT="${UMBREL_ROOT:-$(cd "${APP_DIR}/../.." && pwd)}"
+
+mkdir -p "${APP_DIR}/data" "${ROOT}/data/storage/downloads"
+chown 1000:1000 "${APP_DIR}/data" 2>/dev/null || true
+chown 1000:1000 "${ROOT}/data/storage/downloads" 2>/dev/null || true

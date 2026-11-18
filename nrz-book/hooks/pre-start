@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+UMBREL_HOME="${UMBREL_ROOT:-$(cd "${APP_DIR}/../.." && pwd)}/home"
+
+# Docker wuerde fehlende Ordner als root anlegen. /books richtet das Image nicht selbst ein.
+mkdir -p "${APP_DIR}/data/app" "${APP_DIR}/data/postgres" "${UMBREL_HOME}/nrzBook"
+chown 1000:1000 "${UMBREL_HOME}/nrzBook" 2>/dev/null || true

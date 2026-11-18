@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-git_app_1
+      APP_PORT: 8380
+    container_name: nrz-git_app_proxy_1
+
+  app:
+    # Gepinntes buildpack-deps:bookworm-scm (Multi-Arch-Manifest, mit git, curl und ssh).
+    # nrzGit selbst ist kein Image: hooks/pre-start kopiert das Programm fuer die Architektur
+    # dieses Geraets aus hooks/app-files nach ${APP_DATA_DIR}/app. (nrzGit kann sich beim
+    # eigenen Update nicht selbst herunterladen – es laeuft dann ja nicht.)
+    image: buildpack-deps:bookworm-scm@sha256:b5e40d97255739ddf46ddaace0cc99d3b18ed1cf593aa764deb89aac1e10be49
+    container_name: nrz-git_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzgit"]
+    stop_grace_period: 15s
+    ports:
+      # Git over SSH cannot go through the app proxy.
+      - "2380:2380/tcp"
+      # Public Public: oeffentliche Nur-Lese-Instanz ohne Umbrel-Login, Ziel des NetBird-Proxys fuer
+      # git.zweers.ch. Zeigt nur, was in nrzGit ausdruecklich freigegeben wurde. Nicht direkt im
+      # Router weiterleiten: Von aussen kommt nur der Proxy (mit HTTPS) hierher.
+      - "8391:8391/tcp"
+    environment:
+      - TZ=Europe/Zurich
+      - NRZGIT_CONFIG=/app/Rocket.toml
+      - NRZGIT_DATA_DIR=/data
+      - NRZGIT_ADDRESS=0.0.0.0
+      - NRZGIT_PORT=8380
+      - NRZGIT_SSH_PORT=2380
+      - NRZGIT_COOKIE_SECURE=false
+      # So erreichen andere Container (z. B. nrzCode) nrzGit im Umbrel-Netz – erscheint unter
+      # Einstellungen -> MCP als empfohlene interne Adresse.
+      - NRZGIT_INTERNAL_URL=http://nrz-git_app_1:8380
+      - NRZGIT_PUBLIC_PORT=8391
+      - NRZGIT_PUBLIC_URL=https://git.zweers.ch
+      # Nur diesen Netzen wird X-Forwarded-For geglaubt: NetBird/Tailscale und Docker. Der Router
+      # leitet 8391 nicht weiter, Besucher aus dem Internet erreichen den Port also nur ueber den Proxy.
+      - NRZGIT_PUBLIC_TRUSTED_PROXIES=100.64.0.0/10,10.0.0.0/8,172.16.0.0/12
+      - NRZGIT_LOG=info,rocket::server=warn,rocket::launch::_=warn,rocket::shield=warn,nrzgit::code::files::_=error,nrzgit::extras::feeds::_=error
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # Database, bare repositories, attachments, packages and the SSH host key.
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzgit", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

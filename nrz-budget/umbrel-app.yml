@@ -1,0 +1,112 @@
+manifestVersion: 1
+id: nrz-budget
+category: finance
+name: nrzFinanzen
+version: "1.0.0"
+tagline: Budget, Abos und Fixkosten, Transaktionen, Raten, Sparen und Investments - verschluesselt
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-budget/icon.png?v=2
+port: 8370
+path: ""
+description: >-
+  nrzFinanzen (frueher nrzBudget) ist aus einem 1:1-Nachbau von Ocular entstanden, komplett in Rust (Dioxus als
+  WebAssembly mit rust-ui-Komponenten, axum). Einnahmen und Ausgaben werden
+  pro Jahr in Gruppen und Budgets mit 12 Monaten geplant, das Dashboard zeigt
+  alles als Sankey-Diagramm, Treemap und Balken. Dazu kommen Konten und
+  mehrere Organisationen mit Mitgliedern und Rollen. Alle Daten liegen auf
+  dem Server in einer mit SQLCipher verschluesselten SQLite-Datei.
+
+
+  ## Was die App kann
+
+  - **Budget-Tabelle** - Gruppen und Budgets mit 12 Monaten, Summen und
+  Durchschnitt, Rechnen direkt in der Zelle (12*30), Zeile fuellen, Drag &
+  Drop, Tastaturnavigation mit Shift + Pfeiltasten, Rueckgaengig.
+
+  - **Dashboard** - Uebersicht mit Kennzahlen, Sankey, Treemap und Balken
+  (absolut, Prozent, Monatsdurchschnitt), Download als PNG oder SVG,
+  Zusammenfassung mit Verlaufsdiagramm, Allzeit-Ansicht mit Trends,
+  Jahresvergleich.
+
+  - **Mehrere Jahre** - Geschaeftsjahr ab beliebigem Monat, Uebertrag der
+  Nettoersparnisse, Gruppen von Jahr zu Jahr kopieren.
+
+  - **Import und Export** - JSON-Export, Import von nrzBudget- und
+  Ocular-Dateien sowie der Google-Sheets-Jahresbudget-CSVs.
+
+  - **Organisationen** - jede Person kann mehrere Organisationen anlegen
+  (Haushalt, Firma, Verein) und Mitglieder als Inhaber, Bearbeiter oder
+  Betrachter einladen. Aenderungen anderer erscheinen nach wenigen Sekunden.
+
+  - **Dieter** - der KI-Assistent wie in nrzPaper: "Dieter fragen" unten
+  rechts beantwortet Fragen zu den Budgets ("Wie viel fuer Lebensmittel?",
+  "Wo koennen wir sparen?") und verlinkt die verwendeten Gruppen. Jeder
+  KI-Anbieter: OpenRouter, OpenAI, Anthropic, Gemini, Mistral, Groq, Ollama,
+  LM Studio und jede OpenAI-kompatible Adresse.
+
+  - **Web-App fuers Handy** - auf dem iPhone in Safari "Teilen > Zum
+  Home-Bildschirm", auf Android "App installieren": nrzBudget startet im
+  Vollbild wie eine App, ohne App Store. Eigene Handy-Oberflaeche mit
+  Tab-Leiste unten, Budgets Monat fuer Monat mit grossen Betragsfeldern und
+  einem Blatt mit allen zwoelf Monaten.
+
+  - **MCP fuer nrzDashboard** - nrzBudget ist ein MCP-Server (POST /mcp):
+  nrzDashboard, KI-Assistenten und Skripte fragen die Kennzahlen ab
+  (Ueberblick, Jahr, Monat, Allzeit, Status), nur lesend. Tokens unter
+  Einstellungen > MCP & nrzDashboard.
+
+  - **Abos und Fixkosten** - Miete, Strom, Versicherungen, Handy, Streaming
+  und andere feste Kosten mit Betrag, Rhythmus (monatlich bis jaehrlich),
+  erster und letzter Zahlung und Abbuchungstag. Sie stehen automatisch ganz
+  oben in den Ausgaben und zaehlen wie jede andere Ausgabe; Kuendigen heisst
+  letzte Zahlung eintragen. Bestehende Ausgaben lassen sich uebernehmen.
+
+  - **Planung** - eine Flaeche mit Karten (z. B. Weihnachtsgeschenke) fuer
+  geplante Ausgaben und Einnahmen, die noch nicht mitzaehlen. Steht ein Plan
+  fest, wird er eingeklappt und freigegeben und landet als Gruppe in der
+  Tabelle.
+
+  - **Zahlungsstatus und Schulden** - Rechtsklick auf eine Ausgabe markiert sie
+  als faellig (rot) oder bezahlt (gruen). Der Tab Schulden zeigt alle offenen
+  Betraege mit Summe, Aufteilung nach Posten und einer Notiz pro Eintrag.
+
+  - **Raten und Inkasso** - Ratenzahlungen, Inkasso-Faelle und Kredite mit
+  Forderung, Gebuehren, Monatsrate und Zahlungen; zeigt, was offen ist und
+  wann es abbezahlt ist, und uebernimmt die Rate auf Wunsch in die Ausgaben.
+
+  - **Transaktionen** - Kontoauszuege einfuegen (CSV-Export oder kopierte
+  Zeilen aus dem Online-Banking) oder hochladen; Spalten, Zahlen- und
+  Datumsformate werden erkannt, Duplikate uebersprungen, Kategorien gelernt.
+
+  - **Sparen und Ruecklagen** - Spartoepfe mit Ziel, der Notgroschen ist
+  immer dabei (ohne Ziel). Einzahlungen ganz unten bei den Ausgaben zaehlen
+  als Ausgabe, Entnahmen ganz unten bei den Einnahmen als Einnahme - das
+  Gesparte wird nicht in den naechsten Monat uebertragen.
+
+  - **Investments** - Positionen mit Einsatz, aktuellem Wert, Sparplan,
+  Gewinn/Verlust und Aufteilung.
+
+  - **Konten** - Onboarding legt das Admin-Konto an, Registrierung
+  abschaltbar, Admin-Bereich fuer Benutzer, 13 Sprachen, hell und dunkel,
+  Privatmodus.
+
+
+  ## Technisches
+
+  - **Verschluesselt** - die ganze Datenbank ist mit SQLCipher (AES-256)
+  verschluesselt. Der Schluessel ist der APP_SEED dieser Installation; im
+  Datenordner liegt kein Schluessel. Passwoerter als Argon2id-Hash.
+
+
+  - **Kein eigenes Image** - Server (amd64 und arm64) und Web-App liegen im
+  Store unter hooks/app-files und laufen im offiziellen debian:trixie-slim.
+releaseNotes: "Erste Version."
+developer: nrz
+website: https://zweers.ch
+submitter: nrz
+submission: http://100.78.107.162:8101/nicorenezweers/nrzStore
+repo: https://github.com/nicorenezweers/nrzBudget
+support: https://github.com/nicorenezweers/nrzBudget/issues
+dependencies: []
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

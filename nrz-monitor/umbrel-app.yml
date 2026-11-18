@@ -1,0 +1,61 @@
+manifestVersion: 1
+id: nrz-monitor
+category: "networking"
+name: nrzMonitor
+version: "1.0.0"
+tagline: "Ueberwachung wie Netdata: Host, jeder Container, DNS, Cloudflare und NetBird - live und sparsam"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-monitor/icon.png"
+port: 8570
+path: ""
+description: >-
+  nrzMonitor ueberwacht dein Geraet wie Netdata und Grafana - komplett in Rust
+  (Dioxus, nrzUI-Thema) mit DuckDB als sparsamem Speicher. Alles aktualisiert
+  sich jede Sekunde live.
+
+
+  ## Was die App kann
+
+
+  - **System** - CPU je Kern, Takt, Last, Arbeitsspeicher, Swap, Datentraeger
+  (Durchsatz, Wartezeit, Belegung), Netzwerk je Schnittstelle, TCP/UDP,
+  Prozesse und alle Sensoren mit **Temperaturen**, Luefter und Leistung.
+
+
+  - **Jeder Container und jede App** - CPU, Speicher, Netzwerk und
+  Datentraeger je Container direkt aus den cgroups, Zustand, Neustarts, Logs
+  und Ereignisse; zusammengefasst je Umbrel-App.
+
+
+  - **Dein Netzwerk** - jede DNS-Anfrage ueber den MCP-Server von nrzNetwork
+  (wer fragt was, gesperrt, Antwortzeiten), Cloudflare (Anfragen, Bedrohungen,
+  Tunnel), NetBird (Peers, Aktivitaet) und Erreichbarkeit wichtiger Ziele.
+
+
+  - **Analysieren** - Fadenkreuz ueber alle Diagramme, Zoomen per Ziehen, "Was
+  hat sich geaendert?", Ereignisse im Verlauf, Alarme mit ntfy, Discord,
+  Telegram oder Webhook.
+
+
+  - **Sparsam** - Sekundenwerte, Minuten- und Stundenmittel als komprimiertes
+  Parquet; Aufbewahrung und Obergrenze fuer den Speicherplatz einstellbar.
+
+
+  ## Erste Schritte
+
+
+  Die App laeuft im Host-Modus und liest System und Container sofort. Fuer DNS
+  in nrzNetwork unter Einstellungen -> MCP ein Token erstellen und in
+  nrzMonitor unter Einstellungen -> Integrationen eintragen; ebenso ein
+  Cloudflare-API-Token (Leserechte) und ein NetBird Personal Access Token.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzMonitor
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzMonitor
+support: http://100.78.107.162:8390/nicorenezweers/nrzMonitor/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

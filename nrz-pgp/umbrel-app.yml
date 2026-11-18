@@ -1,0 +1,77 @@
+manifestVersion: 1
+id: nrz-pgp
+category: developer
+name: nrzPGP
+version: "1.0.0"
+tagline: "PGP-Client mit Profilen, Pruefer und Tresor - Schluessel nie im Klartext"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-pgp/icon.png
+port: 8540
+path: ""
+description: >-
+  nrzPGP ist ein PGP-Client fuer den eigenen Server. Nachrichten verschluesseln,
+  entschluesseln, signieren und pruefen - mit mehreren Profilen (Schluesselpaaren)
+  fuer verschiedene E-Mail-Adressen und Zwecke. Server und Oberflaeche sind in
+  Rust geschrieben (rPGP, Dioxus mit nrzUI).
+
+
+  ## Was die App kann
+
+
+  - **Profile** - beliebig viele Schluesselpaare erzeugen (Ed25519/Curve25519,
+  RSA 4096 oder OpenPGP v6) oder vorhandene importieren, je mit Name, Zweck und
+  eigenem Raetsel.
+
+
+  - **Werkzeuge** - verschluesseln (an Profile, Kontakte, eingefuegte Schluessel
+  oder mit Passwort, optional signiert), entschluesseln mit Signaturpruefung,
+  signieren (Klartext, abgetrennt, eingebettet).
+
+
+  - **PGP-Pruefer** - Signaturen pruefen, Schluessel analysieren (Fingerabdruck,
+  Teilschluessel, Ablauf, Widerruf, schwache Algorithmen) und Nachrichten
+  untersuchen (Empfaenger, Container).
+
+
+  - **Kontakte** - oeffentliche Schluessel anderer speichern und als geprueft
+  markieren.
+
+
+  ## Sicherheit
+
+
+  - Private Schluessel liegen nie im Klartext in der Datenbank: mit der
+  Passphrase geschuetzt und zusaetzlich mit einem Hauptschluessel versiegelt,
+  der nur in der Umgebung liegt.
+
+
+  - Entschluesseln und Signieren passieren auf dem Server, die Oberflaeche
+  bekommt nur das Ergebnis.
+
+
+  - Den privaten Schluessel gibt der Tresor erst nach mehreren Raetseln,
+  Cap-Captcha und Konto-Passwort heraus - nie vorher, nie im HTML.
+
+
+  - Cap-Captcha (selbst gehostet) bei Anmeldung und Tresor, Argon2id, HttpOnly-
+  Cookie, CSRF-Schutz, strenge Content-Security-Policy, Rate-Limits und
+  Protokoll aller Vorgaenge.
+
+
+  ## Erste Schritte
+
+
+  Mit Benutzer `nrz` und dem hier angezeigten Passwort anmelden, danach das
+  Passwort in den Einstellungen der App aendern.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzPGP
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzPGP
+support: http://100.78.107.162:8390/nicorenezweers/nrzPGP/issues
+dependencies:
+  - nrz-git
+defaultUsername: "nrz"
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

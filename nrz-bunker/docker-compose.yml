@@ -1,0 +1,153 @@
+services:
+  # Injected by umbrelOS: oeffentliche Oberflaeche (darf ins Internet), intern Port 8536.
+  # nrzBunker hat eigene Konten, die umbrelOS-Anmeldung ist aus (settings.yml).
+  app_proxy:
+    environment:
+      APP_HOST: nrz-bunker_web_1
+      APP_PORT: 8536
+    container_name: nrz-bunker_app_proxy_1
+
+  web:
+    # nrzBunker ist kein eigenes Image: hooks/pre-start laedt Server (Rust) und beide Oberflaechen
+    # (Dioxus/WASM) fuer die Architektur dieses Geraets aus dem nrzBunker-Repo auf nrzGit.
+    image: debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+    container_name: nrz-bunker_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /data
+    command: ["/app/nrzforum"]
+    stop_grace_period: 20s
+    # Admin-/Moderations-Oberflaeche nur im eigenen Netz (Port 8521 = oeffentlich + 1, nicht ueber
+    # den App-Proxy und nie ins Internet freigeben).
+    ports:
+      - "8521:8537"
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=warn,nrzforum=info
+      - NRZFORUM_BIND=0.0.0.0:8536
+      - NRZFORUM_ADMIN_BIND=0.0.0.0:8537
+      - NRZFORUM_DATA=/data
+      - NRZFORUM_WEB_DIR=/app/web
+      - NRZFORUM_ADMIN_WEB_DIR=/app/admin
+      - NRZFORUM_SQLITE=/data/nrzforum.sqlite
+      # Admin `nrz` mit dem in umbrelOS angezeigten Passwort (wird bei jedem Start gesetzt).
+      - NRZFORUM_ADMIN_NAME=nrz
+      - NRZFORUM_ADMIN_PASSWORD=${APP_PASSWORD}
+      # Hauptgeheimnis fuer die Verschluesselung aller Inhalte (aus dem App-Seed abgeleitet).
+      - NRZFORUM_MASTER_KEY=${APP_SEED}-nrzforum-master
+      # Nur der umbrelOS app_proxy erreicht Port 8536: Client-IP aus X-Forwarded-For.
+      - NRZFORUM_TRUST_PROXY=true
+      - NRZFORUM_SURREAL_URL=ws://nrz-bunker_surrealdb_1:8000
+      - NRZFORUM_SURREAL_USER=root
+      - NRZFORUM_SURREAL_PASSWORD=${APP_SEED}
+      - NRZFORUM_SKYTABLE=nrz-bunker_skytable_1:2003
+      - NRZFORUM_SKYTABLE_PASSWORD=${APP_SEED}
+      - NRZFORUM_MEILI_URL=http://nrz-bunker_meilisearch_1:7700
+      - NRZFORUM_MEILI_KEY=${APP_SEED}
+      # Google AdSense (Auto-Anzeigen, Einwilligung ueber das Google-Einwilligungsfenster). Leer =
+      # keine Werbung; die Datenschutzerklaerung passt sich an. /ads.txt nennt den Publisher.
+      - NRZFORUM_ADSENSE_CLIENT=ca-pub-2367208874993734
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    depends_on:
+      surrealdb:
+        condition: service_started
+      skytable:
+        condition: service_started
+      meilisearch:
+        condition: service_healthy
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data/nrzbunker:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  surrealdb:
+    # Hauptdatenbank (RocksDB auf der Platte), nur intern erreichbar.
+    image: surrealdb/surrealdb:v4.0.1@sha256:408eb8e5c9436670525e2bc2634b1e50ba74ce1b447eaf0094c35f73b67f9cb6
+    container_name: nrz-bunker_surrealdb_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    command: ["start", "--user", "root", "--pass", "${APP_SEED}", "--bind", "0.0.0.0:8000", "--log", "warn", "rocksdb:///data/db"]
+    environment:
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/data/surrealdb:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  skytable:
+    # Heisse Zaehler (Likes, Follower, Ungelesen), Praesenz, Cache. Offizielles skyd-Binary
+    # (amd64/arm64) aus dem Release-Paket, siehe hooks/pre-start.
+    image: debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+    container_name: nrz-bunker_skytable_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /data
+    command: ["/app/skyd", "--mode", "prod", "--endpoint", "tcp@0.0.0.0:2003", "--auth-plugin", "pwd", "--auth-root-password", "${APP_SEED}"]
+    environment:
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data/skytable:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  meilisearch:
+    # Volltextsuche (nur oeffentliche Beitraege und Profile).
+    image: getmeili/meilisearch:v1.57.0@sha256:91bf09897482c17205c8faeca8daa8d57999fb9de20d862763cdfa92ba4ec790
+    container_name: nrz-bunker_meilisearch_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    environment:
+      - MEILI_MASTER_KEY=${APP_SEED}
+      - MEILI_ENV=production
+      - MEILI_NO_ANALYTICS=true
+      - MEILI_DB_PATH=/meili_data/data.ms
+      - MEILI_HTTP_ADDR=0.0.0.0:7700
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/data/meilisearch:/meili_data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:7700/health || curl -fsS http://127.0.0.1:7700/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

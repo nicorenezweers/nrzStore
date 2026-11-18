@@ -1,0 +1,68 @@
+manifestVersion: 1
+id: nrz-backup
+category: "files"
+name: "nrzBackup"
+version: "1.0.0"
+tagline: "Backups deiner Apps automatisch und Ende-zu-Ende verschluesselt zu Filen.io"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-backup/icon.png"
+port: 8510
+path: ""
+description: >-
+  nrzBackup nimmt Backups deiner anderen Apps entgegen und laedt sie
+  automatisch, vorher auf diesem Geraet verschluesselt, zu Filen.io hoch.
+  nrzBackup selbst behaelt nichts: eine Datei bleibt nur so lange lokal, bis
+  sie sicher in Filen liegt.
+
+
+  ## Was die App kann
+
+
+  - **Von beiden Seiten ausloesbar** - Apps senden Dateien per HTTP (`POST
+  /api/v1/backup`) oder MCP (`backup_file`, `backup_from_url`). Oder nrzBackup
+  fordert selbst ein Backup an (HTTP oder MCP-Tool), nach Zeitplan (taeglich
+  um HH:MM, alle N Stunden) oder per Knopf.
+
+
+  - **Ende-zu-Ende verschluesselt** - AES-256-GCM wie in den offiziellen
+  Filen-Apps; die Dateien erscheinen normal in deinem Filen-Drive unter
+  `/nrzBackup/<quelle>/`.
+
+
+  - **Aufbewahrung wie du willst** - pro Quelle z. B. 1 taegliche, 1
+  woechentliche, 1 monatliche und 1 jaehrliche Kopie (oder beliebig viele);
+  alles Aeltere wird nach einem erfolgreichen Upload in Filen geloescht.
+
+
+  - **Geht nie verloren** - ist Filen nicht erreichbar, wartet das Backup
+  lokal und wird immer wieder versucht.
+
+
+  - **umbrelOS direkt sichern** - Apps und Ordner (/Home) einfach anhaken,
+  ohne Token und ohne dass die App etwas koennen muss; z. B. stuendlich oder
+  taeglich. nrzBackup liest dafuer /Home und die App-Daten nur lesend.
+
+
+  - **Ampel und MCP fuer nrzDashboard** - gruen, gelb oder rot pro Quelle und
+  gesamt, Filen-Speicher, letzte Sicherungen; MCP-Server unter `/mcp`.
+
+
+  ## Erste Schritte
+
+
+  Mit dem hier angezeigten Passwort anmelden, unter Einstellungen das
+  Filen-Konto verbinden und unter Quellen "umbrelOS sichern" waehlen: Apps und
+  Ordner anhaken, Zeitplan waehlen, fertig.
+releaseNotes: "Erste Version."
+developer: nrz
+website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
+support: "http://100.78.107.162:8390/nicorenezweers/nrzBackup/issues"
+dependencies:
+  - nrz-git
+defaultUsername: "admin"
+defaultPassword: "$APP_PASSWORD"
+# umbrelOS zeigt das echte APP_PASSWORD an (mit dem sich nrzBackup anmeldet)
+deterministicPassword: true
+gallery: []

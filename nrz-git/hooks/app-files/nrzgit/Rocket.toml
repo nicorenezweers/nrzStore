@@ -1,0 +1,20 @@
+# Standardwerte – jede Einstellung lässt sich mit NRZGIT_<NAME> überschreiben,
+# z. B. NRZGIT_PORT=9000, NRZGIT_SSH_PORT=0 (SSH aus) oder NRZGIT_ROOT_URL=https://git.example.com
+# (siehe src/config.rs).
+[default]
+address = "0.0.0.0"
+port = 8380
+ident = "nrzGit"
+data_dir = "./data"
+ssh_port = 2380
+# Pushes und Anhänge bis 2 GiB
+limits = { file = "2GiB", data-form = "2GiB", form = "64KiB", json = "4MiB", bytes = "2GiB", string = "8MiB" }
+# Sauber beenden bei Ctrl-C und SIGTERM (docker stop): laufende Anfragen abschliessen,
+# dann die Datenbank schliessen.
+shutdown = { ctrlc = true, signals = ["term", "hup"], grace = 5, mercy = 5 }
+
+[debug]
+log_level = "normal"
+
+[release]
+log_level = "critical"

@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# nrzDNS hat eigene Konten (erstes Konto = Admin, Anmeldung in der App).
+appProxyAuthEnabled: false

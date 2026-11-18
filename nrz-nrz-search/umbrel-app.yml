@@ -1,0 +1,61 @@
+manifestVersion: 1
+id: nrz-nrz-search
+category: Utilities
+name: nrzSearch
+version: "1.0.0"
+tagline: "Eigene Suchmaschine wie Google - komplett in Rust, mit eingebautem SearXNG"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-nrz-search/icon.png
+port: 8188
+path: ""
+description: >-
+  nrzSearch ist eine eigene Suchmaschine mit einer Oberflaeche fast wie
+  Google, nur dunkel. Server und Oberflaeche sind komplett in Rust geschrieben
+  (axum und Dioxus/WASM mit nrzUI). Es braucht keine externe Instanz: SearXNG
+  ist eingebaut, wird beim ersten Start installiert und taeglich automatisch
+  auf die neueste Fassung gebracht - ohne Unterbrechung der Suche.
+
+
+  ## Was die App kann
+
+
+  - **Suche wie bei Google** - Treffer aus mehreren Suchmaschinen gleichzeitig,
+  eine gemeinsame Rangliste mit Pruefung, ob ein Treffer wirklich zur Frage
+  passt, Bilder, Videos, News, Wissenschaft, IT, Musik.
+
+
+  - **Jugendschutz** - pornografische Inhalte werden immer herausgefiltert:
+  strenge sichere Suche, Sperrliste bekannter Seiten, Woerter in vielen
+  Sprachen und Adult-Domains - auch bei harmlosen Fragen.
+
+
+  - **Instant Answers** - Info-Karte mit Karte, Wetter, Kurse, Rechner,
+  Uebersetzer, Timer, Kalender, Einheiten, Speedtest, Spiele und mehr.
+
+
+  - **KI** - Uebersicht mit KI und KI-Modus mit Dieter (OpenRouter), mit
+  Quellen und Diagrammen; Arbeitsbereich fuer PDF, Word und Excel.
+
+
+  - **Schnell** - Treffer als Strom, Caches im Arbeitsspeicher, vorkomprimierte
+  Oberflaeche, die der Browser dauerhaft zwischenspeichert. Kein Protokoll,
+  kein Tracking.
+
+
+  ## Erste Schritte
+
+
+  Beim ersten Aufruf richtet /admin das Admin-Konto ein (optional mit
+  OpenRouter-Schluessel fuer Dieter). Die erste Installation von SearXNG
+  dauert etwa eine Minute.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzSearch
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzSearch
+support: http://100.78.107.162:8390/nicorenezweers/nrzSearch/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

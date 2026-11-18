@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# nrzFlix kommt als fertiges Image aus der Registry von nrzGit (localhost:8390). Hier werden nur
+# die Ordner angelegt, die der Container (uid 1000) beschreibt.
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+UMBREL_HOME="${UMBREL_ROOT:-$(cd "${APP_DIR}/../.." && pwd)}/home"
+
+mkdir -p "${APP_DIR}/data/jellyfin-config" "${APP_DIR}/data/jellyfin-cache" "${UMBREL_HOME}/nrzFlix"
+
+# Nur die Ordner selbst (nicht rekursiv – Jellyfin-Metadaten und Medien koennen sehr viele
+# Dateien sein; alles darin legt 1000 selbst an).
+chown 1000:1000 "${APP_DIR}/data" "${APP_DIR}/data/jellyfin-config" "${APP_DIR}/data/jellyfin-cache" "${UMBREL_HOME}/nrzFlix" 2>/dev/null || true
+[ -f "${APP_DIR}/data/settings.json" ] && chown 1000:1000 "${APP_DIR}/data/settings.json" 2>/dev/null || true
+# Aus nrzFlix 2.0 (Programm per Download) bleibt app/ zurueck – wird nicht mehr gebraucht.
+rm -rf "${APP_DIR}/app" "${APP_DIR}/app.old" "${APP_DIR}/app.new" 2>/dev/null || true

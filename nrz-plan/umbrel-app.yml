@@ -1,0 +1,61 @@
+manifestVersion: 1
+id: nrz-plan
+category: files
+name: nrzPlan
+version: "1.0.0"
+tagline: "Todos, Kalender, Kanban-Boards und Fokus-Timer mit REST-API und Webhooks"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-plan/icon.png
+port: 8560
+path: ""
+description: >-
+  nrzPlan ist deine persoenliche Produktivitaets-App - komplett in Rust
+  (Dioxus fullstack, nrzUI-Thema, SQLite), am Desktop und als Handy-Ansicht.
+
+
+  ## Was die App kann
+
+
+  - **Heute** - Termine, faellige und ueberfaellige Todos, faellige
+  Board-Karten und ein Pomodoro-Timer auf einen Blick.
+
+
+  - **Todos** - Schnell-Eingabe mit Erkennung von Datum, Prioritaet, Liste und
+  Wiederholung (z.B. "Muell rausstellen jeden dienstag !!"), wiederkehrende
+  Todos, Listen und Filter.
+
+
+  - **Kalender** - Monats- und Wochenansicht mit Terminen, Todos und
+  Board-Karten, Abo-Link fuer Apple, Google und Outlook Kalender.
+
+
+  - **Boards** - Kanban wie Trello: Listen, Karten per Drag & Drop, Labels,
+  Checklisten, Faelligkeit, Prioritaet und Aktivitaetslog.
+
+
+  - **Befehlspalette** - Cmd+K / Strg+K: alles durchsuchen, navigieren und
+  Todos anlegen.
+
+
+  - **REST-API und Webhooks** - externe Tools legen Karten an, aendern den
+  Status, pflegen Todos und Termine (API-Schluessel aus den Einstellungen);
+  Webhooks melden Aenderungen an n8n, Home Assistant oder eigene Skripte.
+
+
+  ## Erste Schritte
+
+
+  Die Oberflaeche liegt hinter der umbrelOS-Anmeldung. Die REST-API unter
+  /api/v1 ist ohne umbrelOS-Anmeldung erreichbar und braucht einen
+  API-Schluessel, den du in nrzPlan unter Einstellungen -> API-Keys erzeugst.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzPlan
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzPlan
+support: http://100.78.107.162:8390/nicorenezweers/nrzPlan/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

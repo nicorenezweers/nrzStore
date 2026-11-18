@@ -1,0 +1,52 @@
+services:
+  # nrzGameHost laeuft im Host-Netzwerk (siehe unten) und ist damit nicht im Docker-DNS.
+  # Der Proxy erreicht die App ueber das Gateway des Umbrel-Netzes (10.21.0.1), Port 8601 -
+  # wie nrzGamePanel und nrzNetwork.
+  app_proxy:
+    environment:
+      APP_HOST: 10.21.0.1
+      APP_PORT: 8601
+    container_name: nrz-gamehost_app_proxy_1
+
+  web:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzGameHost ist kein eigenes Image: hooks/pre-start
+    # laedt Programm (Rust, axum) und Oberflaeche (Dioxus/WASM) fuer die Architektur dieses Geraets
+    # aus dem Paket-Repo nrzGameHost-umbrel auf nrzGit nach ${APP_DATA_DIR}/app.
+    image: debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+    container_name: nrz-gamehost_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    # Host-Modus: 8601 (HTTP) und 8602 (HTTPS mit eigener CA) liegen direkt auf dem Umbrel.
+    network_mode: host
+    working_dir: /data
+    command: ["/app/nrz-gamehost"]
+    stop_grace_period: 20s
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=info
+      - NRZ_GH_BIND=0.0.0.0:8601
+      - NRZ_GH_HTTPS_PORT=8602
+      - NRZ_GH_PROXY_PORT=8600
+      - NRZ_GH_DATA=/data
+      - NRZ_GH_WEB=/app/web
+      - NRZ_GH_IMPORT_ROOTS=Umbrel-Dateien=/import/home
+      - NRZ_GH_PUBLIC_HOST=${DEVICE_DOMAIN_NAME}
+      - NRZ_GH_UMBREL=1
+      - HOME=/data
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+      # Import aus der Dateien-App von umbrelOS (nur lesen: kopieren oder an Ort und Stelle spielen).
+      - ${UMBREL_ROOT}/home:/import/home:ro
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

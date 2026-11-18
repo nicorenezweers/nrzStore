@@ -1,0 +1,59 @@
+manifestVersion: 1
+id: nrz-downloader
+category: "files"
+name: "nrzDownloader"
+version: "1.0.0"
+tagline: "Schneller Download-Manager fuer den Server - mit allen JDownloader-Plugins"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-downloader/icon.png"
+port: 8610
+path: ""
+description: >-
+  nrzDownloader laedt deine Dateien direkt auf dem Server - im Browser bedient,
+  ohne Desktop und ohne VNC. Ein eigener Download-Motor in Rust holt direkte
+  Links sehr schnell, fuer Filehoster werden die Original-Plugins von JDownloader
+  verwendet (ueber 4000 Hoster und Decrypter), die sich selbst aktuell halten.
+
+
+  ## Was die App kann
+
+
+  - **Sehr schnell** - direkte Links in bis zu 32 parallelen Segmenten,
+  Fortsetzen nach Neustarts, automatische Wiederholungen, globales
+  Bandbreitenlimit.
+
+
+  - **JDownloader-Plugins** - Hoster, Ordner-Links, Container (DLC, RSDF, CCF),
+  Premium-Konten und Captchas laufen ueber einen unsichtbaren JDownloader im selben
+  Container. Er aktualisiert seine Plugins bei jedem Start und taeglich.
+
+
+  - **Linksammler** - Links pruefen (online, Name, Groesse), dann starten.
+
+
+  - **Click'n'Load** auf Port 9666 - Webseiten und Browser-Erweiterungen schicken
+  Links direkt an nrzDownloader.
+
+
+  - **Entpacken** - fertige Pakete werden automatisch entpackt (ZIP, RAR, 7z),
+  auch mit Passwortliste.
+
+
+  - **Live** - Fortschritt, Geschwindigkeit und Restzeit in Echtzeit.
+
+
+  ## Erste Schritte
+
+
+  Beim ersten Oeffnen legst du dein Konto an. Downloads landen im Ordner
+  "Downloads" der Dateien-App. Premium-Konten traegst du unter "Konten" ein.
+releaseNotes: "Erste Version."
+developer: nrz
+website: "http://100.78.107.162:8390/nicorenezweers/nrzDownloader"
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: "http://100.78.107.162:8390/nicorenezweers/nrzDownloader"
+support: "http://100.78.107.162:8390/nicorenezweers/nrzDownloader/issues"
+dependencies: []
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

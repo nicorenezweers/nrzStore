@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-code_app_1
+      APP_PORT: 8410
+    container_name: nrz-code_app_proxy_1
+
+  app:
+    # Gepinntes node:22-bookworm (Multi-Arch-Manifest): Node/npm fuer die Agent-CLIs (Claude Code,
+    # Codex, Gemini CLI, OpenCode, Kilo Code, Grok CLI – nrzCode installiert sie nach /data/tools),
+    # dazu git, curl und Compiler fuer die Projekte der Agenten. nrzCode selbst ist kein Image:
+    # hooks/pre-start laedt das Programm fuer die Architektur dieses Geraets aus dem nrzCode-Repo
+    # auf nrzGit (Zweig umbrel) nach ${APP_DATA_DIR}/app – ohne Registry-Login.
+    image: node:22-bookworm@sha256:18a6d90fd60542269850c80ca03b29b1d9b14d6b221ac7ee8e35b0d33ef904bd
+    container_name: nrz-code_app_1
+    restart: unless-stopped
+    init: true
+    # Laeuft als root (kein user:): die Agenten arbeiten wie in einer Cloud-Umgebung, installieren
+    # Werkzeuge und sprechen mit Docker des Hosts.
+    working_dir: /app
+    command: ["/app/nrzcode"]
+    stop_grace_period: 20s
+    ports:
+      # Vorschau der Server, die Agenten starten. Eigener Port statt App-Proxy, damit Seiten mit
+      # absoluten Pfaden und WebSockets funktionieren; Zugang nur mit Vorschau-Token aus nrzCode.
+      - "8411:8411/tcp"
+    environment:
+      - TZ=Europe/Zurich
+      - NRZCODE_CONFIG=/app/Rocket.toml
+      - NRZCODE_DATA_DIR=/data
+      - NRZCODE_ADDRESS=0.0.0.0
+      - NRZCODE_PORT=8410
+      - NRZCODE_PREVIEW_PORT=8411
+      # nrzGit im Umbrel-Netz (Docker-Name) – vorausgefuellt in Einstellungen -> nrzGit.
+      - NRZCODE_NRZGIT_URL=http://nrz-git_app_1:8380
+      - NRZCODE_LOG=info,rocket::server=warn,rocket::launch::_=warn,rocket::shield=warn
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # Datenbank, Agent-Konten (je eigenes Home), Arbeitsbereiche, installierte CLIs.
+      - ${APP_DATA_DIR}/data:/data
+      # Docker des Hosts (ausdruecklich gewuenscht): Agenten bauen Images und schieben sie in die
+      # Registry von nrzGit. Damit hat ein Agent volle Rechte auf dem Geraet – nrzCode nur
+      # vertrauenswuerdigen Personen geben.
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "/app/nrzcode", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

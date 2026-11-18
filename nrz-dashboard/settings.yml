@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# nrzDashboard hat eine eigene Anmeldung (admin + APP_PASSWORD).
+appProxyAuthEnabled: false

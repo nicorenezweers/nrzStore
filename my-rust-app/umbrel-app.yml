@@ -1,0 +1,22 @@
+manifestVersion: 1
+id: my-rust-app
+category: Tools
+name: My Rust App
+version: "1.0.0"
+tagline: Custom Rust application built from source
+icon: icon.png
+port: 44544
+description: >-
+  A custom Rust application compiled from source and running on Umbrel.
+releaseNotes: "Erste Version."
+developer: Your Name
+website: https://example.com
+submitter: nrz
+submission: https://github.com/nicorenezweers/nrzStore
+repo: https://github.com/your/repo
+support: https://github.com/your/repo/issues
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

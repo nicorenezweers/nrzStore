@@ -1,0 +1,57 @@
+manifestVersion: 1
+id: nrz-nrzwebsite
+category: social
+name: nrzWebsite
+version: "1.0.0"
+tagline: Persoenliche Seite, Blog und Website-Hoster fuer deine nrzGit-Apps
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-nrzwebsite/icon.png
+port: 8440
+path: ""
+description: >-
+  nrzWebsite ist deine persoenliche Seite mit Blog und gleichzeitig ein
+  Website-Hoster fuer deine Programme auf nrzGit - komplett in Rust (Rocket +
+  Leptos mit Komponenten von Rust/UI).
+
+
+  ## Ports
+
+  - **8441 - persoenliche Seite** (ohne Umbrel-Login, oeffentlich unter
+  https://zweers.ch): Startseite in neun Sprachen, Blog unter
+  `/<sprache>/posts`, Projekte unter `/<sprache>/projects`, Beitraege unter
+  `/<sprache>/<id>`, Apps unter `/apps/<id>`, RSS-Feed unter `/rss.xml`, dazu
+  `robots.txt`, `sitemap.xml` und `llms.txt`.
+
+  - **8440 - Admin** (dieser App-Button, mit Umbrel-Login): Websites, Blog-Editor
+  mit Live-Vorschau, Links, Profil, Statistik und Einstellungen.
+
+  - **15000-15100 - gehostete Websites**: jede Website auf ihrem eigenen Port.
+
+
+  ## nrzGit-Automatik
+
+  Jedes Programm (Repo mit Release) auf nrzGit bekommt automatisch eine eigene
+  Website: Slogan = About-Text des Repos, Download-Buttons fuer Mac, Windows
+  und Linux aus dem neuesten Release und die Summe aller Downloads. Hintergrund,
+  Texte und Port sind im Admin bearbeitbar.
+
+
+  ## Statistik
+
+  Ohne Cookies: Aufrufe, Besucher, Quellen (Google, nrzGit, GitHub, ...),
+  Seiten, Geraete, Download-Klicks und RSS-Abrufe.
+
+
+  Das Programm kommt ohne eigenes Image aus dem nrzWebsite-Repo auf nrzGit
+  (Port 8390) auf diesem Geraet - die App nrzGit muss installiert sein.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzWebsite
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzWebsite
+support: http://100.78.107.162:8390/nicorenezweers/nrzWebsite/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

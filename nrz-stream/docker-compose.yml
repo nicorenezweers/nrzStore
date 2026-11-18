@@ -1,0 +1,60 @@
+services:
+  # Injected by umbrelOS. nrzStream hat eine eigene Anmeldung (settings.yml: appProxyAuthEnabled
+  # false), damit OBS-Overlays, TTS, Webhooks und MCP ohne umbrelOS-Login funktionieren.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-stream_web_1
+      APP_PORT: 8650
+    container_name: nrz-stream_app_proxy_1
+
+  web:
+    # Eigenes Image aus der nrzGit-Registry (amd64 + arm64, gebaut mit `cargo xtask image`, ohne
+    # Dockerfile): nur das statische Programm (Rust, axum + Turso, Oberflaeche eingebettet).
+    image: localhost:8390/nicorenezweers/nrzstream:1.0.0@sha256:23cdec51a1c35fcf647b859c96c44dcbefb34fe64cf5badbd46b308cf3f28e07
+    container_name: nrz-stream_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /data
+    stop_grace_period: 20s
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=warn,nrzstream=info
+      # Oberflaeche, API, Overlays und MCP (ueber den umbrelOS app_proxy).
+      - NRZSTREAM_BIND=0.0.0.0:8650
+      # Oeffentlicher Port: nur Ko-fi-Webhook, Overlays und TTS (fuer Reverse-Proxy/NetBird).
+      - NRZSTREAM_PUBLIC_BIND=0.0.0.0:8651
+      # Datenbank (Turso/SQLite) nrzstream.db liegt hier.
+      - NRZSTREAM_DATA_DIR=/data
+      # Anmeldung mit dem in umbrelOS angezeigten Passwort.
+      - NRZSTREAM_ADMIN_PASSWORD=${APP_PASSWORD}
+      # Server-Geheimnis, pro Installation fest.
+      - NRZSTREAM_SECRET=${APP_SEED}
+      # Vor dem Server stehen app_proxy bzw. ein Reverse-Proxy.
+      - NRZSTREAM_TRUST_PROXY=true
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    ports:
+      # Oeffentlicher Port fuer Ko-fi (Webhook braucht eine erreichbare Adresse) und Overlays.
+      - "8651:8651/tcp"
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      # Das Programm prueft /api/health selbst (kein curl im Image noetig).
+      test: ["CMD", "/nrzstream", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

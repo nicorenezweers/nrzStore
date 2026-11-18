@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+FILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/app-files/nrzbudget"
+
+# nrzBudget kommt ohne eigenes Image: Server (amd64/arm64) und Web-App liegen
+# unter hooks/app-files (umbrelOS kopiert bei Updates nur hooks/) und werden
+# bei jedem Start nach app/ synchronisiert. Der Container ist debian:trixie-slim.
+case "$(uname -m)" in
+  x86_64 | amd64) ARCH=amd64 ;;
+  aarch64 | arm64) ARCH=arm64 ;;
+  *) echo "nrzBudget: unsupported architecture $(uname -m)" >&2; exit 1 ;;
+esac
+
+mkdir -p "${APP_DIR}/app" "${APP_DIR}/data"
+gunzip -c "${FILES}/nrzbudget-server-${ARCH}.gz" > "${APP_DIR}/app/nrzbudget-server.new"
+chmod 755 "${APP_DIR}/app/nrzbudget-server.new"
+mv -f "${APP_DIR}/app/nrzbudget-server.new" "${APP_DIR}/app/nrzbudget-server"
+rm -rf "${APP_DIR}/app/public"
+cp -R "${FILES}/public" "${APP_DIR}/app/public"
+chmod -R a+rX "${APP_DIR}/app"
+
+# Die verschluesselte Datenbank schreibt der Container als 1000.
+chown 1000:1000 "${APP_DIR}/data" 2>/dev/null || true

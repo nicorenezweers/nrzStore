@@ -1,0 +1,245 @@
+manifestVersion: 1
+id: nrz-media
+category: media
+name: nrzMedia
+version: "1.0.0"
+tagline: Medien-Studio - Videos erzeugen, planen, auswerten und verteilen
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-media/icon.png
+port: 8380
+path: ""
+description: >-
+  nrzMedia ist ein selbst gehostetes Medien-Studio, komplett in Rust. Es
+  erzeugt fertige Videos ueber Generatoren: das Flaggen-Quiz fuer den
+  YouTube-Kanal "Errate die Flagge" und fuenf Quiz-Formate (Logo-Quiz, Sag
+  dasselbe = Raus, Allgemeinwissen-Quiz, Was wuerdest du eher?, Kugel-Rennen).
+  Oberflaeche in Grautoenen wie nrzPaper, auch am Handy.
+
+
+  ## Flaggen-Quiz
+
+  - **Flaggen-Quiz** - Errate die Flagge (offen oder mit Auswahl, auf Wunsch
+  mit allen Flaggen der Welt), Errate die Hauptstadt, Errate die Karte.
+  Jeweils als langes Video und als Short.
+
+  - **Errate die Sprache** - eigener Generator: Hoerprobe, welche Sprache?
+  Teilt Stil, Ton und Aufnahmen mit dem Flaggen-Quiz.
+
+  - **17 Sprachen** - Deutsch, Englisch, Franzoesisch, Spanisch,
+  Portugiesisch, Russisch, Arabisch, Niederlaendisch, Polnisch, Tuerkisch,
+  Schwedisch, Norwegisch, Italienisch, Hindi, Japanisch, Koreanisch,
+  Indonesisch. Jede Sprache mit eigener
+  Rangliste, Texten, Sprachaufnahmen und YouTube-Texten.
+
+  - **Vorschau in jeder Sprache** - mit Bild und Ton direkt im Browser.
+
+  - **Studio** - Vorlagen, Hintergruende (Verlauf, Muster, eigenes Bild oder
+  Video), Effekte, Uebergaenge, Antwort-Stile, Kartenstil.
+
+  - **Ton & Stimme** - eingebaute Sounds und Musik oder eigene Dateien,
+  vier Sprecher in allen Sprachen (Lea und Mia, Max und Leon), eigene
+  Aufnahmen moeglich.
+  Export mit -14 LUFS (YouTube-Referenz) und YouTube-Text.
+
+  - **Thumbnails** - drei Designs (Klassisch, Raster, Stufen) im Format des
+  Videos, das aktive Thumbnail geht beim YouTube-Upload mit.
+
+  - **Stapel** - mehrere Sprachen mal mehrere Videos in einem Auftrag.
+
+
+  ## Quiz-Formate
+
+  - **Logo-Quiz** - Erkenne das Logo: Automarken, Apps und Marken (103 Logos),
+  mit Unschaerfe- oder Zoom-Effekt und gesprochenen Markennamen.
+
+  - **Sag dasselbe = Raus** - "Ich waehle ..." - wer dasselbe gewaehlt hat,
+  ist raus. 17 Kategorien: Farbe, Zahl, Buchstabe, Automarke, Land in Europa,
+  Gericht, Tier, Obst und mehr.
+
+  - **Allgemeinwissen-Quiz** - Hunderte Fragen mit vier Antworten: Wissen,
+  Hauptstaedte, Kontinente, Nachbarlaender, Flaggen, Staedte.
+
+  - **Was wuerdest du eher?** - Zwei Moeglichkeiten mit Countdown und
+  Prozent-Auswertung.
+
+  - **Kugel-Rennen** - Kugeln mit Flaggen, Farben oder Zahlen rollen mit echter
+  Physik durch zufaellige Level aus Stages (Nagelbrett, Rampen, Drehkreuze,
+  Trichter, fahrende Plattformen, Schaufelrad). Rote Zonen schicken zurueck, die
+  Letzten jeder Runde fliegen raus, bis im Finale eine Kugel gewinnt. Einstellbar:
+  Anzahl Kugeln (2-40), Stages, wie viele je Runde rausfliegen, Menge der roten
+  Zonen und wohin sie schicken.
+
+  Alle fuenf in 15 Sprachen, als Short oder Langvideo, mit Musik, Thumbnails in
+  allen Designs (Titel in der Videosprache, aktives Design aus einer Galerie
+  waehlbar) und YouTube-Text - auch ueber Dieter und MCP. Ansagen mit Stimme bei
+  den vier Quiz-Formaten; das Kugel-Rennen kommt vorerst mit Effekten und Musik.
+
+
+  ## Kalender, Statistik und Rating
+
+  - **Konten** - beliebig viele YouTube-, Facebook-, Instagram- und
+  TikTok-Konten ueber die offizielle Anmeldung der Plattform verbinden, je
+  Konto mit Sprache und Kalenderfarbe. Konten ohne Schnittstelle: Link und Zahlen von Hand.
+
+  - **Kalender** - Monat, Woche oder Liste. Ein Video aus der Mediathek auf
+  mehreren Konten gleichzeitig einplanen, per Ziehen verschieben. nrzMedia
+  veroeffentlicht zur geplanten Zeit selbst.
+
+  - **Posting-Slots und Autopilot** - je Kanal feste Termine (Wochentage,
+  Uhrzeit, Short oder Langvideo, optional fuer einen Generator). Vorschlag:
+  taeglich Shorts um 5, 9, 13, 17 und 21 Uhr und ein Langvideo um 15 Uhr in
+  der Ortszeit der Kanalsprache (mit Sommerzeit). Fertige
+  Videos kommen in den naechsten freien Slot; leere Slots fuellt der
+  Autopilot aus der Mediathek oder erzeugt neue Videos in der Sprache des
+  Kanals mit den Einstellungen, die im Rating am besten abschneiden.
+
+  - **Statistik** - Aufrufe, Watchtime, Likes, Kommentare und
+  Interaktionsrate mit Vergleich zum Vorzeitraum, nach Plattform, Konto und
+  Sprache.
+
+  - **Rating** - welche Generatoren, Sprachen, Laengen, Thumbnails,
+  Wochentage und Uhrzeiten je Plattform am besten laufen, auch nach
+  Klickrate, mit Empfehlung.
+
+
+  ## Kommentare
+
+  - **Kommentare beantworten** - alle Kommentare unter den Videos deiner
+  YouTube-Kanaele an einem Ort, von Hand oder mit KI-Vorschlag antworten.
+
+  - **Antwort-Agent** - antwortet je Kanal selbst ueber jeden KI-Anbieter
+  (z. B. OpenRouter), natuerlich und in der Sprache des Kommentars: nur auf
+  einen Teil, zufaellig 10-60 Minuten spaeter, verteilt, nur tagsueber, mit
+  Limits - alles einstellbar. Spam und Heikles laesst er aus. Ein Rat aus
+  Verfasser und Pruefer kennt Art und Inhalt des Videos und prueft jede
+  Antwort auf Sprache, Richtigkeit und Sinn.
+
+
+  ## Canvas, Kalender und Video-Analytics
+
+  - **Canvas** - alles auf einer Flaeche: Generatoren, Gruppen, Kanaele und
+  Render-Nodes. Kanaele und Gruppen sind Unterworkflows; Verbindungen aendern die
+  echten Einstellungen.
+
+  - **Kalender** - Tag, Woche und Monat in deutscher Zeit, mit veroeffentlichten,
+  geplanten, entstehenden und fertigen Videos. Beitraege per Ziehen verschieben,
+  fertige Videos per Ziehen einplanen, Rechtsklick zum Umplanen, Oeffnen und Loeschen.
+
+  - **Video-Analytics** - je Video Rang unter den letzten zehn des Kanals,
+  "typischerweise X Aufrufe in dieser Zeit", Verlauf und Vergleichsvideos.
+
+  - **nrzGenAI** - Idee, Fotos, ein Video oder einfach einen TikTok- oder YouTube-Link
+  eingeben: Eine KI-CLI auf dem Server baut das Video fast 1 zu 1 als Generator nach,
+  mit Inhaltsliste und eigener Oberflaeche (HTML, CSS, JavaScript, abgeschottet) wie
+  beim Flaggen-Quiz. Jede Variante ergibt ein neues Video. Vor der Freigabe laesst er
+  sich im Demo-Modus ausprobieren, die Videos landen dabei nicht in der Mediathek.
+  Aktiv nach deiner Freigabe, ohne Update.
+  Zur Wahl stehen Claude Code, Codex, Gemini, OpenCode, Kilo und Grok. Ein
+  Administrator laedt die CLI im Studio und hinterlegt seinen Schluessel. Jede CLI
+  zeigt ihre Zugriffsstufe: Nur Arbeitsordner, Sandbox oder - bei Grok - voller
+  Zugriff auf den Container, mit Warnung und Bestaetigung vor dem Start.
+
+
+  ## Ziele, Analytics und Gruppen
+
+  - **Ziele** - Voraussetzungen der Monetarisierung auf YouTube, TikTok,
+  Snapchat, Instagram und Facebook je Kanal, live oder von Hand eingetragen.
+
+  - **Analytics** - Filter nach Plattform, Kanal, Generator und Zeitraum,
+  Flaechendiagramm mit Zoom und Vergleich, Aufteilung nach Sprache, Kanal,
+  Short oder Langvideo, Generator und Zielgruppe.
+
+  - **Gruppen** - mehrere Kanaele teilen sich Kurzvideos: je Termin genau ein
+  Video, einmal erzeugt, auf allen Kanaelen gleichzeitig. Gemeinsame Regeln fuer
+  Slots, Texte und Hashtags.
+
+  - **Workflow-Tree** - je Kanal ein Baum zum Ziehen; er steuert direkt Slots
+  und Autopilot.
+
+
+  ## Nodes und Module
+
+  - **Render-Nodes** - externe Rechner uebernehmen Video und Bild, sonst rendert
+  der Server selbst. Neue Sprache entsteht nur auf Nodes mit Rolle Audio, etwa
+  mit der macOS-MenuBar-App; ohne solche Node wird sie uebersprungen.
+
+  - **nrzRenderFramework** - Videos aus wenigen Zeilen, gebaut fuer KI-Agenten. Mit
+  freier Ebene (Formen, Texte, Bilder, Flaggen frei gesetzt und animiert) fuer genaue
+  Nachbauten.
+
+  - **Papierkorb** - geloeschte Videos und Generatoren bleiben 31 Tage und lassen
+  sich zurueckholen.
+
+  - **Generatoren** - alle auf einer Seite mit Suche und Filter, in der Seitenleiste
+  aufklappbar.
+
+  - **Module** - Generatoren zur Laufzeit laden, ersetzen, abschalten, freigeben,
+  deinstallieren oder
+  aus einer Beschreibung von einer KI bauen lassen. Jede Aufgabe kann ein eigenes
+  Modell nutzen. Claude Code braucht das Programm claude, das im Container nicht
+  enthalten ist; hier laeuft der Bau ueber einen KI-Anbieter mit Schluessel.
+
+
+  ## KI und MCP
+
+  - **Dieter** - Chat-Assistent unten rechts, mit jedem KI-Anbieter
+  (OpenRouter, OpenAI, Anthropic, Gemini, Ollama ...). Er kann Videos selbst
+  anlegen, Auftraege verfolgen, Beitraege einplanen und Statistik und
+  Rating abfragen.
+
+  - **MCP-Server** unter /mcp mit API-Schluessel - KI-Clients wie Claude
+  erstellen Videos direkt in nrzMedia.
+
+
+  ## Sicherheit
+
+  - **Zwei-Faktor-Anmeldung** - Pflicht: nach dem Passwort ein Code aus einer
+  Authenticator-App (Aegis, 2FAS, Google/Microsoft Authenticator,
+  1Password ...), eingerichtet beim ersten Anmelden per QR-Code, dazu 10
+  einmalige Wiederherstellungscodes.
+
+  - **Schutz der Anmeldung** - Sperre nach Fehlversuchen, Codes nur einmal
+  gueltig, sichere Cookies und HSTS ueber HTTPS.
+
+  - **Unsichtbar** - Suchmaschinen und KI-Crawler (Google, Bing, GPTBot,
+  ClaudeBot, Perplexity ...) bekommen nichts zu sehen und duerfen nichts
+  indexieren oder fuer KI verwenden.
+
+  - **API-Port 8381** - nur /api/v1 und /mcp mit API-Schluessel, ohne
+  Oberflaeche. Steht unter Einstellungen > API-Schluessel & MCP.
+
+
+  ## Erste Schritte
+
+  Nach der Installation http://<Geraet>.local:8380 oeffnen und das erste
+  Konto anlegen (wird Admin), dann die Zwei-Faktor-Anmeldung mit dem
+  QR-Code einrichten. KI-Anbieter fuer Dieter unter Einstellungen >
+  KI & Dieter, API-Schluessel fuer MCP unter Einstellungen > API-Schluessel,
+  Zugangsdaten der Plattform-Apps (YouTube, Meta, TikTok) unter
+  Einstellungen > Plattformen.
+
+
+  ## Technisches
+
+  - **Server in Rust** (Rocket, sqlx, Oberflaeche mit Dioxus als
+  WebAssembly), Videos mit ffmpeg (H.264/HEVC, AAC). Kein eigenes Image und
+  kein Registry-Login: ein gepinntes debian:trixie-slim startet Server,
+  statisches ffmpeg, Sprachaufnahmen und Schriften, die beim ersten Start
+  und nach Updates aus dem Paket-Repo nrzMedia-umbrel auf nrzGit (Port 8390)
+  auf diesem Geraet geladen werden (amd64 und arm64). Braucht die App nrzGit.
+
+  - **Verschluesselt** - Konten und Einstellungen in einer
+  SQLCipher-Datenbank, Schluessel ist der APP_SEED dieser Installation.
+  Kennzahlen liegen unverschluesselt in DuckDB (keine Zugangsdaten).
+  Videos liegen unter app-data/nrz-media/data/media.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzMedia
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzMedia
+support: http://100.78.107.162:8390/nicorenezweers/nrzMedia/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

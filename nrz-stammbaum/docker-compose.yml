@@ -1,0 +1,42 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: nrz-stammbaum_web_1
+      APP_PORT: 8541
+    container_name: nrz-stammbaum_app_proxy_1
+
+  web:
+    # Gepinntes Debian (Multi-Arch). nrzStammbaum ist kein eigenes Image: hooks/pre-start laedt
+    # Server (Rust, axum + SQLite) und Oberflaeche (Dioxus/WASM) fuer die Architektur dieses
+    # Geraets aus dem nrzStammbaum-Repo (Zweig umbrel) nach ${APP_DATA_DIR}/app.
+    image: debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+    container_name: nrz-stammbaum_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /data
+    command: ["/app/nrzstammbaum"]
+    stop_grace_period: 20s
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=warn,nrzstammbaum=info
+      - NRZSTAMMBAUM_BIND=0.0.0.0:8541
+      - NRZSTAMMBAUM_DATA=/data
+      - NRZSTAMMBAUM_WEB_DIR=/app/web
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

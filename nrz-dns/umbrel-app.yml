@@ -1,0 +1,133 @@
+manifestVersion: 1
+id: nrz-dns
+category: networking
+name: nrzNetwork
+version: "1.0.0"
+tagline: Netzwerk-Zentrale - DNS, Domains bei Cloudflare, NetBird, Reverse Proxy mit HTTPS
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-dns/icon.png
+port: 8400
+path: ""
+description: >-
+  nrzNetwork ist ein selbst gehosteter DNS-Server nach dem Vorbild von Technitium
+  DNS Server, komplett in Rust. Er beantwortet die DNS-Anfragen deines ganzen
+  Netzes: eigene Zonen verbindlich, alles andere ueber vorgelagerte Server
+  deiner Wahl (auch verschluesselt), mit Cache, Sperrlisten gegen Werbung und
+  Tracker und einem Abfrageprotokoll. Einstellungen, Zonen, Listen und
+  Protokoll liegen in einer SQLite-Datei.
+
+
+  ## Was die App kann
+
+  - **Eigene Zonen** - A, AAAA, CNAME, MX, TXT, NS, SRV, PTR und CAA,
+  Platzhalter wie *.dev, Import und Export von Zonendateien im BIND-Format.
+
+  - **Bedingte Weiterleitung** - eine Domain an eigene Server schicken, z. B.
+  fritz.box an den Router.
+
+  - **Weiterleitung** - UDP, TCP, DNS ueber TLS und DNS ueber HTTPS, der Reihe
+  nach, zufaellig oder parallel. Vorlagen fuer Cloudflare, Quad9, Google,
+  AdGuard DNS und Mullvad.
+
+  - **Cache** - abgelaufene Eintraege ausliefern, wenn das Internet weg ist
+  (Serve-Stale), und beliebte Eintraege vorab erneuern (Prefetch).
+
+  - **Sperrlisten** - hosts-, Domain- und Adblock-Format, Vorlagen wie
+  StevenBlack, HaGeZi und OISD, automatisch neu geladen, Pause auf Knopfdruck.
+  Dazu eigene Sperren und Ausnahmen.
+
+  - **Abfrageprotokoll und Dashboard** - jede Anfrage mit Filtern und
+  CSV-Export, Verlaufsdiagramm, Top-Clients, Top-Domains und meistgesperrte
+  Domains.
+
+  - **DNS-Client und DoH** - beliebige Server fragen; nrzNetwork beantwortet
+  selbst DNS ueber HTTPS unter /dns-query.
+
+  - **MCP-Server fuer nrzDashboard** - Kennzahlen fuer die Uebersicht,
+  Statistiken und Abfrageprotokoll ueber das Model Context Protocol
+  (/mcp, mit Token); auf Wunsch auch Filter ein-/ausschalten und pausieren.
+
+  - **Reverse Proxy** - eigene Namen statt IP und Port, z. B. music.nrz.ch
+  statt 100.78.107.162:8350. nrzNetwork beantwortet den Namen selbst und reicht
+  HTTP-Anfragen nach dem Namen an das Ziel weiter - ohne Port im Namen. Ein
+  kleiner Waechter gibt Port 80 des Umbrel an den Proxy, solange er
+  antwortet; die umbrelOS-Oberflaeche bleibt auf Port 80 erreichbar. Die
+  Domain muss dir nicht gehoeren; nur HTTP.
+
+  - **DNS-Eintraege bei Cloudflare** - alle Zonen und alle DNS-Eintraege an einem
+  Ort: anlegen, aendern, loeschen, Cloudflare-Proxy ein und aus.
+
+  - **NetBird** - das ganze NetBird-Netz ueber die NetBird-API: Geraete,
+  Gruppen, Zugriffsregeln, Netzwerke, DNS (ein Klick: nrzNetwork als DNS fuer
+  alle NetBird-Geraete), Setup-Keys und Benutzer.
+
+  - **Zugriffe** - wer deine Websites aufruft: ueber Cloudflare (mit echter
+  Adresse und Land), NetBird, LAN oder Internet - mit Statistik je Website,
+  Verlauf, Top-Seiten, Browsern und Live-Ansicht.
+
+  - **Cloudflare Tunnel und NetBird eingebaut** - nrzNetwork betreibt beide
+  selbst und aktualisiert sie taeglich zur eingestellten Uhrzeit. Websites
+  mit einem Schalter oeffentlich machen, ohne Ports zu oeffnen.
+
+  - **Dieter (KI-Assistent)** - fragt, prueft und konfiguriert dein Netzwerk
+  ueber OpenRouter, Grok (xAI) oder die Claude CLI. Springt bei Problemen
+  mit DNS, Tunnel, NetBird, Proxy oder Zertifikat automatisch ein und
+  berichtet, was er gefunden und behoben hat.
+
+  - **Spy** - was andere ueber deine eigenen Domains wissen koennen:
+  Subdomains und E-Mails aus Zertifikaten, DNS-Eintraege, Anbieter, Hoster,
+  dein Anschluss, verwaiste CNAMEs und alle 65 535 Ports - mit Anleitung zu
+  jedem Punkt, taeglichem Scan und Verlauf der Aenderungen.
+
+  - **HTTPS fuer eigene Domains** - echtes Zertifikat von Let's Encrypt fuer
+  eine Domain bei Cloudflare (z. B. *.zweers.ch), Nachweis ueber das
+  Cloudflare-API-Token - von aussen muss nichts erreichbar sein. Danach
+  oeffnen sich die Eintraege als https://music.zweers.ch ohne Warnung.
+  Erneuert sich von selbst; das HTTPS von umbrelOS bleibt unberuehrt.
+
+  - **Sperrseite** - gesperrte Seiten zeigen "Diese Seite wurde durch
+  nrzNetwork gesperrt". Dort kann man sie fuer eine Weile freischalten oder
+  eine dauerhafte Freigabe beantragen, die der Admin genehmigt.
+
+  - **Geraete und Netzwerk-Tools** - alle Geraete im Netz mit eigenen Namen,
+  Ping, Port-Check, HTTP-Check und Subnetz-Rechner.
+
+  - **Mehrere Konten** - Admins aendern alles, Mitglieder sehen alles.
+  Oberflaeche auf Deutsch und Englisch.
+
+
+  ## Wichtig: Port 53
+
+  nrzNetwork belegt Port 53 (UDP und TCP) auf dem Umbrel-Geraet. Der Port muss
+  frei sein: Laeuft dort schon Technitium DNS Server, Pi-hole, AdGuard Home
+  oder ein anderer DNS-Server, schlaegt die Installation fehl ("app-script
+  install" mit Exit-Code 1). Diesen DNS-Server zuerst stoppen oder
+  deinstallieren, dann nrzNetwork installieren.
+
+
+  Umzug von Technitium: vorher in Technitium jede Zone exportieren (Zones,
+  Export Zone) und in nrzNetwork unter Zonen, Importieren wieder einlesen. Die
+  Adressen der Sperrlisten und eigene Sperren und Ausnahmen in nrzNetwork unter
+  Sperren und Ausnahmen neu eintragen. Zeigt der Router schon auf den
+  Umbrel, muss dort nichts geaendert werden - nrzNetwork uebernimmt dieselbe
+  Adresse.
+
+
+  ## Erste Schritte
+
+  Nach der Installation das erste Konto anlegen, es wird Administrator.
+  Danach Weiterleitungen und Sperrlisten waehlen. Damit das Netz nrzNetwork
+  benutzt, im Router in den DHCP-Einstellungen die IP-Adresse des Umbrel als
+  DNS-Server eintragen (oder an einzelnen Geraeten in den
+  Netzwerkeinstellungen). Die Geraete uebernehmen sie beim naechsten
+  Verbinden. Dem Umbrel vorher im Router eine feste IP-Adresse geben.
+releaseNotes: "Erste Version."
+developer: nrz
+website: https://github.com/nicorenezweers/nrzNetwork
+submitter: nrz
+submission: http://100.78.107.162:8101/nicorenezweers/nrzStore
+repo: https://github.com/nicorenezweers/nrzNetwork
+support: https://github.com/nicorenezweers/nrzNetwork/issues
+dependencies: []
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

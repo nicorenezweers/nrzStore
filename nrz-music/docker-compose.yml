@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy. nrzMusic hat seit 1.2.0
+  # eigene Konten – die umbrelOS-Anmeldung ist aus (settings.yml), damit es auch oeffentlich
+  # als music.zweers.ch und aus der Android-App erreichbar ist.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-music_app_1
+      APP_PORT: 8350
+    container_name: nrz-music_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzMusic ist kein eigenes Image: hooks/pre-start
+    # laedt Server (mit Oberflaeche und Android-App), statisches ffmpeg/ffprobe, yt-dlp und Deno
+    # fuer die Architektur dieses Geraets aus dem nrzMusic-Repo (Zweig umbrel) nach
+    # ${APP_DATA_DIR}/app – ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-music_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzmusic"]
+    stop_grace_period: 15s
+    environment:
+      - TZ=Europe/Zurich
+      - NRZMUSIC_CONFIG=/app/Rocket.toml
+      - NRZMUSIC_DATA_DIR=/data
+      - NRZMUSIC_MUSIC_DIR=/music
+      - NRZMUSIC_ADDRESS=0.0.0.0
+      - NRZMUSIC_PORT=8350
+      # Oeffentliche Adresse: Spotify-Redirect-URI und sichere Cookies ueber HTTPS
+      # (im Heimnetz ueber http://umbrel.local:8350 bleibt die Anmeldung moeglich)
+      - NRZMUSIC_PUBLIC_URL=https://music.zweers.ch
+      # yt-dlp (Wiedergabe und Downloads von YouTube), ffmpeg/ffprobe und Deno liegen in /app;
+      # yt-dlp kopiert sich nach /data/tools und aktualisiert sich dort selbst
+      - NRZMUSIC_YTDLP=/app/yt-dlp
+      - NRZMUSIC_FFMPEG=/app/ffmpeg
+      - PATH=/app:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - DENO_DIR=/tmp/deno
+      - DENO_NO_UPDATE_CHECK=1
+      - NRZMUSIC_LOG=info,rocket::server=warn,rocket::launch::_=warn,rocket::shield=warn,lofty=error
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # Konten, Datenbank (Bibliothek, Playlists, Favoriten, Verlauf, Spotify), Cover, yt-dlp.
+      - ${APP_DATA_DIR}/data:/data
+      # Der Ablageordner, sichtbar in der umbrelOS-Dateien-App als Home > nrzMusic.
+      # Angelegt und an 1000 uebergeben von hooks/pre-start.
+      - ${UMBREL_ROOT}/home/nrzMusic:/music
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzmusic", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

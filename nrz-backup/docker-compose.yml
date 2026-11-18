@@ -1,0 +1,67 @@
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-backup_app_1
+      APP_PORT: 8080
+    container_name: nrz-backup_app_proxy_1
+
+  app:
+    # Pinned upstream Debian (multi-arch manifest list). The nrzBackup server and
+    # web app are not an image: hooks/pre-start loads them for this device's
+    # architecture from the nrzBackup repo on nrzGit (branch umbrel, tag below).
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-backup_app_1
+    restart: unless-stopped
+    init: true
+    # Runs as root, but with only one capability (DAC_OVERRIDE, see below) so it can read the
+    # data of every app (databases often belong to other users). The umbrelOS folders are
+    # mounted read-only; writable is only data/ of nrzBackup itself.
+    user: "0:0"
+    stop_grace_period: 30s
+    command: ["/app/nrzbackup-server"]
+    environment:
+      - TZ=Europe/Zurich
+      - NRZBACKUP_ADDR=0.0.0.0:8080
+      - NRZBACKUP_DATA=/data
+      - NRZBACKUP_PUBLIC=/app/public
+      # Login of the web UI (user admin), shown in umbrelOS.
+      - NRZBACKUP_PASSWORD=${APP_PASSWORD}
+      # Seals the Filen session and app tokens at rest; derived from the Umbrel seed.
+      - NRZBACKUP_SECRET=${APP_SEED}
+      # How other apps on this device reach nrzBackup (push URL, MCP).
+      - NRZBACKUP_PUBLIC_URL=http://nrz-backup_app_1:8080
+      # umbrelOS folders, read directly (no token): /Home and /Apps, see volumes below.
+      - NRZBACKUP_UMBREL_ROOT=/umbrel
+      # Optional: umbrelOS MCP + file API (/External, /Network, stopping apps); the MCP token
+      # is entered in nrzBackup under Settings -> umbrelOS.
+      - NRZBACKUP_UMBREL_URL=http://host.docker.internal
+      # Forces a fresh container per release.
+      - APP_VERSION=${APP_VERSION}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # Database and spool (files only stay here until they are in Filen).
+      - ${APP_DATA_DIR}/data:/data
+      # What can be backed up: the umbrelOS home folder and the data of all apps (read-only).
+      - ${UMBREL_ROOT}/home:/umbrel/Home:ro
+      - ${UMBREL_ROOT}/app-data:/umbrel/Apps:ro
+    cap_drop:
+      - ALL
+    cap_add:
+      # read every file (and write data/, which belongs to 1000)
+      - DAC_OVERRIDE
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzbackup-server", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

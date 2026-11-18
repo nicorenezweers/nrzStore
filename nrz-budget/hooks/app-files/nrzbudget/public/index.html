@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de" class="dark">
+    <head>
+        <title>nrzFinanzen</title>
+        <meta charset="UTF-8">
+        <!-- Web app for the home screen (iPhone/Android): full screen, no zoom, content under the status bar -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+        <meta name="theme-color" content="#121212">
+        <meta name="color-scheme" content="dark">
+        <meta name="application-name" content="nrzFinanzen">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="nrzFinanzen">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="manifest" href="/manifest.webmanifest">
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+        <style>
+            /* Shown until the WebAssembly app has rendered (no white flash on start). */
+            html, body { margin: 0; height: 100%; background: #121212; }
+            #main:empty { height: 100%; background: #121212 url("/icons/icon.svg") center / 72px no-repeat; }
+        </style>
+    <link rel="preload" as="script" href="/./assets/nrzbudget-dxh149134f7acdff625.js" crossorigin></head>
+    <body>
+        <div id="main"></div>
+    <script type="module" async src="/./assets/nrzbudget-dxh149134f7acdff625.js"></script>
+            </body>
+</html>

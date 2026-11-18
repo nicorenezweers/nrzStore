@@ -1,0 +1,52 @@
+manifestVersion: 1
+id: nrz-book
+category: media
+name: nrzBook
+version: "1.0.0"
+tagline: Bibliothek und Reader fuer E-Books, PDFs, Hoerbuecher und Comics
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-book/icon.png
+port: 8421
+path: ""
+description: >-
+  nrzBook verwaltet deine Buecher und laesst dich im Browser lesen und hoeren.
+  Dieses Paket startet das unveraenderte Original-Image von BookOrbit v3.6.0,
+  in der Oberflaeche steht deshalb der Name BookOrbit. Das Paket selbst stammt
+  nicht vom BookOrbit-Projekt.
+
+
+  ## Funktionen
+
+  - **Reader im Browser** - EPUB, MOBI, AZW3, FB2, PDF, Comics und Hoerbuecher.
+
+  - **Sync** - Lesefortschritt und Markierungen mit Kobo und KOReader.
+
+  - **Metadaten** - Cover und Buchdaten von vielen Anbietern, dazu OPDS und
+  Send-to-Kindle.
+
+  - **Mehrere Konten** - eigene Rechte und eigene Lesedaten je Konto.
+
+
+  ## Einrichtung
+
+  Beim ersten Start fragt die App nach einem Setup-Token: Das ist das in Umbrel
+  angezeigte App-Passwort. Das erste Konto wird Admin.
+
+
+  Lege deine Buecher in der Dateien-App unter **Home > nrzBook** ab und erstelle
+  in der App eine Bibliothek mit dem Ordner `/books`.
+
+
+  Original: https://github.com/bookorbit/bookorbit (GNU AGPLv3 mit
+  Zusatzbedingungen). Paket: http://100.78.107.162:8390/nicorenezweers/nrzBook
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzBook
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzBook
+support: http://100.78.107.162:8390/nicorenezweers/nrzBook/issues
+dependencies: []
+defaultUsername: ""
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

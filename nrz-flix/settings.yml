@@ -1,0 +1,5 @@
+dependencies: {}
+autoStart: true
+# nrzFlix nutzt die Jellyfin-Anmeldung. Ohne umbrelOS-Login, damit sich auch die
+# Jellyfin-Apps (Handy, TV) mit nrzFlix verbinden koennen.
+appProxyAuthEnabled: false

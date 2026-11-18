@@ -1,0 +1,63 @@
+services:
+  # Kein `app_proxy`: nrzBench ist eine oeffentliche Seite ohne Anmeldung. Der Container gibt seine
+  # Ports selbst frei (siehe `ports`), damit die Seite nicht vom umbrelOS-Gateway abhaengt: Am
+  # 15.11.2026 fehlte Port 8550 nach einem App-Update rund eine Viertelstunde, obwohl der Container
+  # lief. Folge: Die umbrelOS-Anmeldung laesst sich fuer diese App nicht mehr davorschalten.
+  web:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzBench ist kein eigenes Image: hooks/pre-start
+    # laedt Server, Oberflaeche und sources.toml fuer die Architektur dieses Geraets aus dem
+    # nrzBench-Repo (Zweig umbrel) nach ${APP_DATA_DIR}/app - ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-bench_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzbench"]
+    stop_grace_period: 10s
+    environment:
+      - TZ=Europe/Zurich
+      - IP=0.0.0.0
+      - PORT=8550
+      # Plattformen und Abruf-Intervall (eigene Datei in data/ hat Vorrang, siehe pre-start)
+      - NRZBENCH_CONFIG=/data/sources.toml
+      # Letzter Stand aller Plattformen; bleibt bei Ausfaellen erhalten
+      - NRZBENCH_DATA=/data/snapshot.json
+      # Admin-Seite (Werbung, Affiliate, Abruf) auf Port 8551: Benutzer admin + Umbrel-App-Passwort
+      - NRZBENCH_ADMIN_PORT=8551
+      - NRZBENCH_ADMIN_PASSWORD=${APP_PASSWORD}
+      # AdSense-Kennung dieser Installation: Snippet im Seitenkopf und /ads.txt
+      # (google.com, pub-2367208874993734, DIRECT, f08c47fec0942fa0). Ein Eintrag in der Admin-Seite hat Vorrang.
+      - NRZBENCH_ADSENSE_CLIENT=ca-pub-2367208874993734
+      # Webanalyse (nrzAnalytics, ohne Cookies) auf jeder oeffentlichen Seite. Die Admin-Seite kann sie
+      # abschalten, Domain/Adresse aendern und Skript-Varianten waehlen (script.hash.outbound-links.js …).
+      - NRZBENCH_ANALYTICS_SRC=https://analytics.zweers.ch/js/script.js
+      - NRZBENCH_ANALYTICS_DOMAIN=bench.zweers.ch
+      # Oeffentliche Adresse fuer SEO: in der Admin-Seite, data/public_url.txt oder NRZBENCH_PUBLIC_URL
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    ports:
+      # Oeffentliche Seite (umbrel-app.yml: port) - Ziel des NetBird-Dienstes und des Reverse-Proxys
+      # fuer bench.zweers.ch. Nur ohne `app_proxy` moeglich: Mit ihm wuerden Docker und umbrelOS um
+      # denselben Port streiten.
+      - "8550:8550/tcp"
+      # Admin-Seite (eigene Anmeldung)
+      - "8551:8551/tcp"
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzbench", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

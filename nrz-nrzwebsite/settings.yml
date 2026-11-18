@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# Admin (Port 8440) ist durch den Umbrel-Login geschuetzt (ADMIN_AUTH=umbrel in der App).
+appProxyAuthEnabled: true

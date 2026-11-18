@@ -1,0 +1,97 @@
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy. nrzBook hat eigene Konten, die
+  # umbrelOS-Anmeldung ist aus (settings.yml), damit auch Kobo und KOReader durchkommen.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-book_app_1
+      APP_PORT: 3000
+    container_name: nrz-book_app_proxy_1
+
+  app:
+    # Original-Image von BookOrbit, unveraendert (Multi-Arch-Manifest, amd64 und arm64).
+    image: ghcr.io/bookorbit/bookorbit:3.6.0@sha256:bbb5da52e96dbbff1dd36f55454f9845e6cde264b4b3428a3ea783124a4ca62e
+    container_name: nrz-book_app_1
+    restart: unless-stopped
+    init: true
+    # Das Image startet als root, richtet /data ein und wechselt dann selbst auf PUID:PGID.
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - TZ=Europe/Zurich
+      - PUID=1000
+      - PGID=1000
+      # Container-Name statt "postgres": umbrel_main_network teilen sich alle Apps.
+      - POSTGRES_HOST=nrz-book_db_1
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=nrzbook
+      - POSTGRES_PASSWORD=${APP_SEED}
+      - POSTGRES_DB=nrzbook
+      - JWT_SECRET=${APP_SEED}
+      # Ersteinrichtung im Browser: Token = App-Passwort aus dem Umbrel-UI.
+      - SETUP_BOOTSTRAP_TOKEN=${APP_PASSWORD}
+      - APP_URL=http://${DEVICE_DOMAIN_NAME}:8421
+      - LIBRARY_BROWSE_ROOT=/books
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION_UMBREL=${APP_VERSION}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      # Datenordner der App: Cover, Book Dock, Einstellungen.
+      - ${APP_DATA_DIR}/data/app:/data
+      # Bibliothek, sichtbar in der umbrelOS-Dateien-App als Home > nrzBook.
+      - ${UMBREL_ROOT}/home/nrzBook:/books
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  db:
+    # PostgreSQL 18 mit pgvector (Multi-Arch-Manifest), wie im Original von BookOrbit.
+    image: pgvector/pgvector:pg18@sha256:c29f30688a9ad961691bdf0ec1650717cc132a5814619d80f80463d6e4c42e47
+    container_name: nrz-book_db_1
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=nrzbook
+      - POSTGRES_PASSWORD=${APP_SEED}
+      - POSTGRES_DB=nrzbook
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 30s
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nrzbook -d nrzbook"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

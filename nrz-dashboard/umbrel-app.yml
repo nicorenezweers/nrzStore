@@ -1,0 +1,68 @@
+manifestVersion: 1
+id: nrz-dashboard
+category: developer
+name: nrzDashboard
+version: "1.0.0"
+tagline: "Modulares Dashboard wie Homarr mit Monitoren, Dateimanager und KI-Agent"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-dashboard/icon.png
+port: 8500
+path: ""
+description: >-
+  nrzDashboard ist ein modulares Dashboard fuer umbrelOS - komplett in Rust
+  (Dioxus fullstack, nrzUI-Thema), am Desktop und als Handy-Ansicht. Alles
+  aktualisiert sich live.
+
+
+  ## Was die App kann
+
+
+  - **Board wie Homarr** - mehrere Boards, Widgets per Drag & Drop verschieben
+  und in der Groesse aendern: Umbrel-Apps, App-Kacheln mit Ping, System,
+  Monitore, Nachrichten aus nrzNews, DNS (nrzDNS), Finanzen (nrzBudget), Uhr,
+  Wetter, Suche, Lesezeichen, Notizen, iFrame. Rechtsklick auf eine App zum
+  Anpassen, Starten/Stoppen und fuer Logs.
+
+
+  - **Monitore wie Uptime Kuma** - HTTP(S), TCP, Ping, DNS, Umbrel-App und
+  Push mit Heartbeats, Uptime, Antwortzeit-Diagramm und Benachrichtigungen
+  (ntfy, Discord, Telegram, Webhook).
+
+
+  - **Dateimanager im Stil der umbrelOS-Files-App** - Favoriten, Netzwerk,
+  externer Speicher, Drag & Drop zum Hochladen und Verschieben,
+  Mehrfachauswahl, Raster/Liste, Vorschau, Kontextmenue.
+
+
+  - **KI-Agent** - wie Claude Code / Grok CLI: Claude oder Grok erledigt
+  Aufgaben auf deinem Umbrel ueber die umbrelOS-Werkzeuge, kritische Schritte
+  nur nach Bestaetigung.
+
+
+  - **Apps und System** - Apps starten, stoppen, updaten, Logs;
+  umbrelOS-Update, Netzwerk, System-Logs, Neustart.
+
+
+  ## Erste Schritte
+
+
+  Mit Benutzer `admin` und dem hier angezeigten Passwort anmelden. In umbrelOS
+  unter Einstellungen -> AI agents (MCP) einen Token erstellen und ihn in
+  nrzDashboard unter System -> Umbrel-Verbindung eintragen. Fuer das Widget
+  Nachrichten in nrzNews unter Einstellungen -> Konto -> API-Tokens ein Token
+  anlegen und unter System -> nrzNews eintragen. Fuer DNS- und Finanz-Widgets
+  die MCP-Tokens von nrzDNS und nrzBudget unter System -> Integrationen
+  eintragen. Fuer den KI-Agenten einen API-Schluessel von Anthropic oder xAI
+  unter Agent -> Einstellungen eintragen.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzDashboard
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzDashboard
+support: http://100.78.107.162:8390/nicorenezweers/nrzDashboard/issues
+dependencies:
+  - nrz-git
+defaultUsername: "admin"
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

@@ -1,0 +1,60 @@
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-nrz-search_app_1
+      APP_PORT: 8188
+    container_name: nrz-nrz-search_app_proxy_1
+
+  app:
+    # Gepinntes offizielles Python-Image (Multi-Arch, Debian trixie). nrzSearch ist kein eigenes
+    # Image: hooks/pre-start laedt Server und Oberflaeche (Rust/WASM) fuer die Architektur dieses
+    # Geraets aus dem nrzSearch-Repo (Zweig umbrel) nach ${APP_DATA_DIR}/app. Python braucht die
+    # eingebaute SearXNG-Instanz, die nrzSearch selbst installiert und taeglich aktualisiert.
+    image: python:3.14-slim-trixie@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f
+    container_name: nrz-nrz-search_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /data
+    command: ["/app/nrzsearch"]
+    stop_grace_period: 20s
+    environment:
+      - TZ=Europe/Berlin
+      - PORT=8188
+      - HOME=/data/tmp
+      - TMPDIR=/data/tmp
+      - WEB_DIR=/app/web
+      # Eigene module.json im Datenordner - sonst die mitgelieferte.
+      - MODULE_CONFIG=/data/module.json
+      - MODULE_STANDARD=/app/module.json
+      # Eingebautes SearXNG: Fassungen, Einstellungen, Log; neue Fassung alle 24 h.
+      - SEARXNG_DIR=/data/searxng
+      - SEARXNG_SECRET=${APP_SEED}
+      - SEARXNG_UPDATE_STUNDEN=24
+      - OPENROUTER_KEY_FILE=/data/openrouter.key
+      - ABLAGE_DIR=/data/ablagen
+      - STATISTIK_DATEI=/data/statistik.json
+      - ADMIN_DATEI=/data/admin.json
+      # Optional: eigene Sperrliste (eine Domain je Zeile) fuer den Jugendschutz-Filter.
+      # - SPERRLISTE=/data/sperrliste.txt
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8188/api/statistik', timeout=4)"]
+      interval: 30s
+      timeout: 6s
+      retries: 3
+      start_period: 120s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

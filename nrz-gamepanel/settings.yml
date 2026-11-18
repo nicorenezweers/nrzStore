@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# nrzGamePanel hat eine eigene Anmeldung (Admin-Konto bei der Ersteinrichtung, API-Tokens fuer MCP).
+appProxyAuthEnabled: false

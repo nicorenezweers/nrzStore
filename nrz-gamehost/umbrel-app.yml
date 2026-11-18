@@ -1,0 +1,88 @@
+manifestVersion: 1
+id: nrz-gamehost
+category: gaming
+name: "nrzGameHost"
+version: "1.0.0"
+tagline: "Browser-Spiele selbst hosten - HTML5, WebAssembly, WebGPU, im Host-Modus"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-gamehost/icon.png"
+port: 8600
+path: ""
+description: >-
+  nrzGameHost ist deine eigene Spielebibliothek fuer Browser-Spiele auf dem Umbrel:
+  Web-Exporte aus Godot, Unity, Construct, GDevelop, Emscripten, RPG Maker, PICO-8 und
+  anderen HTML5/WebAssembly-Engines hochladen und auf jedem Geraet im Netz spielen.
+  Server und Oberflaeche sind komplett in Rust geschrieben (axum + Dioxus mit nrzUI).
+
+
+  ## Was die App kann
+
+
+  - **Bibliothek** - Raster oder Liste mit Covern, Suche, Filter nach Engine und
+  Schlagwort, Favoriten, Spielzeit und "zuletzt gespielt".
+
+
+  - **Hinzufuegen** - ZIP, TAR(.GZ) oder HTML hochladen (Drag & Drop mit Fortschritt),
+  von einer URL laden, aus den Umbrel-Dateien importieren (kopieren oder an Ort und
+  Stelle) oder selbst kopierte Ordner finden. Startdatei, Titel, Cover, Engine und
+  Bedarf an Threads/WebGPU werden erkannt.
+
+
+  - **Richtig ausgeliefert** - Cross-Origin-Isolation (COOP/COEP) pro Spiel fuer
+  SharedArrayBuffer und Threads, Range-Anfragen, ETag/Cache, korrekte MIME-Typen und
+  vorkomprimierte Unity-Dateien (.br/.gz) mit Content-Encoding.
+
+
+  - **HTTPS mit eigener CA** - eigener HTTPS-Port mit lokaler Zertifizierungsstelle:
+  einmal die CA installieren, dann haben WebGPU, Threads und Gamepads auch im LAN einen
+  sicheren Kontext.
+
+
+  - **Player** - Vollbild-Rahmen mit Leiste (Start-Varianten, Neu laden, Vollbild),
+  Hinweisen zu HTTPS/WebGPU und Zaehlung der Spielzeit.
+
+
+  - **Browser-Check** - prueft sicheren Kontext, Isolation, WebAssembly (SIMD, Threads,
+  Memory64), WebGL2, WebGPU, Gamepads, Audio und Speicher des Geraets.
+
+
+  - **Verwaltung** - Cover, Beschreibung, Schlagwoerter, Start-Varianten, Datei-Browser,
+  Pruefsummen (SHA-256), Export als ZIP, Hintergrund-Aufgaben mit Fortschritt.
+
+
+  - **Gastzugang** - auf Wunsch spielen andere ohne Anmeldung; verwalten kann nur der
+  Admin, einzelne Spiele lassen sich fuer Gaeste verstecken.
+
+
+  - **KI-Agenten (MCP)** - MCP-Server unter /mcp: Token in der App anlegen, dem Agenten
+  geben - dann listet und bearbeitet er Spiele, startet Downloads und Importe, verfolgt
+  Aufgaben und aendert Einstellungen (19 Werkzeuge, Tokens auch "nur lesen").
+
+
+  ## Ports (Host-Modus)
+
+
+  - **8600** - Weboberflaeche ueber den umbrelOS-App-Proxy (Kachel im Dashboard)
+
+  - **8601** - HTTP direkt (Oberflaeche und Spiele ohne Proxy)
+
+  - **8602** - HTTPS mit eigener lokaler CA (empfohlen zum Spielen)
+
+
+  ## Erste Schritte
+
+
+  Beim ersten Oeffnen legst du dein Admin-Konto an. Die CA fuer HTTPS findest du unter
+  Einstellungen; Spiele aus den Umbrel-Dateien importierst du unter "Spiel hinzufuegen".
+  Bitte nur Spiele hinzufuegen, die du verwenden darfst.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzGameHost-umbrel
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzGameHost-umbrel
+support: http://100.78.107.162:8390/nicorenezweers/nrzGameHost-umbrel/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

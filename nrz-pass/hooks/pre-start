@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+
+# nrzPass kommt ohne eigenes Image und ohne Registry-Login: Programm (Web-Tresor eingebettet)
+# und Downloads (macOS-App, Browser-Erweiterungen) liegen im nrzPass-Repo auf nrzGit auf diesem
+# Geraet (Zweig umbrel, Tag unten). Beim ersten Start und nach Updates werden sie fuer die
+# Architektur dieses Geraets nach app/ geladen und mit SHA256SUMS geprueft.
+RELEASE="umbrel-1.0.0"
+BASE="http://localhost:8390/nicorenezweers/nrzPass/raw/tag/${RELEASE}"
+
+case "$(uname -m)" in
+  x86_64 | amd64) ARCH=amd64 ;;
+  aarch64 | arm64) ARCH=arm64 ;;
+  *) echo "nrzPass: unsupported architecture $(uname -m)" >&2; exit 1 ;;
+esac
+
+mkdir -p "${APP_DIR}/data"
+
+download() {
+  TMP="$(mktemp -d "${APP_DIR}/.download.XXXXXX")"
+  trap 'rm -rf "${TMP}" "${APP_DIR}/app.new"' EXIT
+
+  fetch() {
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL --retry 3 --retry-delay 2 -o "${TMP}/$1" "${BASE}/$1"
+    else
+      wget -q -O "${TMP}/$1" "${BASE}/$1"
+    fi
+  }
+  fetch SHA256SUMS || return 1
+  fetch "nrzpass-${ARCH}.gz" || return 1
+  (cd "${TMP}" && grep -E " nrzpass-${ARCH}\.gz$" SHA256SUMS | sha256sum -c --quiet -) || return 1
+
+  NEW="${APP_DIR}/app.new"
+  rm -rf "${NEW}"
+  mkdir -p "${NEW}/downloads"
+  gunzip -c "${TMP}/nrzpass-${ARCH}.gz" > "${NEW}/nrzpass"
+  chmod 755 "${NEW}/nrzpass"
+
+  # Downloads (optional: fehlt eine Datei oder stimmt die Pruefsumme nicht, startet nrzPass trotzdem)
+  mkdir -p "${TMP}/downloads"
+  for f in $(awk '$2 ~ /^downloads\/[A-Za-z0-9._-]+$/ {print $2}' "${TMP}/SHA256SUMS"); do
+    if fetch "${f}" && (cd "${TMP}" && awk -v f="${f}" '$2 == f' SHA256SUMS | sha256sum -c --quiet -); then
+      mv "${TMP}/${f}" "${NEW}/downloads/"
+    else
+      echo "nrzPass: ${f} uebersprungen" >&2
+    fi
+  done
+  echo "${RELEASE}-${ARCH}" > "${NEW}/.release"
+
+  rm -rf "${APP_DIR}/app.old"
+  if [ -d "${APP_DIR}/app" ]; then mv "${APP_DIR}/app" "${APP_DIR}/app.old"; fi
+  mv "${NEW}" "${APP_DIR}/app"
+  rm -rf "${APP_DIR}/app.old"
+}
+
+if [ "$(cat "${APP_DIR}/app/.release" 2>/dev/null || true)" != "${RELEASE}-${ARCH}" ]; then
+  if ! download; then
+    # nrzGit nicht erreichbar: mit dem bisherigen Programm weiterlaufen statt gar nicht zu starten
+    if [ -x "${APP_DIR}/app/nrzpass" ]; then
+      echo "nrzPass: ${RELEASE} nicht von nrzGit (Port 8390) ladbar, bisherige Version bleibt" >&2
+    else
+      echo "nrzPass: Programm nicht von nrzGit (Port 8390) ladbar - ist die App nrzGit installiert und gestartet?" >&2
+      exit 1
+    fi
+  fi
+fi
+
+# Die Daten schreibt der Container als 1000 - und nur er darf sie lesen.
+chown 1000:1000 "${APP_DIR}/data" 2>/dev/null || true
+chmod 700 "${APP_DIR}/data" 2>/dev/null || true

@@ -1,0 +1,5 @@
+dependencies: {}
+autoStart: true
+# nrzPass hat eine eigene Anmeldung (Master-Passwort, optional TOTP). Der Umbrel-Login waere
+# fuer Browser-Erweiterung, macOS-App und Bitwarden-Clients ein Hindernis (keine Umbrel-Cookies).
+appProxyAuthEnabled: false

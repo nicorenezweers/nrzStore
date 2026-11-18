@@ -1,0 +1,5 @@
+dependencies: {}
+autoStart: true
+# nrzBackup hat eine eigene Anmeldung (Benutzer admin, Passwort = APP_PASSWORD,
+# in umbrelOS bei der App angezeigt). Andere Apps nutzen Bearer-Tokens.
+appProxyAuthEnabled: false

@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-paper_app_1
+      APP_PORT: 8320
+    container_name: nrz-paper_app_proxy_1
+
+  app:
+    # The official multi-arch Debian image (amd64 and arm64), pinned by digest.
+    # nrzPaper is not an image: hooks/pre-start loads the program (with the web
+    # interface), the text recognition (Tesseract with German and English,
+    # Poppler and the libraries they need) and start.sh for this device's
+    # architecture from the public package repo nrzPaper-umbrel on nrzGit
+    # (localhost:8390, plain HTTP, no login) into ${APP_DATA_DIR}/app.
+    image: debian:bookworm-slim@sha256:7ff6ba31527b9e336162fa061746c366c4b2032f4d2cff2078bea43f78efe3f8
+    container_name: nrz-paper_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /opt/nrzpaper
+    entrypoint: ["/bin/sh", "/opt/nrzpaper/start.sh"]
+    stop_grace_period: 15s
+    environment:
+      - TZ=Europe/Zurich
+      # Database (nrzpaper.db) and ingestion folder data/ingestion/<org-id>/.
+      - NRZPAPER_DATA_DIR=/data
+      # The whole database (documents included) is encrypted with SQLCipher.
+      # The key is this install's APP_SEED, derived from the Umbrel seed - so
+      # no key file sits next to the database in the data folder.
+      - NRZPAPER_DB_KEY=${APP_SEED}
+      - NRZPAPER_OCR_LANGUAGES=deu+eng
+      - NRZPAPER_OCR_WORKERS=2
+      # Scannen: der Canon TS4100i im LAN ist voreingestellt, "Scanner suchen" sucht in diesem Netz.
+      - NRZPAPER_SCANNER_URL=http://192.168.0.70
+      - NRZPAPER_SCAN_SUBNETS=192.168.0.0/24
+      - NRZPAPER_LOG=info,rocket::server=warn,rocket::launch::_=warn,rocket::shield=warn
+      # The image stays the same between releases: a fresh container per release.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/opt/nrzpaper:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      # No curl in the slim image - the program checks /api/v1/health itself.
+      test: ["CMD", "/bin/sh", "/opt/nrzpaper/start.sh", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

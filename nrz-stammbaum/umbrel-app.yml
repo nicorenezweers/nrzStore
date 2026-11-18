@@ -1,0 +1,64 @@
+manifestVersion: 1
+id: nrz-stammbaum
+category: files
+name: nrzStammbaum
+version: "1.0.0"
+tagline: "Familienforschung in Rust - Stammbaum, Zeitleiste, Karte, Quellen"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-stammbaum/icon.png
+port: 8541
+path: ""
+description: >-
+  nrzStammbaum ist eine Ahnenforschungs-App mit Stammbaum, Zeitleiste, Karte,
+  Forschungsprotokoll und Quellenverwaltung. Server und Oberflaeche sind in Rust
+  geschrieben (axum, Dioxus mit nrzUI), die Daten liegen in einer SQLite-Datei.
+
+
+  ## Was die App kann
+
+
+  - **Stammbaum** - Ahnen, Nachkommen und Sanduhr als zieh- und zoombare Flaeche
+  mit Kekule-Nummern; Luecken lassen sich direkt fuellen.
+
+
+  - **Personen und Verwandtschaft** - Lebenslauf mit ungefaehren Daten, Belegen und
+  Sicherheit je Angabe; Verwandtschaft auf Deutsch ("Urgrossvater muetterlicherseits").
+
+
+  - **Zeitleiste und Karte** - Chronik mit Zeitgeschichte, Lebensspannen,
+  OpenStreetMap-Karte mit Lebenswegen.
+
+
+  - **Forschung und Quellen** - Aufgaben mit Protokoll inklusive Negativbefunden,
+  automatische Plausibilitaetspruefung, Archiv-Anlaufstellen, Quellen mit Guete.
+
+
+  - **Dieter, der KI-Assistent** - legt Personen, Ereignisse, Orte und Quellen an,
+  verknuepft Beziehungen, belegt Angaben und recherchiert im Web; mit Claude Code
+  (offizielle CLI, Abo-Token oder API-Schluessel), Grok oder OpenRouter.
+
+
+  - **Deep Research** - Dieter forscht selbstaendig ueber Stunden: Checkliste aller
+  Archive, Datenbanken, Orte und Personen, Funde mit Belegen, Notizbuch,
+  Negativbefunde und Schlussbericht.
+
+
+  - **Gesamtbaum** - alle Personen und Verbindungen auf einer Flaeche, dazu
+  Familienverbindungen auf der Karte.
+
+
+  - **Streaming-Modus** - blendet alle Namen aus, fuer Bildschirmuebertragungen.
+
+
+  - **Daten** - Export als JSON und GEDCOM 5.5.1, Import, taegliche Sicherungen.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzStammbaum
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzStammbaum
+support: http://100.78.107.162:8390/nicorenezweers/nrzStammbaum/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# nrzSimulation kommt ohne eigenes Image: der fertige Web-Build ist ein Release-Asset im
+# nrzSimulation-Repo auf nrzGit auf diesem Geraet. Beim ersten Start und nach Updates wird er
+# geladen, per SHA-256 geprueft und nach app/www entpackt; nginx liefert ihn aus.
+# Der Build ist architekturunabhaengig (WebAssembly).
+VERSION="1.0.0"
+ASSET="nrz-simulation-${VERSION}-web.tar.gz"
+SHA256="68293835413ffce164ed909046e6cac503975a714c3154c6382bc6fb0f42b86f"
+URL="http://localhost:8390/nicorenezweers/nrzSimulation/releases/download/v${VERSION}/${ASSET}"
+
+download() {
+  TMP="$(mktemp -d "${APP_DIR}/.download.XXXXXX")"
+  trap 'rm -rf "${TMP}" "${APP_DIR}/app.new"' EXIT
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL --retry 3 --retry-delay 2 -o "${TMP}/${ASSET}" "${URL}" || return 1
+  else
+    wget -q -O "${TMP}/${ASSET}" "${URL}" || return 1
+  fi
+  echo "${SHA256}  ${TMP}/${ASSET}" | sha256sum -c --quiet - || return 1
+
+  NEW="${APP_DIR}/app.new"
+  rm -rf "${NEW}"
+  mkdir -p "${NEW}/www" "${NEW}/conf.d"
+  tar -xzf "${TMP}/${ASSET}" -C "${NEW}/www"
+  rm -f "${NEW}/www/.trunk-lock"
+  find "${NEW}/www" -type f \( -name '*.wasm' -o -name '*.js' -o -name '*.html' \) -print0 |
+    xargs -0 -r gzip -9 -k -f || true
+  echo "${VERSION}" > "${NEW}/.release"
+
+  rm -rf "${APP_DIR}/app.old"
+  if [ -d "${APP_DIR}/app" ]; then mv "${APP_DIR}/app" "${APP_DIR}/app.old"; fi
+  mv "${NEW}" "${APP_DIR}/app"
+  rm -rf "${APP_DIR}/app.old"
+}
+
+if [ "$(cat "${APP_DIR}/app/.release" 2>/dev/null || true)" != "${VERSION}" ]; then
+  if ! download; then
+    if [ -f "${APP_DIR}/app/www/index.html" ]; then
+      echo "nrzSimulation: ${VERSION} nicht von nrzGit (Port 8390) ladbar, bisherige Version bleibt" >&2
+    else
+      echo "nrzSimulation: Web-Build nicht von nrzGit (Port 8390) ladbar - ist nrzGit installiert und gestartet?" >&2
+      exit 1
+    fi
+  fi
+fi
+
+# nginx-Konfiguration bei jedem Start aus hooks/ uebernehmen (umbrelOS aktualisiert nur hooks/).
+mkdir -p "${APP_DIR}/app/conf.d"
+cp "${HOOK_DIR}/app-files/default.conf" "${APP_DIR}/app/conf.d/default.conf"
+chmod -R a+rX "${APP_DIR}/app"

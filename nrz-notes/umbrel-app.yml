@@ -1,0 +1,63 @@
+manifestVersion: 1
+id: nrz-notes
+category: productivity
+name: nrzNotes
+version: "1.0.0"
+tagline: Wissensdatenbank wie Logseq - verschluesselt in einer Datei
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-notes/icon.png
+port: 8330
+path: ""
+description: >-
+  nrzNotes ist eine selbst gehostete Wissensdatenbank wie Logseq und Roam
+  Research, komplett in Rust. Seiten und Tagesjournale sind
+  Markdown-Gliederungen im Logseq-Format, verlinkt mit @Seite, [[Seite]],
+  #tag und ((Block)). Alles - Seiten, Journale, Whiteboards, Bilder, Konten - liegt in
+  einer einzigen, mit SQLCipher verschluesselten SQLite-Datei.
+
+
+  ## Was die App kann
+
+  - **Outliner und Journale** - Bloecke einruecken, einklappen, verschieben,
+  eine Seite pro Tag.
+
+  - **Links und Rueckverweise** - @ tippen und eine Seite aus der Liste
+  waehlen oder einfach @Name schreiben, die Seite entsteht automatisch;
+  verlinkte und unverlinkte Erwaehnungen, Umbenennen schreibt alle Links um,
+  Tags, Eigenschaften, Block-Referenzen.
+
+  - **Aufgaben, Suche, Graph** - TODO/DONE auf einer Aufgabenseite,
+  Volltextsuche, Graph-Ansicht aller Seiten.
+
+  - **Whiteboards** - Excalidraw, mitgeliefert und offline.
+
+  - **Import und Export** - Markdown oder ein ganzer Logseq-Graph als .zip.
+
+  - **Dieter und KI-Aktionen** - beantwortet Fragen zu deinen Notizen, mit
+  jedem Anbieter (OpenRouter, OpenAI, Anthropic, Ollama ...).
+
+  - **Mehrere Graphen und Konten** - Rollen Besitzer, Admin, Bearbeiter,
+  Betrachter.
+
+
+  ## Erste Schritte
+
+  Nach der Installation das erste Konto anlegen (es wird Administrator) und
+  den ersten Graphen erstellen. Danach ist die Registrierung geschlossen, bis
+  du sie in den Einstellungen oeffnest. Der Datenbank-Schluessel ist der
+  APP_SEED dieser Installation.
+
+
+  Das Programm kommt ohne eigenes Image aus dem nrzNotes-Repo auf nrzGit
+  (Port 8390) auf diesem Geraet - die App nrzGit muss installiert sein.
+releaseNotes: "Erste Version."
+developer: nrz
+website: https://github.com/nicorenezweers/nrzNotes
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: https://github.com/nicorenezweers/nrzNotes
+support: https://github.com/nicorenezweers/nrzNotes/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

@@ -1,0 +1,5 @@
+dependencies: {}
+autoStart: true
+# nrzAnalytics hat eigene Konten (mit 2FA); die umbrelOS-Anmeldung davor ist aus, damit das
+# Tracking-Skript, die Ereignis-API und geteilte Dashboards ohne umbrelOS-Login erreichbar sind.
+appProxyAuthEnabled: false

@@ -1,0 +1,66 @@
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy. nrzNetwork runs
+  # in the host network, so the proxy reaches it through the gateway of the
+  # umbrel network (10.21.0.1).
+  app_proxy:
+    environment:
+      APP_HOST: 10.21.0.1
+      APP_PORT: 8401
+    container_name: nrz-dns_app_proxy_1
+
+  app:
+    # Pinned upstream Debian (multi-arch manifest list). nrzNetwork is not an
+    # image: server, DNS engine and web UI are one program, which
+    # hooks/pre-start unpacks from hooks/app-files to ${APP_DATA_DIR}/app for
+    # this device's architecture. It brings its own root certificates.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-dns_app_1
+    restart: unless-stopped
+    init: true
+    # Host network and full privileges: the built-in NetBird gets a real
+    # WireGuard interface (wt0, routing, all ports) and the built-in Cloudflare
+    # Tunnel reaches every device and port in the network.
+    network_mode: host
+    privileged: true
+    user: "0:0"
+    stop_grace_period: 15s
+    command: ["/app/nrzdns"]
+    environment:
+      - TZ=Europe/Zurich
+      # nrzdns.db: accounts, settings, zones, blocklists, logs - one file.
+      - NRZDNS_DATA_DIR=/data
+      - NRZDNS_ADDRESS=0.0.0.0
+      # Web UI (8380 is taken on the device).
+      - NRZDNS_PORT=8401
+      - NRZDNS_DNS_LISTEN=0.0.0.0:53
+      # Reverse proxy on 81 (HTTP) and 444 (HTTPS); hooks/nrznetwork-gateway
+      # redirects ports 80/443 of the device to them while they answer.
+      - NRZDNS_PROXY_LISTEN=0.0.0.0:81
+      - NRZDNS_PROXY_TLS_LISTEN=0.0.0.0:444
+      # Targets on this device (also former addresses) are reached locally.
+      - NRZDNS_HOST_GATEWAY=127.0.0.1
+      # Names without an entry, IPs and .local go on to umbrelOS.
+      - NRZDNS_PROXY_FALLBACK=http://127.0.0.1:80
+      - NRZDNS_TLS_FALLBACK=127.0.0.1:443
+      # The web UI is reached over plain HTTP through the app proxy.
+      - NRZDNS_COOKIE_SECURE=false
+      # The app proxy passes the browser's address in X-Forwarded-For.
+      - NRZDNS_IP_HEADER=X-Forwarded-For
+      # Forces a fresh container per release.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+      # Docker page (containers, internal IPs, networks, logs - read only).
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    healthcheck:
+      test: ["CMD", "/app/nrzdns", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

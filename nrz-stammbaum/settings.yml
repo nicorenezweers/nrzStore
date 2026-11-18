@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# Familiendaten: die umbrelOS-Anmeldung bleibt davor (nrzStammbaum hat keine eigene).
+appProxyAuthEnabled: true

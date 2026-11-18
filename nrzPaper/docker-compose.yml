@@ -1,0 +1,58 @@
+# nrzPaper — immer die neueste Version von GitHub + neuestes Image
+# ---------------------------------------------------------------
+# Dieses Compose baut nrzPaper direkt vom main-Branch auf GitHub.
+# Jeder `docker compose up --build` holt den neuesten Stand und baut
+# ein frisches Image mit dem Tag `nrzpaper:latest`.
+#
+# Daten (verschlüsselte DB + Schlüssel) liegen im Volume nrzpaper-data
+# und bleiben bei Updates erhalten.
+#
+# Starten (immer neueste Version):
+#   docker compose up --build -d
+# Nur neu laden, falls Image schon lokal gebaut ist:
+#   docker compose up -d
+
+name: nrzpaper
+
+services:
+  nrzpaper:
+    # Build-Kontext ist der GitHub main-Branch → immer neueste Version
+    build:
+      context: https://github.com/nicorenezweers/nrzPaper.git#main
+      dockerfile: Dockerfile
+    image: nrzpaper:latest
+    container_name: nrzpaper
+    restart: unless-stopped
+    init: true
+    ports:
+      - "8320:8320"
+    environment:
+      NRZPAPER_DATA_DIR: /data
+      # Eigener Datenbank-Schlüssel (64 Hex-Zeichen oder lange Passphrase).
+      # Wichtig: sicher außerhalb des Volumes aufbewahren! Ohne Schlüssel wird
+      # automatisch einer erstellt und in /data/nrzpaper.key abgelegt.
+      # NRZPAPER_DB_KEY: ${NRZPAPER_DB_KEY:-}
+      NRZPAPER_OCR_LANGUAGES: deu+eng
+      NRZPAPER_ADDRESS: 0.0.0.0
+      NRZPAPER_PORT: 8320
+      NRZPAPER_LOG: info
+      # Hinter HTTPS / Reverse-Proxy einschalten:
+      # NRZPAPER_COOKIE_SECURE: "true"
+      # NRZPAPER_REGISTRATION_OPEN: "false"
+    volumes:
+      - nrzpaper-data:/data
+      # Optional: Ordner-Inbox vom Host einbinden
+      # - ./eingang:/data/ingestion
+    healthcheck:
+      test: ["CMD", "nrzpaper", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  nrzpaper-data:

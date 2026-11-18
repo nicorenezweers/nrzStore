@@ -1,0 +1,57 @@
+manifestVersion: 1
+id: nrz-rss
+category: social
+name: nrzNews
+version: "1.0.0"
+tagline: Ruhiger News- und RSS-Reader in Rust, auch fuers Handy
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-rss/icon.png
+port: 8340
+path: ""
+description: >-
+  nrzNews (vorher nrzRSS) ist ein selbst gehosteter News- und RSS-Reader in
+  Rust, ohne externe Datenbank. Konten, Feeds, Artikel und Einstellungen
+  liegen in einer SQLite-Datei. RSS, Atom und JSON Feed abonnieren - oder
+  einfach die Adresse einer Website einfuegen, nrzNews findet den Feed.
+
+
+  ## Was die App kann
+
+  - **Abonnieren** - Feed-Erkennung, Ordner, OPML-Import und -Export.
+
+  - **Aktualisieren im Hintergrund** - alle 30 Minuten, mit ETag und
+  Last-Modified, alte gelesene Artikel werden aufgeraeumt.
+
+  - **Lesen** - Ungelesen, Heute, Gemerkt, saubere Leseansicht,
+  Tastaturkuerzel.
+
+  - **Handy** - Tab-Leiste unten, Artikel nach rechts wischen = gelesen,
+  nach links = merken, herunterziehen zum Abrufen, im Lesemodus wischen fuer
+  den naechsten Artikel, Teilen. Laesst sich als Web-App auf den Homescreen
+  legen.
+
+  - **Suche** - Volltext ueber Titel und Inhalt, Umlaute egal.
+
+  - **KI mit jedem Anbieter** - Zusammenfassungen, Ueberblick ueber neue
+  Artikel und Dieter, der Fragen zu deinen Feeds mit Quellen beantwortet.
+
+  - **Mehrere Konten** - das erste Konto wird Administrator.
+
+
+  ## Erste Schritte
+
+  Nach der Installation das erste Konto anlegen, es wird Administrator.
+  Danach ist die Registrierung geschlossen, bis du sie in den Einstellungen
+  oeffnest. Das Programm kommt aus dem nrzNews-Repo auf nrzGit, die App
+  nrzGit muss darum installiert sein.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzNews
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzNews
+support: http://100.78.107.162:8390/nicorenezweers/nrzNews/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

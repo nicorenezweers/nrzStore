@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+
+# nrzBunker kommt ohne eigenes Image: Server (Rust), skyd (Skytable) und beide Oberflaechen
+# (Dioxus/WASM) liegen im nrzBunker-Repo auf nrzGit auf diesem Geraet (Zweig `umbrel`, Tag unten,
+# gebaut mit `cargo xtask release`). Beim ersten Start und nach Updates werden sie fuer die
+# Architektur dieses Geraets nach app/ geladen und geprueft.
+RELEASE="umbrel-1.0.0"
+BASE="http://localhost:8390/nicorenezweers/nrzBunker/raw/tag/${RELEASE}"
+
+case "$(uname -m)" in
+  x86_64 | amd64) ARCH=amd64 ;;
+  aarch64 | arm64) ARCH=arm64 ;;
+  *) echo "nrzBunker: Architektur $(uname -m) wird nicht unterstuetzt" >&2; exit 1 ;;
+esac
+
+FILES="nrzforum-${ARCH}.gz skyd-${ARCH}.gz web.tar.gz admin.tar.gz"
+PATTERN=" nrzforum-${ARCH}\.gz$| skyd-${ARCH}\.gz$| web\.tar\.gz$| admin\.tar\.gz$"
+
+download() {
+  TMP="$(mktemp -d "${APP_DIR}/.download.XXXXXX")"
+  trap 'rm -rf "${TMP}" "${APP_DIR}/app.new"' EXIT
+
+  fetch() {
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL --retry 3 --retry-delay 2 -o "${TMP}/$1" "${BASE}/$1"
+    else
+      wget -q -O "${TMP}/$1" "${BASE}/$1"
+    fi || { echo "nrzBunker: ${BASE}/$1 nicht ladbar" >&2; return 1; }
+  }
+  fetch SHA256SUMS || return 1
+  for f in ${FILES}; do
+    fetch "$f" || return 1
+  done
+  (cd "${TMP}" && grep -E "${PATTERN}" SHA256SUMS | sha256sum -c --quiet -) || return 1
+  [ "$(grep -cE "${PATTERN}" "${TMP}/SHA256SUMS")" = 4 ] || return 1
+
+  NEW="${APP_DIR}/app.new"
+  rm -rf "${NEW}"
+  mkdir -p "${NEW}/web" "${NEW}/admin"
+  gunzip -c "${TMP}/nrzforum-${ARCH}.gz" > "${NEW}/nrzforum"
+  gunzip -c "${TMP}/skyd-${ARCH}.gz" > "${NEW}/skyd"
+  chmod 755 "${NEW}/nrzforum" "${NEW}/skyd"
+  tar -xzf "${TMP}/web.tar.gz" -C "${NEW}/web"
+  tar -xzf "${TMP}/admin.tar.gz" -C "${NEW}/admin"
+  chmod -R a+rX "${NEW}"
+  echo "${RELEASE}-${ARCH}" > "${NEW}/.release"
+
+  rm -rf "${APP_DIR}/app.old"
+  if [ -d "${APP_DIR}/app" ]; then mv "${APP_DIR}/app" "${APP_DIR}/app.old"; fi
+  mv "${NEW}" "${APP_DIR}/app"
+  rm -rf "${APP_DIR}/app.old"
+}
+
+if [ "$(cat "${APP_DIR}/app/.release" 2>/dev/null || true)" != "${RELEASE}-${ARCH}" ]; then
+  if ! download; then
+    # nrzGit nicht erreichbar: mit dem bisherigen Programm weiterlaufen statt gar nicht zu starten
+    if [ -x "${APP_DIR}/app/nrzforum" ]; then
+      echo "nrzBunker: ${RELEASE} nicht von nrzGit (Port 8390) ladbar, bisherige Version bleibt" >&2
+    else
+      echo "nrzBunker: Programm nicht von nrzGit (Port 8390) ladbar - ist die App nrzGit installiert und gestartet?" >&2
+      exit 1
+    fi
+  fi
+fi
+
+# Daten gehoeren dem Benutzer 1000 (alle Container laufen ohne root).
+mkdir -p "${APP_DIR}/data/nrzbunker" "${APP_DIR}/data/surrealdb" "${APP_DIR}/data/skytable" "${APP_DIR}/data/meilisearch"
+chown -R 1000:1000 "${APP_DIR}/data" 2>/dev/null || true

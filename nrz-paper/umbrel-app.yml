@@ -1,0 +1,73 @@
+manifestVersion: 1
+id: nrz-paper
+category: Files
+name: nrzPaper
+version: "1.0.0"
+tagline: Dokumente ablegen, erkennen und finden - verschluesselt in einer Datei
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-paper/icon.png
+port: 8320
+path: ""
+description: >-
+  nrzPaper ist eine selbst gehostete Dokumentenverwaltung im Funktionsumfang
+  von Papra, komplett in Rust. Dokumente hochladen, per Texterkennung
+  durchsuchbar machen, mit Tags ordnen und in einer ausfuehrlichen
+  PDF-Vorschau ansehen. Alle Daten, auch die Dateien selbst, liegen in einer
+  einzigen, mit SQLCipher verschluesselten SQLite-Datei. Oberflaeche modern in
+  Grautoenen, auch als Web-App am Handy: Seiten mit der Kamera scannen und
+  PDFs aus anderen Apps an nrzPaper teilen.
+
+
+  ## Was die App kann
+
+  - **Ablegen** - Drag & Drop, Eingangsordner, REST-API. Duplikate werden
+  erkannt, geloeschte Dokumente bleiben 30 Tage im Papierkorb.
+
+  - **Texterkennung** - Tesseract (Deutsch, Englisch) und Poppler im
+  Hintergrund, auch fuer eingescannte PDFs und Fotos.
+
+  - **Suche** - Volltext mit Umlauten, live beim Tippen, mit Filtern wie
+  tag:steuern, -tag:privat, name:, content:, type:pdf, created:2026.
+
+  - **PDF-Vorschau** - Miniaturen, Zoom, Drehen, Vollbild, Suche im Dokument.
+
+  - **Tags, Ordner, Organisationen, Benutzer** - Ordner fassen mehrere Tags
+  zusammen, mehrere Organisationen mit Rollen, das erste Konto wird Admin.
+
+
+  - **Inbox mit E-Mail-Eingang** - PDFs und Bilder aus Mail-Anhaengen (IMAP)
+  und Scans warten mit KI-Vorschlaegen auf die Abnahme.
+
+  - **API, Webhooks, Freigaben** - API-Keys mit Rechten, signierte Webhooks
+  (Standard Webhooks), oeffentliche Links mit Ablauf.
+
+
+  ## Erste Schritte
+
+  Nach der Installation http://<Geraet>.local:8320 oeffnen, das erste Konto
+  anlegen und die erste Organisation erstellen. Dateien in
+  app-data/nrz-paper/data/ingestion/<Organisations-ID>/ werden automatisch
+  uebernommen.
+
+
+  ## Technisches
+
+  - **Server in Rust** (Rocket, sqlx, Oberflaeche mit Dioxus als
+  WebAssembly) - Programm und Texterkennung (amd64 und arm64) laedt
+  hooks/pre-start aus dem Paket-Repo nrzPaper-umbrel auf nrzGit, sie laufen
+  im gepinnten debian:bookworm-slim.
+
+
+  - **Verschluesselt** - der Datenbank-Schluessel ist der APP_SEED dieser
+  Installation; im Datenordner liegt kein Schluessel. Passwoerter als
+  Argon2id-Hash, API-Keys und Freigabelinks nur als SHA-256.
+releaseNotes: "Erste Version."
+developer: nrz
+website: https://github.com/nicorenezweers/nrzPaper
+submitter: nrz
+submission: http://100.78.107.162:8101/nicorenezweers/nrzStore
+repo: https://github.com/nicorenezweers/nrzPaper
+support: https://github.com/nicorenezweers/nrzPaper/issues
+dependencies: []
+defaultUsername: ""
+defaultPassword: ""
+gallery: []
