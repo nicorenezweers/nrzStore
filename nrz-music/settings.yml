@@ -1,0 +1,4 @@
+dependencies: {}
+autoStart: true
+# Eigene Anmeldung in der App (Konten seit 1.2.0).
+appProxyAuthEnabled: false

@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: veroeffentlicht den Web-Tresor und die Bitwarden-kompatible API (8490).
+  app_proxy:
+    environment:
+      APP_HOST: nrz-pass_app_1
+      APP_PORT: 8490
+    container_name: nrz-pass_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzPass ist kein eigenes Image: hooks/pre-start
+    # laedt das Programm (Web-Tresor eingebettet) samt Downloads (macOS-App, Erweiterungen) fuer
+    # die Architektur dieses Geraets aus dem nrzPass-Repo auf nrzGit nach ${APP_DATA_DIR}/app.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-pass_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzpass"]
+    stop_grace_period: 10s
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    environment:
+      - TZ=Europe/Zurich
+      # Verschluesselte Turso-Datenbank (AEGIS-256) in /data
+      - DATA_DIR=/data
+      - NRZPASS_ADDRESS=0.0.0.0
+      - NRZPASS_PORT=8490
+      # Datenbank- und Geheimnisschluessel werden aus dem APP_SEED dieses Geraets abgeleitet.
+      - NRZPASS_SEED=${APP_SEED}
+      # Hinter dem Umbrel-App-Proxy: echte Client-IP aus X-Forwarded-For (Brute-Force-Schutz).
+      - TRUST_PROXY=1
+      # Nur das erste Konto darf sich selbst registrieren.
+      - SIGNUPS_ALLOWED=false
+      # Vaultwarden-Konten im Web-Tresor ueber diesen Server erreichen (nur angemeldet).
+      - PROXY_ENABLED=true
+      # macOS-App und Browser-Erweiterungen zum Herunterladen
+      - DOWNLOAD_DIR=/app/downloads
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzpass", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

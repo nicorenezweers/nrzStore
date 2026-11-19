@@ -1,0 +1,56 @@
+services:
+  # Injected by umbrelOS. nrzDashboard hat eine eigene Anmeldung (settings.yml schaltet die
+  # umbrelOS-Anmeldung davor ab).
+  app_proxy:
+    environment:
+      APP_HOST: nrz-dashboard_web_1
+      APP_PORT: 8500
+    container_name: nrz-dashboard_app_proxy_1
+
+  web:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzDashboard ist kein eigenes Image: hooks/pre-start
+    # laedt Server und Oberflaeche fuer die Architektur dieses Geraets aus dem nrzDashboard-Repo
+    # (Zweig umbrel) nach ${APP_DATA_DIR}/app - ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-dashboard_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzdashboard"]
+    stop_grace_period: 10s
+    environment:
+      - TZ=Europe/Zurich
+      - IP=0.0.0.0
+      - PORT=8500
+      - DATA_DIR=/data
+      - DASH_USER=admin
+      - DASH_PASSWORD=${APP_PASSWORD}
+      # umbrelOS-MCP-Server auf dem Host (Port 80); in der App unter System aenderbar.
+      - UMBREL_URL=http://host.docker.internal
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # ICMP-Ping ohne root und ohne Capabilities (Datagram-Sockets).
+    sysctls:
+      net.ipv4.ping_group_range: "0 2147483647"
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # Ping-Ziele, Sitzungen und die Umbrel-Verbindung (Token).
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzdashboard", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

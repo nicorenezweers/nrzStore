@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-rss_app_1
+      APP_PORT: 8340
+    container_name: nrz-rss_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzNews (vorher nrzRSS, die App-ID bleibt) ist kein
+    # eigenes Image: hooks/pre-start laedt das Programm (Oberflaeche eingebettet) fuer die
+    # Architektur dieses Geraets aus dem nrzNews-Repo auf nrzGit (Zweig umbrel) nach
+    # ${APP_DATA_DIR}/app – ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-rss_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrznews"]
+    stop_grace_period: 15s
+    environment:
+      - TZ=Europe/Zurich
+      - NRZNEWS_CONFIG=/app/Rocket.toml
+      # Konten, Feeds, Artikel, Einstellungen - alles in einer Datei. Eine bestehende
+      # nrzrss.db (bis 1.0.0) wird weiterverwendet.
+      - NRZNEWS_DATA_DIR=/data
+      - NRZNEWS_ADDRESS=0.0.0.0
+      - NRZNEWS_PORT=8340
+      - NRZNEWS_COOKIE_SECURE=false
+      - NRZNEWS_LOG=info,rocket::server=warn,rocket::launch::_=warn,rocket::shield=warn
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrznews", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

@@ -1,0 +1,58 @@
+manifestVersion: 1
+id: nrz-pass
+category: files
+name: nrzPass
+version: "1.0.0"
+tagline: "Passwort-Manager in Rust - Zero-Knowledge, Vaultwarden-kompatibel"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-pass/icon.png"
+port: 8490
+path: ""
+description: >-
+  nrzPass ist ein Passwort-Manager komplett in Rust: Server (axum), Web-Tresor
+  (Leptos mit Rust/UI im nrzTheme), macOS-App (Tauri) und Browser-Erweiterung.
+
+
+  ## Sicherheit
+
+  - **Zero-Knowledge:** Ver- und Entschluesselung passiert nur auf deinem
+  Geraet (AES-256 + HMAC, Argon2id). Der Server sieht nie dein Master-Passwort
+  und kann deinen Tresor nicht lesen.
+
+  - **Verschluesselte Datenbank:** Turso (Rust-SQLite) mit AEGIS-256, der
+  Schluessel kommt aus dem APP_SEED dieses Geraets.
+
+  - Zwei-Faktor (TOTP), Schutz gegen Brute-Force, Geraeteverwaltung,
+  Sicherheitsprotokoll, automatische Sperre und Zwischenablage-Loeschung.
+
+
+  ## Vaultwarden-kompatibel
+
+  nrzPass spricht die Bitwarden-API: Dein Vaultwarden-Konto laesst sich unter
+  "Konten" hinzufuegen, Eintraege erscheinen direkt in nrzPass und lassen sich
+  mit einem Klick uebernehmen. Import aus Bitwarden, Vaultwarden, Chrome,
+  Firefox und Safari.
+
+
+  ## Apps
+
+  Im Web-Tresor unter "Apps und Erweiterung": macOS-App (DMG) sowie die
+  Browser-Erweiterung fuer Chrome und Firefox, die Login-Felder erkennt,
+  ausfuellt und starke Passwoerter vorschlaegt. Auf dem Handy: Seite oeffnen
+  und "Zum Home-Bildschirm".
+
+
+  Das erste Konto darf sich registrieren, danach ist die Registrierung
+  geschlossen. Das Programm kommt ohne eigenes Image aus dem nrzPass-Repo auf
+  nrzGit (Port 8390) auf diesem Geraet - die App nrzGit muss installiert sein.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzPass
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzPass
+support: http://100.78.107.162:8390/nicorenezweers/nrzPass/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

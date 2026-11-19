@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Waechter beenden: er entfernt seine Port-80-Regeln, umbrelOS bekommt Port 80 sofort zurueck.
+set -euo pipefail
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+if [ -f "${APP_DIR}/data/gateway.pid" ]; then
+  kill "$(cat "${APP_DIR}/data/gateway.pid")" 2>/dev/null || true
+fi
+exit 0

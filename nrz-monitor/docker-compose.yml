@@ -1,0 +1,78 @@
+services:
+  # Injected by umbrelOS. nrzMonitor laeuft im Host-Netzwerk; der Proxy erreicht es ueber das
+  # Gateway des Umbrel-Netzes (10.21.0.1). Die umbrelOS-Anmeldung bleibt davor - nrzMonitor selbst
+  # lauscht nur auf 10.21.0.1 und 127.0.0.1, ist also aus dem LAN nicht direkt erreichbar.
+  app_proxy:
+    environment:
+      APP_HOST: 10.21.0.1
+      APP_PORT: 8571
+    container_name: nrz-monitor_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzMonitor ist kein eigenes Image: hooks/pre-start
+    # laedt Programm (Oberflaeche eingebaut) und DuckDB-Bibliothek fuer die Architektur dieses
+    # Geraets aus dem nrzMonitor-Repo (Zweig umbrel) nach ${APP_DATA_DIR}/app - ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-monitor_app_1
+    restart: unless-stopped
+    init: true
+    # Host-Modus: nur so sieht ein Monitor die echten Schnittstellen, Verbindungen und Prozesse
+    # des Geraets (wie Netdata). Alles vom Host ist nur lesend eingehaengt.
+    network_mode: host
+    pid: host
+    user: "0:0"
+    working_dir: /app
+    command: ["/app/nrzmonitor"]
+    stop_grace_period: 30s
+    environment:
+      - TZ=Europe/Zurich
+      # Nur fuer den App-Proxy und das Geraet selbst erreichbar (Anmeldung macht umbrelOS).
+      - NRZMON_BIND=10.21.0.1:8571,127.0.0.1:8571
+      # DuckDB, Parquet-Archiv und Einstellungen (Zugangsdaten der Integrationen)
+      - NRZMON_DATA_DIR=/data
+      - NRZMON_HOST_PROC=/host/proc
+      - NRZMON_HOST_SYS=/host/sys
+      - NRZMON_HOST_ROOT=/host/root
+      - NRZMON_DOCKER_SOCK=/var/run/docker.sock
+      # DNS-Anfragen des Netzwerks ueber den MCP-Server von nrzNetwork (Token in den Einstellungen)
+      - NRZMON_DNS_MCP_URL=https://dns.zweers.ch/mcp
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      # Belegung aller Dateisysteme des Geraets (nur lesen, Mounts folgen dem Host).
+      - /:/host/root:ro,rslave
+      # Container, Images, Ereignisse und Logs lesen - nrzMonitor bietet keine Aktionen an.
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # Statt privileged nur, was das Mitlesen braucht:
+    # SYS_PTRACE + DAC_READ_SEARCH: /proc/<pid>/io und Dateien fremder Benutzer lesen,
+    # DAC_OVERRIDE + FOWNER + CHOWN: in den Datenordner schreiben, den umbrelOS als 1000:1000 anlegt
+    # (ohne diese Rechte darf root dort nichts anlegen),
+    # NET_RAW: Ping fuer die Erreichbarkeits-Pruefungen.
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_PTRACE
+      - DAC_READ_SEARCH
+      - DAC_OVERRIDE
+      - FOWNER
+      - CHOWN
+      - NET_RAW
+    security_opt:
+      - no-new-privileges:true
+      # Sonst verbietet AppArmor das Lesen von /proc fremder Prozesse.
+      - apparmor:unconfined
+    healthcheck:
+      test: ["CMD", "/app/nrzmonitor", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

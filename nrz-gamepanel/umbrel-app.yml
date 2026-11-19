@@ -1,0 +1,71 @@
+manifestVersion: 1
+id: nrz-gamepanel
+category: gaming
+name: "nrzGamePanel"
+version: "1.0.1"
+tagline: "Minecraft- und Factorio-Server verwalten - in Rust, im Host-Modus"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-gamepanel/icon.png"
+port: 8700
+path: ""
+description: >-
+  nrzGamePanel verwaltet Minecraft- und Factorio-Server auf deinem Umbrel. Server
+  und Oberflaeche sind komplett in Rust geschrieben (axum + Dioxus mit nrzUI).
+
+
+  ## Was die App kann
+
+
+  - **Server erstellen** - Paper, Vanilla, Fabric, Purpur, NeoForge, Forge und
+  Factorio headless mit wenigen Klicks; passendes Java (Eclipse Temurin) laedt das
+  Panel automatisch.
+
+
+  - **Bestehende Server importieren** - das Panel sucht vorhandene Server selbst und
+  erkennt Software, Version, Startdatei, Java, RAM, Port und Welten automatisch.
+  Ein Klick und der Server laeuft im Panel, der Ordner bleibt wo er ist.
+
+
+  - **Konsole live** - mit Farben, Verlauf und Schnellbefehlen; Start, Stopp,
+  Neustart, automatischer Neustart nach Absturz, CPU und RAM je Server.
+
+
+  - **Volle Minecraft-Integration** - Spieler, OPs, Whitelist und Banns, Inventar
+  UND Endertruhe ansehen und bearbeiten (Drag & Drop, online per Befehl, offline in
+  der Spielerdatei), Karte der Welt mit den Positionen aller Spieler,
+  server.properties-Editor, Plugins und Mods inkl. Modrinth-Suche.
+
+
+  - **Dateien, Backups, Ereignisse** - Datei-Explorer mit Editor, Backups mit
+  Wiederherstellen, Ereignisse (Beitritte, Chat, Tode, Abstuerze) und
+  Automationen (taeglicher Neustart, Backups, Discord-Webhooks).
+
+
+  - **MCP-Server** - KI-Agenten steuern die Server ueber /mcp (API-Token).
+
+
+  ## Host-Modus
+
+
+  Das Panel laeuft im Host-Netzwerk: Jeder Server ist direkt auf seinem Port
+  erreichbar (Minecraft 25565/tcp, Factorio 34197/udp, RCON, Mod-Ports), ohne je
+  ein Port-Mapping anzufassen. Fuer den Import sieht das Panel die Umbrel-Ordner
+  home und app-data (z. B. den ZweersSMP-Server).
+
+
+  ## Erste Schritte
+
+
+  Beim ersten Oeffnen legst du dein Admin-Konto an.
+releaseNotes: >-
+  Allgemeine Fixes und Aufraeumarbeiten an Build und Oberflaeche.
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzGamePanel-umbrel
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzGamePanel-umbrel
+support: http://100.78.107.162:8390/nicorenezweers/nrzGamePanel-umbrel/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

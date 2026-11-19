@@ -1,0 +1,55 @@
+services:
+  # Injected by umbrelOS: publishes the web UI in the app proxy. Without the umbrelOS login:
+  # nrzCodeMobile has its own accounts (password, session cookie, every account sees only its own
+  # PCs) - a second login in front would break the web app on the iPhone home screen.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-code-mobile_app_1
+      APP_PORT: 8470
+      PROXY_AUTH_ADD: "false"
+    container_name: nrz-code-mobile_app_proxy_1
+
+  app:
+    # Pinned upstream Debian (multi-arch manifest list). nrzCodeMobile is not an image: the
+    # program (static, web UI inside) comes from the nrzCodeMobile repo on nrzGit (branch umbrel,
+    # tag in hooks/pre-start) and is unpacked to ${APP_DATA_DIR}/app for this device's
+    # architecture - no registry login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-code-mobile_app_1
+    restart: unless-stopped
+    init: true
+    # umbrelOS creates app directories as 1000:1000; hooks/pre-start makes sure data/ exists.
+    user: "1000:1000"
+    stop_grace_period: 10s
+    command: ["/app/nrzcode-mobile"]
+    environment:
+      - TZ=Europe/Zurich
+      # store.json (0600): accounts (Argon2id), sessions and paired PCs - only hashes, no secrets.
+      - NRZMOBILE_DATA_DIR=/data
+      - NRZMOBILE_ADDRESS=0.0.0.0
+      - NRZMOBILE_PORT=8470
+      - NRZMOBILE_PC_PORT=8471
+      # Forces a fresh container per release.
+      - APP_VERSION=${APP_VERSION}
+    # nrzCode on the PCs connects here by itself (WebSocket, token from pairing). Not through the
+    # app proxy: the PCs have no umbrelOS login. Only pairing codes and paired PCs are accepted.
+    ports:
+      - "8471:8471/tcp"
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzcode-mobile", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

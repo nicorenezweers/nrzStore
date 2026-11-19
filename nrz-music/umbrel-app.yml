@@ -1,0 +1,71 @@
+manifestVersion: 1
+id: nrz-music
+category: media
+name: nrzMusic
+version: "1.4.0"
+tagline: Eigene Musik, YouTube Music und Spotify in einem Rust-Client – mit Konten und Android-App
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-music/icon.png
+port: 8350
+path: ""
+description: >-
+  nrzMusic ist ein selbst gehosteter Musik-Client in Rust, ohne externe
+  Datenbank. Er beobachtet einen Musikordner: MP3, FLAC und andere Dateien
+  hineinlegen, und sie erscheinen nach Sekunden mit Tags und Covern in der
+  Bibliothek. Daneben bringt er YouTube Music und deine Spotify-Bibliothek mit
+  – abgespielt als reine Tonspur ueber yt-dlp, ohne Werbung.
+
+
+  ## Was die App kann
+
+  - **Konten** - registrieren und anmelden; Playlists, Favoriten, Verlauf und
+  Spotify gehoeren jedem Konto, der Musikordner ist gemeinsam. Das erste Konto
+  ist Admin.
+
+  - **Android-App** - verbindet sich mit music.zweers.ch, spielt im
+  Hintergrund weiter und laedt Titel, Alben und Playlists aufs Handy zum
+  Offline-Hoeren. Die APK gibt es auf der Anmeldeseite.
+
+  - **YouTube Music** - Suche, Startseite, Alben, Kuenstler, Radio und
+  Playlist-Import; Wiedergabe ueber yt-dlp ohne eingebetteten Player.
+
+  - **Spotify** - Lieblingssongs und alle Playlists mit einem Klick
+  uebernehmen, oeffentliche Playlists auch per Link ohne Anmeldung. Anmelden
+  geht ohne Premium in der Android-App: Spotifys Anmeldeseite oeffnet sich in
+  einem Fenster der App, die das Cookie sp_dc selbst uebernimmt.
+
+  - **Fuer dich** - unendlicher Feed, der aus deinem Hoeren lernt (wie lange,
+  was du ueberspringst, was du likest) und immer wieder Neues ausprobiert;
+  die Wiedergabe laeuft endlos weiter.
+
+  - **Statistiken** - Hoerzeit, Top-Kuenstler, -Titel und -Genres, Tageszeit
+  und Verlauf.
+
+  - **Downloads** - YouTube-Titel mit yt-dlp in den Musikordner laden, auf
+  Wunsch automatisch beim Liken.
+
+  - **Teilen** - einzelne Titel, deine Likes oder Playlists per Link
+  verschicken; anhoeren geht auch ohne Konto, Vorschau mit Cover im Messenger.
+
+  - **Ablageordner und Hochladen** - live beobachtet, Upload per Drag & Drop
+  (Admin).
+
+
+  ## Erste Schritte
+
+  Die App oeffnen und das erste Konto anlegen – es wird Admin und uebernimmt
+  Playlists und Favoriten aus frueheren Versionen. Der Musikordner ist
+  **nrzMusic** im Home-Ordner von umbrelOS (Dateien-App Home > nrzMusic).
+  Braucht die App nrzGit (laedt das Programm von dort).
+releaseNotes: >-
+  Umbrel-Paket nrzMusic 1.4.0
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzMusic
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzMusic
+support: http://100.78.107.162:8390/nicorenezweers/nrzMusic/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

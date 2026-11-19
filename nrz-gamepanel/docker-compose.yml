@@ -1,0 +1,55 @@
+services:
+  # Das Panel laeuft im Host-Netzwerk (siehe unten) und ist damit nicht im Docker-DNS.
+  # Der Proxy erreicht es ueber das Gateway des Umbrel-Netzes (10.21.0.1), Port 8701 -
+  # wie nrzNetwork. host.docker.internal ist von dort aus nicht erreichbar.
+  app_proxy:
+    environment:
+      APP_HOST: 10.21.0.1
+      APP_PORT: 8701
+    container_name: nrz-gamepanel_app_proxy_1
+
+  panel:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzGamePanel ist kein eigenes Image: hooks/pre-start
+    # laedt Programm (Rust, axum) und Oberflaeche (Dioxus/WASM) fuer die Architektur dieses Geraets
+    # aus dem Paket-Repo nrzGamePanel-umbrel auf nrzGit nach ${APP_DATA_DIR}/app. Java (Temurin)
+    # und Factorio laedt das Panel bei Bedarf selbst nach /data.
+    image: debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+    container_name: nrz-gamepanel_panel_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    # Host-Modus: Spiel-Ports (25565/tcp, 34197/udp, RCON, Voice-Chat- und Karten-Mods ...)
+    # jedes Servers sind direkt auf dem Umbrel erreichbar, ohne Port-Mapping.
+    network_mode: host
+    working_dir: /data
+    command: ["/app/nrz-gamepanel"]
+    # Beim Stoppen faehrt das Panel alle Spielserver sauber herunter (Welt speichern).
+    stop_grace_period: 120s
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=info,tower_http=warn
+      - NRZ_GP_BIND=0.0.0.0:8701
+      - NRZ_GP_DATA=/data
+      - NRZ_GP_WEB=/app/web
+      - NRZ_GP_IMPORT_ROOTS=/import/app-data,/import/home
+      - NRZ_GP_PUBLIC_HOST=${DEVICE_DOMAIN_NAME}
+      - HOME=/data
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data:/data
+      # Import bestehender Server "an Ort und Stelle": Umbrel-Home (Dateien-App) und die
+      # Datenordner anderer Apps (z. B. nrz-zweerssmp). Bewusst schreibbar, weil der importierte
+      # Server dort weiterlaeuft (Welt, Logs, Spielerdaten).
+      - ${UMBREL_ROOT}/home:/import/home
+      - ${UMBREL_ROOT}/app-data:/import/app-data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

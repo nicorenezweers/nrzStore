@@ -1,0 +1,63 @@
+manifestVersion: 1
+id: nrz-code-mobile
+category: developer
+name: nrzCodeMobile
+version: "1.0.0"
+tagline: nrzCode für unterwegs – Chats überwachen, Limits sehen, weiter anweisen
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-code-mobile/icon.png
+port: 8470
+path: ""
+description: >-
+  nrzCodeMobile bringt nrzCode aufs Handy: Du siehst die Chats deiner
+  Coding-Agenten live, behaeltst die Nutzungslimits im Auge und gibst von
+  unterwegs Anweisungen. Komplett in Rust (axum, Dioxus/WebAssembly), im
+  gleichen Grau wie die anderen nrz-Apps, als Web-App zum Startbildschirm
+  hinzufuegbar.
+
+
+  ## Was die App kann
+
+  - **Chats live** - alle Chats des PCs mit Zustand (arbeitet, wartet,
+  fertig, Fehler, Rate-Limit), Verlauf mit Antworten und zusammengefassten
+  Arbeitsschritten, aufklappbar.
+
+  - **Weiter anweisen** - Nachricht senden; arbeitet der Agent noch, kommt sie
+  in die Warteschlange oder geht als Zwischenruf im naechsten passenden
+  Moment raus. Agent stoppen. Neue Chats starten.
+
+  - **Limits** - Session und Woche je Konto (Claude, Codex): uebrig in
+  Prozent, Zeit bis zum Zuruecksetzen.
+
+  - **Mehrere PCs und Personen** - jeder PC mit nrzCode koppelt sich einmal
+  mit einem Code; jede Person hat ihr eigenes Konto.
+
+
+  ## Erste Schritte
+
+  App oeffnen (auch am Handy), beim ersten Mal das eigene Konto anlegen und
+  "PC verbinden" waehlen: Es zeigt eine Adresse (Port 8471) und einen Code.
+  In nrzCode am PC (Desktop-App ab 1.0.27) unter Einstellungen -> Mobil
+  beides eintragen und koppeln. Der PC verbindet sich danach von selbst ueber
+  Port 8471 hierher und braucht keinen offenen Port. Port 8471 nimmt nur
+  gekoppelte PCs (Token) und Codes an.
+
+
+  ## Konten
+
+  Beim ersten Oeffnen legst du dein Konto an (Benutzername und Passwort,
+  Administrator); unter Einstellungen -> Konten weitere fuer andere Personen.
+  Jedes Konto koppelt seine eigenen PCs und sieht nur deren Chats - auch
+  Administratoren sehen keine fremden. Passwoerter als Argon2id-Hash,
+  Sitzung im HttpOnly-Cookie, Sperre nach Fehlversuchen.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzCodeMobile
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzCode
+support: http://100.78.107.162:8390/nicorenezweers/nrzCode/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

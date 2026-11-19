@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+FILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/app-files/nrzdns"
+
+# nrzDNS kommt ohne eigenes Image: das Programm (Server, DNS-Engine und
+# Oberflaeche in einer Datei, amd64/arm64) liegt unter hooks/app-files
+# (umbrelOS kopiert bei Updates nur hooks/) und wird bei jedem Start nach
+# app/ entpackt. Der Container ist debian:trixie-slim.
+case "$(uname -m)" in
+  x86_64 | amd64) ARCH=amd64 ;;
+  aarch64 | arm64) ARCH=arm64 ;;
+  *) echo "nrzDNS: unsupported architecture $(uname -m)" >&2; exit 1 ;;
+esac
+
+SRC="${FILES}/nrzdns-${ARCH}.gz"
+if [ ! -s "${SRC}" ]; then
+  echo "nrzDNS: ${SRC} is missing" >&2
+  exit 1
+fi
+
+mkdir -p "${APP_DIR}/app" "${APP_DIR}/data"
+gunzip -c "${SRC}" > "${APP_DIR}/app/nrzdns.new"
+chmod 755 "${APP_DIR}/app/nrzdns.new"
+mv -f "${APP_DIR}/app/nrzdns.new" "${APP_DIR}/app/nrzdns"
+chmod a+rx "${APP_DIR}/app"
+
+# Die Datenbank schreibt der Container als 1000.
+chown 1000:1000 "${APP_DIR}/data" 2>/dev/null || true
+
+# nrzNetwork-Waechter (auf dem Geraet): erkennt die Adressen des Geraets und gibt Port 80
+# an den Reverse Proxy, solange er antwortet (sonst gehoert Port 80 sofort wieder umbrelOS).
+# Ein alter Waechter raeumt beim Beenden seine Regeln selbst weg.
+GATEWAY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/nrznetwork-gateway"
+if [ -f "${APP_DIR}/data/gateway.pid" ]; then
+  kill "$(cat "${APP_DIR}/data/gateway.pid")" 2>/dev/null || true
+  sleep 1
+fi
+if [ -x "${GATEWAY}" ] && command -v setsid >/dev/null 2>&1; then
+  setsid -f bash "${GATEWAY}" "${APP_DIR}" </dev/null >/dev/null 2>&1 || true
+fi

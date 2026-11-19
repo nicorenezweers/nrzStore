@@ -1,0 +1,55 @@
+manifestVersion: 1
+id: nrz-code
+category: developer
+name: nrzCode
+version: "1.0.0"
+tagline: Coding-Agenten im Browser, verbunden mit nrzGit
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-code/icon.png
+port: 8410
+path: ""
+description: >-
+  nrzCode startet Coding-Agenten auf deinem Umbrel und zeigt sie als ruhigen
+  Chat im Browser: Claude Code, Codex, Gemini CLI, OpenCode, Kilo Code und Grok
+  CLI. Komplett in Rust (Rocket, Dioxus/WebAssembly mit rust-ui), im gleichen
+  Grau wie die anderen nrz-Apps.
+
+
+  ## Was die App kann
+
+  - **Mehrere Abos** - beliebig viele Konten je Agent, jedes mit eigenem
+  Home-Verzeichnis, z. B. zwei Claude-Code-Abos oder getrennte
+  OpenCode-Sitzungen auf einem oder mehreren Projekten.
+
+  - **Subagenten** - ein Agent startet weitere Agenten parallel, jeden im
+  eigenen Git-Worktree, und wartet auf sie.
+
+  - **nrzGit** - Projekte aus deinen Repositories; jeder Agent bekommt nrzGit
+  als MCP-Server und kann Repos anlegen, pushen, Pull Requests und Releases
+  erstellen, Images bauen und freie Ports waehlen.
+
+  - **Arbeitsbereich** - Worktree je Thread, Commit, Push, Pull Request,
+  Aenderungen mit Diff, Dateien, Terminal und Vorschau (Port 8411).
+
+
+  ## Erste Schritte
+
+  Erstes Konto anlegen (wird Administrator). In nrzGit unter Einstellungen ->
+  MCP ein Token erstellen und in nrzCode unter Einstellungen -> nrzGit
+  einfuegen. Die Adresse http://nrz-git_app_1:8380 (intern im Umbrel-Netz) ist
+  schon eingetragen; fuer Links im Browser optional z. B.
+  http://umbrel.local:8390. Unter Werkzeuge
+  die gewuenschten Agenten installieren, unter Agenten Konten anlegen und
+  anmelden. Die Agenten arbeiten ohne Rueckfragen und haben Zugriff auf Docker
+  des Geraets.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzCode
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzCode
+support: http://100.78.107.162:8390/nicorenezweers/nrzCode/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

@@ -1,0 +1,50 @@
+services:
+  # Injected by umbrelOS. Die Oberflaeche bleibt hinter der umbrelOS-Anmeldung; die REST-API
+  # (/api/v1/..., eigener API-Schluessel bzw. Abo-Token) ist davon ausgenommen, damit externe
+  # Tools sie erreichen.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-plan_web_1
+      APP_PORT: 8560
+      PROXY_AUTH_WHITELIST: "/api/v1/**"
+    container_name: nrz-plan_app_proxy_1
+
+  web:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzPlan ist kein eigenes Image: hooks/pre-start
+    # laedt Server und Oberflaeche fuer die Architektur dieses Geraets aus dem nrzPlan-Repo
+    # (Zweig umbrel) nach ${APP_DATA_DIR}/app - ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-plan_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzplan"]
+    stop_grace_period: 10s
+    environment:
+      - TZ=Europe/Zurich
+      - IP=0.0.0.0
+      - PORT=8560
+      - DATABASE_URL=sqlite:///data/nrzplan.db
+      - RUST_LOG=info
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # SQLite-Datenbank (Boards, Todos, Termine, API-Schluessel, Webhooks).
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzplan", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

@@ -1,0 +1,81 @@
+manifestVersion: 1
+id: nrz-analytics
+category: developer
+name: nrzAnalytics
+version: "1.0.0"
+tagline: "Datenschutzfreundliche Webanalyse wie Plausible - in Rust"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-analytics/icon.png
+port: 8580
+path: ""
+description: >-
+  nrzAnalytics ist eine schlanke, datenschutzfreundliche Webanalyse im Stil von
+  Plausible Analytics. Server und Oberflaeche sind komplett in Rust geschrieben,
+  alle Daten liegen in einer einzigen SQLite-Datei auf diesem Geraet.
+
+
+  ## Was die App kann
+
+
+  - **Ohne Cookies, DSGVO-freundlich** - keine Cookies, keine persoenlichen
+  Daten, Besucher werden nur ueber einen taeglich wechselnden Hash gezaehlt.
+  Kein Cookie-Banner noetig.
+
+
+  - **Plausible-kompatibel** - das Tracking-Skript (mit Varianten fuer
+  ausgehende Links, Datei-Downloads, Hash-Routing, Umsatz und eigene
+  Eigenschaften) und die Stats-API v1/v2 funktionieren wie bei Plausible.
+
+
+  - **Dashboard** - Echtzeit-Besucher, Quellen, Kanaele und UTM-Kampagnen,
+  Seiten mit Einstiegs- und Ausstiegsseiten, Laender, Geraete, Browser und
+  Betriebssysteme, Filter und Vergleichszeitraeume.
+
+
+  - **Ziele und Umsatz** - Ziele mit Konversionsrate, Trichter, eigene
+  Eigenschaften und Umsatz-Auswertung.
+
+
+  - **Teilen** - geteilte Links (auch mit Passwort), oeffentliche Dashboards
+  und Einbettung in andere Seiten per iframe.
+
+
+  - **Sicherheit** - Zwei-Faktor-Anmeldung (TOTP), API-Schluessel, Rollen,
+  Schutzregeln gegen Spam und eigene Aufrufe (IP, Seiten, Laender, Hostnamen).
+
+
+  - **Fuer nrz-Apps und Agenten** - MCP-Server fuer nrzDashboard und
+  Coding-Agenten sowie ein Rust-Client fuer andere Apps.
+
+
+  ## Erste Schritte
+
+
+  1. Mit Benutzer `admin` und dem hier angezeigten Passwort anmelden.
+
+  2. Eine Website anlegen (Domain eintragen).
+
+  3. Das angezeigte Snippet in den `<head>` der Website einbauen - fertig.
+
+
+  ## Hinweis zum Tracking
+
+
+  Die Oberflaeche (Port 8580) ist durch umbrelOS erreichbar. Fuer das Tracking
+  oeffentlicher Websites gibt es den eigenen Port 8581: dort sind nur das
+  Tracking-Skript, die Ereignis-API, geteilte Dashboards und die Stats-API
+  erreichbar. Diesen Port ueber einen Reverse-Proxy oder NetBird oeffentlich
+  machen und die oeffentliche URL in der Verwaltung eintragen, damit das
+  Snippet die richtige Adresse nutzt.
+releaseNotes: "Erste Version."
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics
+support: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics/issues
+dependencies:
+  - nrz-git
+defaultUsername: "admin"
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

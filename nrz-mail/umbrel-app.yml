@@ -1,0 +1,76 @@
+manifestVersion: 1
+id: nrz-mail
+category: Files
+name: nrzMail
+version: "1.0.0"
+tagline: Mail-Client mit Archiv, Statistik und KI-Assistent - verschluesselt in einer Datei
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-mail/icon.png
+port: 8360
+path: ""
+description: >-
+  nrzMail ist ein selbst gehosteter Mail-Client mit Archiv, komplett in Rust.
+  Mails per IMAP abholen, per SMTP senden und jede Nachricht in einem lokalen
+  Archiv behalten - auch wenn sie auf dem Server geloescht wird. Alle Daten,
+  auch Anhaenge und Suchindex, liegen in einer einzigen, mit SQLCipher
+  verschluesselten SQLite-Datei. Oberflaeche ruhig in Grautoenen, mit
+  Tastenkuerzeln und Befehlspalette, auch am Handy.
+
+
+  ## Was die App kann
+
+  - **Lesen und Senden** - mehrere Postfaecher (IMAP und SMTP), Antworten,
+  Weiterleiten, Entwuerfe, geplantes Senden, Signaturen und Anhaenge.
+
+  - **Ein Posteingang fuer alles** - vereinheitlichter Posteingang ueber alle
+  Postfaecher, Reiter Allgemein, Newsletter, Soziale Netzwerke und
+  Benachrichtigungen, Unterhaltungen als Threads.
+
+  - **Suche** - Volltext mit Umlauten und Filtern wie from:anna,
+  has:attachment, is:unread, before:2024-12-31, folder:, category:newsletter.
+
+  - **Archiv** - Import von mbox, eml und zip, Export als mbox oder zip,
+  Wiederherstellen auf den Server, Aufbewahrungsfristen je Postfach.
+
+  - **Statistik** - wie viele Mails wann kamen: je Tag, Monat, Stunde und
+  Wochentag, haeufigste Absender und Domains.
+
+  - **Dieter** - KI-Assistent mit jedem Anbieter (OpenRouter, OpenCode,
+  Claude Code, Grok, OpenAI, Anthropic, Gemini, Mistral, Ollama und jede
+  OpenAI-kompatible Adresse): fasst zusammen, schreibt Antworten aus dem
+  ganzen Verlauf - erst nach deiner Freigabe - und beantwortet Fragen.
+
+  - **Benutzer** - mehrere Konten, jedes sieht nur seine eigenen Postfaecher,
+  das erste Konto wird Admin, Zugriffsprotokoll.
+
+
+  ## Erste Schritte
+
+  Nach der Installation http://<Geraet>.local:8360 oeffnen, das erste Konto
+  anlegen (es wird Administrator) und unter Einstellungen ein Postfach
+  hinzufuegen. Der erste Abgleich startet sofort im Hintergrund.
+
+
+  ## Technisches
+
+  - **Server in Rust** (Rocket, sqlx, Oberflaeche mit Dioxus als
+  WebAssembly) - kein eigenes Image: das Programm (amd64 und arm64) kommt aus
+  dem nrzMail-Repo auf nrzGit und laeuft in einem gepinnten Debian. Die App
+  nrzGit muss installiert sein.
+
+
+  - **Verschluesselt** - der Datenbank-Schluessel ist der APP_SEED dieser
+  Installation; im Datenordner liegt kein Schluessel. Passwoerter als
+  Argon2id-Hash, Zugangsdaten der Postfaecher nur in der verschluesselten
+  Datenbank, externe Bilder in Mails erst auf Wunsch.
+releaseNotes: "Erste Version."
+developer: nrz
+website: https://github.com/nicorenezweers/nrzMail
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: https://github.com/nicorenezweers/nrzMail
+support: https://github.com/nicorenezweers/nrzMail/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

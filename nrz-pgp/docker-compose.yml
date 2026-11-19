@@ -1,0 +1,103 @@
+services:
+  # Injected by umbrelOS. Die umbrelOS-Anmeldung bleibt als zusaetzliche Schicht vor der
+  # eigenen Anmeldung von nrzPGP aktiv.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-pgp_web_1
+      APP_PORT: 8546
+    container_name: nrz-pgp_app_proxy_1
+
+  web:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzPGP ist kein eigenes Image: hooks/pre-start
+    # laedt Server (Rust, axum + SQLite) und Oberflaeche (Dioxus/WASM) fuer die Architektur
+    # dieses Geraets aus dem nrzPGP-Repo (Zweig umbrel) nach ${APP_DATA_DIR}/app.
+    image: debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+    container_name: nrz-pgp_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /data
+    command: ["/app/nrzpgp"]
+    stop_grace_period: 20s
+    env_file:
+      # Gemeinsames Geheimnis mit dem Cap-Dienst (zufaellig, von hooks/pre-start erzeugt). Fehlt die
+      # Datei, startet der Server wegen NRZPGP_CAP_REQUIRED nicht (fail closed).
+      - path: ${APP_DATA_DIR}/data/cap.env
+        required: false
+    environment:
+      - TZ=Europe/Zurich
+      - RUST_LOG=warn,nrzpgp=info
+      - NRZPGP_BIND=0.0.0.0:8546
+      - NRZPGP_DATABASE=/data/db/pgp.db
+      - NRZPGP_WEB_DIR=/app/web
+      # Hauptschluessel fuer die zweite Schutzschicht der privaten Schluessel. Kommt von umbrelOS
+      # (nicht aus den App-Daten), ein Backup der Datenbank allein reicht also nicht.
+      - NRZPGP_MASTER_KEY=${APP_SEED}
+      # Konto nrz: Passwort beim ersten Start = in umbrelOS angezeigtes Passwort, danach in der App.
+      - NRZPGP_ADMIN_NAME=nrz
+      - NRZPGP_ADMIN_PASSWORD=${APP_PASSWORD}
+      # Nur der umbrelOS app_proxy erreicht den Server: Client-IP und Host aus X-Forwarded-*.
+      - NRZPGP_TRUST_PROXY=true
+      - NRZPGP_CAP_URL=http://nrz-pgp_cap_1:3000
+      - NRZPGP_CAP_REQUIRED=true
+      - NRZPGP_SECURE_COOKIES=false
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    depends_on:
+      cap:
+        condition: service_healthy
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      - ${APP_DATA_DIR}/data/db:/data/db
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  cap:
+    # Cap-Captcha (https://trycap.dev, Apache-2.0): capjs-core prueft Proof of Work, Browser und
+    # Verhalten. Nur intern erreichbar; der nrzPGP-Server reicht die Widget-Anfragen weiter.
+    # Programm (cap/server.mjs + capjs-core, ohne npm-Abhaengigkeiten) laedt hooks/pre-start
+    # nach ${APP_DATA_DIR}/app/cap. Bekommt NICHT den Hauptschluessel.
+    image: node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+    container_name: nrz-pgp_cap_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /cap
+    command: ["node", "--max-old-space-size=192", "/cap/server.mjs"]
+    env_file:
+      - path: ${APP_DATA_DIR}/data/cap.env
+        required: false
+    environment:
+      - CAP_PORT=3000
+      - NODE_ENV=production
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app/cap:/cap:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

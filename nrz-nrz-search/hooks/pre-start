@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+
+# nrzSearch kommt ohne eigenes Image und ohne Registry-Login: Server (Rust) und Oberflaeche
+# (Rust/WASM, Dioxus + nrzUI) liegen im nrzSearch-Repo auf nrzGit auf diesem Geraet (Zweig
+# `umbrel`, Tag unten, gebaut mit scripts/umbrel-release.sh). Beim ersten Start und nach Updates
+# werden sie fuer die Architektur dieses Geraets nach app/ geladen und geprueft.
+# SearXNG installiert und aktualisiert nrzSearch selbst (nach data/searxng).
+RELEASE="umbrel-1.0.0"
+BASE="http://localhost:8390/nicorenezweers/nrzSearch/raw/tag/${RELEASE}"
+
+case "$(uname -m)" in
+  x86_64 | amd64) ARCH=amd64 ;;
+  aarch64 | arm64) ARCH=arm64 ;;
+  *) echo "nrzSearch: unsupported architecture $(uname -m)" >&2; exit 1 ;;
+esac
+
+FILES="nrzsearch-${ARCH}.gz web.tar.gz module.json"
+PATTERN=" nrzsearch-${ARCH}\.gz$| web\.tar\.gz$| module\.json$"
+
+download() {
+  TMP="$(mktemp -d "${APP_DIR}/.download.XXXXXX")"
+  trap 'rm -rf "${TMP}" "${APP_DIR}/app.new"' EXIT
+
+  fetch() {
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL --retry 3 --retry-delay 2 -o "${TMP}/$1" "${BASE}/$1"
+    else
+      wget -q -O "${TMP}/$1" "${BASE}/$1"
+    fi || { echo "nrzSearch: ${BASE}/$1 nicht ladbar" >&2; return 1; }
+  }
+  fetch SHA256SUMS || return 1
+  for f in ${FILES}; do
+    fetch "$f" || return 1
+  done
+  (cd "${TMP}" && grep -E "${PATTERN}" SHA256SUMS | sha256sum -c --quiet -) || return 1
+  [ "$(grep -cE "${PATTERN}" "${TMP}/SHA256SUMS")" = 3 ] || return 1
+
+  NEW="${APP_DIR}/app.new"
+  rm -rf "${NEW}"
+  mkdir -p "${NEW}/web"
+  gunzip -c "${TMP}/nrzsearch-${ARCH}.gz" > "${NEW}/nrzsearch"
+  chmod 755 "${NEW}/nrzsearch"
+  tar -xzf "${TMP}/web.tar.gz" -C "${NEW}/web"
+  cp "${TMP}/module.json" "${NEW}/module.json"
+  chmod -R a+rX "${NEW}"
+  echo "${RELEASE}-${ARCH}" > "${NEW}/.release"
+
+  rm -rf "${APP_DIR}/app.old"
+  if [ -d "${APP_DIR}/app" ]; then mv "${APP_DIR}/app" "${APP_DIR}/app.old"; fi
+  mv "${NEW}" "${APP_DIR}/app"
+  rm -rf "${APP_DIR}/app.old"
+}
+
+if [ "$(cat "${APP_DIR}/app/.release" 2>/dev/null || true)" != "${RELEASE}-${ARCH}" ]; then
+  if ! download; then
+    # nrzGit nicht erreichbar: mit dem bisherigen Programm weiterlaufen statt gar nicht zu starten
+    if [ -x "${APP_DIR}/app/nrzsearch" ]; then
+      echo "nrzSearch: ${RELEASE} nicht von nrzGit (Port 8390) ladbar, bisherige Version bleibt" >&2
+    else
+      echo "nrzSearch: Programm nicht von nrzGit (Port 8390) ladbar - ist die App nrzGit installiert und gestartet?" >&2
+      exit 1
+    fi
+  fi
+fi
+
+# Daten (Chats, Admin, Statistik, eingebautes SearXNG) gehoeren dem Server-Benutzer 1000.
+mkdir -p "${APP_DIR}/data/searxng" "${APP_DIR}/data/tmp"
+chown -R 1000:1000 "${APP_DIR}/data" 2>/dev/null || true
