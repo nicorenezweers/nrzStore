@@ -6,6 +6,9 @@ services:
     environment:
       APP_HOST: 10.21.0.1
       APP_PORT: 8571
+      # MCP-Server, Live-Strom und API fuer Dashboards (/mcp...) schuetzt nrzMonitor selbst mit
+      # einem eigenen Schluessel - darum dort ohne umbrelOS-Anmeldung erreichbar.
+      PROXY_AUTH_WHITELIST: "/mcp*"
     container_name: nrz-monitor_app_proxy_1
 
   app:

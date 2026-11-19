@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-monitor
 category: "networking"
 name: nrzMonitor
-version: "1.1.0"
+version: "1.1.1"
 tagline: "Ueberwachung wie Netdata: Host, jeder Container, DNS, Cloudflare und NetBird - live und sparsam"
 icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-monitor/icon.png"
 port: 8570
@@ -48,15 +48,18 @@ description: >-
   nrzMonitor unter Einstellungen -> Integrationen eintragen; ebenso ein
   Cloudflare-API-Token (Leserechte) und ein NetBird Personal Access Token.
 releaseNotes: >-
-  nrzMonitor 1.1.0: MCP-Server fuer KI-Programme und externe Dashboards
-  (Live-Werte, Zeitreihen, Ereignisse, Container, Alarme, DNS, Strom),
-  Live-Strom und REST-API unter /mcp
+  1.1.0: Neu - MCP-Server: KI-Programme (Claude, Cursor, n8n ...) und externe
+  Dashboards fragen alles ab - Live-Werte, Zeitreihen, Kennzahlen, Ranglisten,
+  Ereignisse, Container mit Logs, Alarme, DNS, Strom und Speicher. Dazu ein
+  Live-Strom (Server-Sent Events) und die REST-API mit eigenem Schluessel
+  unter /mcp. Adresse, Schluessel und fertige Befehle unter Einstellungen ->
+  MCP-Server & Dashboards.
 developer: nrz
-website: https://git.zweers.ch/nicorenezweers/nrzMonitor
+website: http://100.78.107.162:8390/nicorenezweers/nrzMonitor
 submitter: nrz
-submission: https://git.zweers.ch/nicorenezweers/nrzStore
-repo: https://git.zweers.ch/nicorenezweers/nrzMonitor
-support: https://git.zweers.ch/nicorenezweers/nrzMonitor/issues
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzMonitor
+support: http://100.78.107.162:8390/nicorenezweers/nrzMonitor/issues
 dependencies:
   - nrz-git
 defaultUsername: ""
