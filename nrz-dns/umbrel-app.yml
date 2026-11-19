@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-dns
 category: networking
 name: nrzNetwork
-version: "1.0.0"
+version: "1.14.0"
 tagline: Netzwerk-Zentrale - DNS, Domains bei Cloudflare, NetBird, Reverse Proxy mit HTTPS
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-dns/icon.png
 port: 8400
@@ -120,7 +120,7 @@ description: >-
   DNS-Server eintragen (oder an einzelnen Geraeten in den
   Netzwerkeinstellungen). Die Geraete uebernehmen sie beim naechsten
   Verbinden. Dem Umbrel vorher im Router eine feste IP-Adresse geben.
-releaseNotes: "Erste Version."
+releaseNotes: "MCP-Server ueberarbeitet: beliebig viele benannte Tokens, jedes nur lesend oder mit Aenderungsrecht (Einstellungen -> MCP), fertige Zeile fuer Claude Code. Neue Werkzeuge: DNS-Abfrage, Zonen, Cache, Reverse Proxy, Zertifikate, Docker mit Logs, Netzwerkkarte, Geraete, Zugriffs-Monitor, Komponenten und die ganze REST-API. Verbindung robuster: Token auch per X-API-Key oder ?token=, CORS fuer Browser-Clients."
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzNetwork
 submitter: nrz
