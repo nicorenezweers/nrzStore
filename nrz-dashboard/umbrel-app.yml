@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-dashboard
 category: developer
 name: nrzDashboard
-version: "1.0.1"
+version: "2.0.0"
 tagline: "umbrelOS-Startbildschirm mit App Store, Aktivitaet, Domains und Zwei-Faktor-Anmeldung"
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-dashboard/icon.png
 port: 8500
@@ -49,7 +49,9 @@ description: >-
   Einstellungen -> AI agents (MCP)) und den nrzNetwork-MCP-Token eintragen.
   Danach unter Einstellungen -> Anmeldung ein eigenes Passwort setzen und die
   Zwei-Faktor-Anmeldung einrichten.
-releaseNotes: "Erste Version."
+releaseNotes: >-
+  Login mit Zwei-Faktor, Apps ueber Domains (Benutzer/Admin, HTTPS),
+  schoenerer App Store, vereinfachte Einstellungen
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzDashboard
 submitter: nrz
