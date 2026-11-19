@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-backup
 category: "files"
 name: "nrzBackup"
-version: "1.1.0"
+version: "1.1.1"
 tagline: "Backups deiner Apps automatisch und Ende-zu-Ende verschluesselt zu Filen.io"
 icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-backup/icon.png"
 port: 8510
@@ -64,7 +64,8 @@ description: >-
   Filen-Konto verbinden und unter Quellen "umbrelOS sichern" waehlen: Apps und
   Ordner anhaken, Zeitplan waehlen, fertig.
 releaseNotes: >-
-  nrzBackup 1.1.0: umbrelOS direkt sichern ohne Token, auch stuendlich
+  nrzBackup 1.1.1: Release neu gebaut (1.1.0 zeigte kurz auf einen alten
+  Stand)
 developer: nrz
 website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
 submitter: nrz
