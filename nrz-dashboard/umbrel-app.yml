@@ -2,57 +2,53 @@ manifestVersion: 1
 id: nrz-dashboard
 category: developer
 name: nrzDashboard
-version: "1.0.0"
-tagline: "Modulares Dashboard wie Homarr mit Monitoren, Dateimanager und KI-Agent"
+version: "1.0.1"
+tagline: "umbrelOS-Startbildschirm mit App Store, Aktivitaet, Domains und Zwei-Faktor-Anmeldung"
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-dashboard/icon.png
 port: 8500
 path: ""
 description: >-
-  nrzDashboard ist ein modulares Dashboard fuer umbrelOS - komplett in Rust
-  (Dioxus fullstack, nrzUI-Thema), am Desktop und als Handy-Ansicht. Alles
-  aktualisiert sich live.
+  nrzDashboard ist ein Startbildschirm fuer umbrelOS - komplett in Rust
+  (Dioxus fullstack), am Desktop und am Handy.
 
 
   ## Was die App kann
 
 
-  - **Board wie Homarr** - mehrere Boards, Widgets per Drag & Drop verschieben
-  und in der Groesse aendern: Umbrel-Apps, App-Kacheln mit Ping, System,
-  Monitore, Nachrichten aus nrzNews, DNS (nrzDNS), Finanzen (nrzBudget), Uhr,
-  Wetter, Suche, Lesezeichen, Notizen, iFrame. Rechtsklick auf eine App zum
-  Anpassen, Starten/Stoppen und fuer Logs.
+  - **Startbildschirm wie umbrelOS** - Begruessung, App-Raster mit Seiten,
+  Suche (Cmd/Strg+K), Dock und Hintergrundbild. Live-Anzeige von CPU, RAM und
+  Speicher mit Aktualisieren-Knopf.
 
 
-  - **Monitore wie Uptime Kuma** - HTTP(S), TCP, Ping, DNS, Umbrel-App und
-  Push mit Heartbeats, Uptime, Antwortzeit-Diagramm und Benachrichtigungen
-  (ntfy, Discord, Telegram, Webhook).
+  - **Apps ueber deine Domains** - jede App oeffnet sich per HTTPS ueber ihre
+  Domain aus nrzNetwork, wahlweise als Benutzer (bench.zweers.ch) oder Admin
+  (admin.bench.zweers.ch). Rechtsklick oder langes Druecken zeigt beide
+  Adressen.
 
 
-  - **Dateimanager im Stil der umbrelOS-Files-App** - Favoriten, Netzwerk,
-  externer Speicher, Drag & Drop zum Hochladen und Verschieben,
-  Mehrfachauswahl, Raster/Liste, Vorschau, Kontextmenue.
+  - **App Store** - Empfehlung, Kategorien, Suche, Details, Installieren und
+  Entfernen; Updates einzeln oder alle auf einmal.
 
 
-  - **KI-Agent** - wie Claude Code / Grok CLI: Claude oder Grok erledigt
-  Aufgaben auf deinem Umbrel ueber die umbrelOS-Werkzeuge, kritische Schritte
-  nur nach Bestaetigung.
+  - **Aktivitaet** - CPU-, RAM- und Speicherverbrauch pro App mit Verlauf und
+  Temperatur.
 
 
-  - **Apps und System** - Apps starten, stoppen, updaten, Logs;
-  umbrelOS-Update, Netzwerk, System-Logs, Neustart.
+  - **Dateien und KI-Agent** - Dateimanager und Assistent fuer dein Umbrel.
+
+
+  - **Sichere Anmeldung** - Passwort und Zwei-Faktor-Code aus einer
+  Authenticator-App.
 
 
   ## Erste Schritte
 
 
-  Mit Benutzer `admin` und dem hier angezeigten Passwort anmelden. In umbrelOS
-  unter Einstellungen -> AI agents (MCP) einen Token erstellen und ihn in
-  nrzDashboard unter System -> Umbrel-Verbindung eintragen. Fuer das Widget
-  Nachrichten in nrzNews unter Einstellungen -> Konto -> API-Tokens ein Token
-  anlegen und unter System -> nrzNews eintragen. Fuer DNS- und Finanz-Widgets
-  die MCP-Tokens von nrzDNS und nrzBudget unter System -> Integrationen
-  eintragen. Fuer den KI-Agenten einen API-Schluessel von Anthropic oder xAI
-  unter Agent -> Einstellungen eintragen.
+  Mit Benutzer `admin` und dem hier angezeigten Passwort anmelden. Unter
+  Einstellungen -> Verbindungen den umbrelOS-MCP-Token (umbrelOS:
+  Einstellungen -> AI agents (MCP)) und den nrzNetwork-MCP-Token eintragen.
+  Danach unter Einstellungen -> Anmeldung ein eigenes Passwort setzen und die
+  Zwei-Faktor-Anmeldung einrichten.
 releaseNotes: "Erste Version."
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzDashboard
