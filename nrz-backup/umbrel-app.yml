@@ -64,9 +64,7 @@ description: >-
   Filen-Konto verbinden und unter Quellen "umbrelOS sichern" waehlen: Apps und
   Ordner anhaken, Zeitplan waehlen, fertig.
 releaseNotes: >-
-  nrzBackup 1.1.0: MCP fuer Speicher, App-Abdeckung, Backups ausloesen und
-  Rechner; Kalender; Backup-Rechner; Hauptschluessel mit App-Passwort,
-  Drucken, Google/iCloud; Hinweis oben klickbar
+  nrzBackup 1.1.0: umbrelOS direkt sichern ohne Token, auch stuendlich
 developer: nrz
 website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
 submitter: nrz
