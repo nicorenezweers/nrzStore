@@ -2,9 +2,9 @@ manifestVersion: 1
 id: nrz-monitor
 category: "networking"
 name: nrzMonitor
-version: "1.0.0"
+version: "1.1.0"
 tagline: "Ueberwachung wie Netdata: Host, jeder Container, DNS, Cloudflare und NetBird - live und sparsam"
-icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-monitor/icon.png"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-monitor/icon.png"
 port: 8570
 path: ""
 description: >-
@@ -47,7 +47,10 @@ description: >-
   in nrzNetwork unter Einstellungen -> MCP ein Token erstellen und in
   nrzMonitor unter Einstellungen -> Integrationen eintragen; ebenso ein
   Cloudflare-API-Token (Leserechte) und ein NetBird Personal Access Token.
-releaseNotes: "Erste Version."
+releaseNotes: >-
+  nrzMonitor 1.1.0: MCP-Server fuer KI-Programme und externe Dashboards
+  (Live-Werte, Zeitreihen, Ereignisse, Container, Alarme, DNS, Strom),
+  Live-Strom und REST-API unter /mcp
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzMonitor
 submitter: nrz
