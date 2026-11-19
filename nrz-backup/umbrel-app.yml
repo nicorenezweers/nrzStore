@@ -2,9 +2,9 @@ manifestVersion: 1
 id: nrz-backup
 category: "files"
 name: "nrzBackup"
-version: "1.0.0"
+version: "1.1.0"
 tagline: "Backups deiner Apps automatisch und Ende-zu-Ende verschluesselt zu Filen.io"
-icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-backup/icon.png"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-backup/icon.png"
 port: 8510
 path: ""
 description: >-
@@ -43,7 +43,18 @@ description: >-
 
 
   - **Ampel und MCP fuer nrzDashboard** - gruen, gelb oder rot pro Quelle und
-  gesamt, Filen-Speicher, letzte Sicherungen; MCP-Server unter `/mcp`.
+  gesamt, Filen-Speicher, letzte Sicherungen; MCP-Server unter `/mcp`
+  (gesicherte GB, freier Filen-Speicher, Prozent der gesicherten Apps, Backups
+  ausloesen, Backup-Rechner).
+
+
+  - **Kalender und Backup-Rechner** - jedes Backup auf seinem Tag, geplante
+  Sicherungen, und wie viel Platz die Aufbewahrung braucht.
+
+
+  - **Hauptschluessel jederzeit** - mit dem App-Passwort anzeigen, ausdrucken,
+  im Google- oder iCloud-Passwortmanager oder als Datei in iCloud/Google Drive
+  sichern.
 
 
   ## Erste Schritte
@@ -52,13 +63,16 @@ description: >-
   Mit dem hier angezeigten Passwort anmelden, unter Einstellungen das
   Filen-Konto verbinden und unter Quellen "umbrelOS sichern" waehlen: Apps und
   Ordner anhaken, Zeitplan waehlen, fertig.
-releaseNotes: "Erste Version."
+releaseNotes: >-
+  nrzBackup 1.1.0: MCP fuer Speicher, App-Abdeckung, Backups ausloesen und
+  Rechner; Kalender; Backup-Rechner; Hauptschluessel mit App-Passwort,
+  Drucken, Google/iCloud; Hinweis oben klickbar
 developer: nrz
-website: "https://git.zweers.ch/nicorenezweers/nrzBackup"
+website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
 submitter: nrz
-submission: https://git.zweers.ch/nicorenezweers/nrzStore
-repo: "https://git.zweers.ch/nicorenezweers/nrzBackup"
-support: "https://git.zweers.ch/nicorenezweers/nrzBackup/issues"
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
+support: "http://100.78.107.162:8390/nicorenezweers/nrzBackup/issues"
 dependencies:
   - nrz-git
 defaultUsername: "admin"
