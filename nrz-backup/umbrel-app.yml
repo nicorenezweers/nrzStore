@@ -64,8 +64,14 @@ description: >-
   Filen-Konto verbinden und unter Quellen "umbrelOS sichern" waehlen: Apps und
   Ordner anhaken, Zeitplan waehlen, fertig.
 releaseNotes: >-
-  nrzBackup 1.1.1: Release neu gebaut (1.1.0 zeigte kurz auf einen alten
-  Stand)
+  nrzBackup 1.1.1: MCP zeigt gesicherte GB, freien Filen-Speicher und wie viel
+  Prozent der Apps gesichert sind, loest Backups aus (einzeln oder alle) und
+  rechnet den Platzbedarf. Neu: Kalender mit allen Backups und geplanten
+  Sicherungen, Backup-Rechner und Apps-gesichert-Anzeige in der Uebersicht,
+  Knopf Alles jetzt sichern. Hauptschluessel jederzeit mit dem App-Passwort
+  ansehen, ausdrucken, im Google- oder iCloud-Passwortmanager oder als Datei
+  in iCloud/Google Drive sichern. Der Hinweis Hauptschluessel noch nicht
+  gesichert ist jetzt anklickbar.
 developer: nrz
 website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
 submitter: nrz
