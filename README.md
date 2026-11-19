@@ -17,7 +17,7 @@ Most apps download their program from nrzGit and depend on `nrz-git` (from nrzPr
 | nrzCodeMobile (`nrz-code-mobile`) | https://github.com/nicorenezweers/nrzCode |
 | nrzCode (`nrz-code`) | https://github.com/nicorenezweers/nrzCode |
 | nrzDashboard (`nrz-dashboard`) | https://github.com/nicorenezweers/nrzDashboard |
-| nrzNetwork (`nrz-dns`) | https://github.com/nicorenezweers/nrzDNS |
+| nrzNetwork (`nrz-dns`) | https://github.com/nicorenezweers/nrzNetwork |
 | nrzGamePanel (`nrz-gamepanel`) | https://github.com/nicorenezweers/nrzGamePanel |
 | nrzMail (`nrz-mail`) | https://github.com/nicorenezweers/nrzMail |
 | nrzMonitor (`nrz-monitor`) | https://github.com/nicorenezweers/nrzMonitor |
