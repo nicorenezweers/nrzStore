@@ -4,7 +4,7 @@ category: media
 name: nrzMusic
 version: "1.4.0"
 tagline: Eigene Musik, YouTube Music und Spotify in einem Rust-Client – mit Konten und Android-App
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-music/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-music/icon.png
 port: 8350
 path: ""
 description: >-
@@ -59,11 +59,11 @@ description: >-
 releaseNotes: >-
   Umbrel-Paket nrzMusic 1.4.0
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzMusic
+website: https://git.zweers.ch/nicorenezweers/nrzMusic
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzMusic
-support: http://100.78.107.162:8390/nicorenezweers/nrzMusic/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzMusic
+support: https://git.zweers.ch/nicorenezweers/nrzMusic/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

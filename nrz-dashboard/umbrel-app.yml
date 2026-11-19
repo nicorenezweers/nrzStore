@@ -4,7 +4,7 @@ category: developer
 name: nrzDashboard
 version: "1.0.0"
 tagline: "Modulares Dashboard wie Homarr mit Monitoren, Dateimanager und KI-Agent"
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-dashboard/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-dashboard/icon.png
 port: 8500
 path: ""
 description: >-
@@ -55,11 +55,11 @@ description: >-
   unter Agent -> Einstellungen eintragen.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzDashboard
+website: https://git.zweers.ch/nicorenezweers/nrzDashboard
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzDashboard
-support: http://100.78.107.162:8390/nicorenezweers/nrzDashboard/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzDashboard
+support: https://git.zweers.ch/nicorenezweers/nrzDashboard/issues
 dependencies:
   - nrz-git
 defaultUsername: "admin"

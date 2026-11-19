@@ -4,7 +4,7 @@ category: networking
 name: nrzNetwork
 version: "1.0.0"
 tagline: Netzwerk-Zentrale - DNS, Domains bei Cloudflare, NetBird, Reverse Proxy mit HTTPS
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-dns/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-dns/icon.png
 port: 8400
 path: ""
 description: >-
@@ -122,11 +122,11 @@ description: >-
   Verbinden. Dem Umbrel vorher im Router eine feste IP-Adresse geben.
 releaseNotes: "Erste Version."
 developer: nrz
-website: https://github.com/nicorenezweers/nrzNetwork
+website: https://git.zweers.ch/nicorenezweers/nrzNetwork
 submitter: nrz
-submission: http://100.78.107.162:8101/nicorenezweers/nrzStore
-repo: https://github.com/nicorenezweers/nrzNetwork
-support: https://github.com/nicorenezweers/nrzNetwork/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzNetwork
+support: https://git.zweers.ch/nicorenezweers/nrzNetwork/issues
 dependencies: []
 defaultUsername: ""
 defaultPassword: ""

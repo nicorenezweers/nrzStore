@@ -4,7 +4,7 @@ category: "developer"
 name: "nrzVPS"
 version: "1.0.1"
 tagline: "Hosting fuer Freunde und Familie - strenge Grenzen, Apps per KI (MCP) hochladen"
-icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-vps/icon.png"
+icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-vps/icon.png"
 port: 34100
 path: ""
 description: >-
@@ -59,11 +59,11 @@ description: >-
 releaseNotes: >-
   Neues Image nicorenezweers/nrz-vps:1.0.1.
 developer: nrz
-website: "http://100.78.107.162:8390/nicorenezweers/nrzVPS"
+website: "https://git.zweers.ch/nicorenezweers/nrzVPS"
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: "http://100.78.107.162:8390/nicorenezweers/nrzVPS"
-support: "http://100.78.107.162:8390/nicorenezweers/nrzVPS/issues"
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: "https://git.zweers.ch/nicorenezweers/nrzVPS"
+support: "https://git.zweers.ch/nicorenezweers/nrzVPS/issues"
 dependencies:
   - nrz-git
 defaultUsername: ""

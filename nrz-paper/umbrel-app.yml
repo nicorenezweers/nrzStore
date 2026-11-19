@@ -4,7 +4,7 @@ category: Files
 name: nrzPaper
 version: "1.0.1"
 tagline: Dokumente ablegen, erkennen und finden - verschluesselt in einer Datei
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-paper/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-paper/icon.png
 port: 8320
 path: ""
 description: >-
@@ -64,11 +64,11 @@ releaseNotes: >-
   Wartung: Build-Hilfen aufgeraeumt, Migrationen abgesichert, Stabilitaet
   verbessert.
 developer: nrz
-website: https://github.com/nicorenezweers/nrzPaper
+website: https://git.zweers.ch/nicorenezweers/nrzPaper
 submitter: nrz
-submission: http://100.78.107.162:8101/nicorenezweers/nrzStore
-repo: https://github.com/nicorenezweers/nrzPaper
-support: https://github.com/nicorenezweers/nrzPaper/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzPaper
+support: https://git.zweers.ch/nicorenezweers/nrzPaper/issues
 dependencies: []
 defaultUsername: ""
 defaultPassword: ""

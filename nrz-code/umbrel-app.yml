@@ -4,7 +4,7 @@ category: developer
 name: nrzCode
 version: "1.0.0"
 tagline: Coding-Agenten im Browser, verbunden mit nrzGit
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-code/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-code/icon.png
 port: 8410
 path: ""
 description: >-
@@ -43,11 +43,11 @@ description: >-
   des Geraets.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzCode
+website: https://git.zweers.ch/nicorenezweers/nrzCode
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzCode
-support: http://100.78.107.162:8390/nicorenezweers/nrzCode/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzCode
+support: https://git.zweers.ch/nicorenezweers/nrzCode/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

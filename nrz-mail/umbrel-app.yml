@@ -4,7 +4,7 @@ category: Files
 name: nrzMail
 version: "1.0.0"
 tagline: Mail-Client mit Archiv, Statistik und KI-Assistent - verschluesselt in einer Datei
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-mail/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-mail/icon.png
 port: 8360
 path: ""
 description: >-
@@ -64,11 +64,11 @@ description: >-
   Datenbank, externe Bilder in Mails erst auf Wunsch.
 releaseNotes: "Erste Version."
 developer: nrz
-website: https://github.com/nicorenezweers/nrzMail
+website: https://git.zweers.ch/nicorenezweers/nrzMail
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: https://github.com/nicorenezweers/nrzMail
-support: https://github.com/nicorenezweers/nrzMail/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzMail
+support: https://git.zweers.ch/nicorenezweers/nrzMail/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

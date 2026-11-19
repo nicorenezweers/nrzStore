@@ -4,7 +4,7 @@ category: developer
 name: nrzAnalytics
 version: "1.0.0"
 tagline: "Datenschutzfreundliche Webanalyse wie Plausible - in Rust"
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-analytics/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-analytics/icon.png
 port: 8580
 path: ""
 description: >-
@@ -68,11 +68,11 @@ description: >-
   Snippet die richtige Adresse nutzt.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics
+website: https://git.zweers.ch/nicorenezweers/nrzAnalytics
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics
-support: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzAnalytics
+support: https://git.zweers.ch/nicorenezweers/nrzAnalytics/issues
 dependencies:
   - nrz-git
 defaultUsername: "admin"

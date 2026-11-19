@@ -4,7 +4,7 @@ category: files
 name: nrzPass
 version: "1.0.0"
 tagline: "Passwort-Manager in Rust - Zero-Knowledge, Vaultwarden-kompatibel"
-icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-pass/icon.png"
+icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-pass/icon.png"
 port: 8490
 path: ""
 description: >-
@@ -46,11 +46,11 @@ description: >-
   nrzGit (Port 8390) auf diesem Geraet - die App nrzGit muss installiert sein.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzPass
+website: https://git.zweers.ch/nicorenezweers/nrzPass
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzPass
-support: http://100.78.107.162:8390/nicorenezweers/nrzPass/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzPass
+support: https://git.zweers.ch/nicorenezweers/nrzPass/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

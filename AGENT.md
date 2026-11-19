@@ -41,13 +41,14 @@ IDs that start with `<store-id>-`, and the app IDs must never change):
 
 | Store | Repo | Contains |
 |-------|------|----------|
-| `nrzStore` (public) | nrzGit `nicorenezweers/nrzStore`, mirrored to `github.com/nicorenezweers/nrzStore` | apps whose source repo is **public on GitHub** (`github.com/nicorenezweers?tab=repositories`) |
+| `nrzStore` (public) | nrzGit `nicorenezweers/nrzStore`, publicly listed → `https://git.zweers.ch/nicorenezweers/nrzStore` (nrzGit mirrors listed repos to GitHub) | apps whose source repo is **publicly listed on git.zweers.ch** (the source of truth; GitHub is only a slower mirror) |
 | `nrzPrivatStore` | nrzGit `nicorenezweers/nrzPrivatStore` (not on GitHub) | every other app |
 
-The rule is GitHub visibility: when an app's repository becomes public on GitHub, move its
+The rule is public listing on git.zweers.ch: when an app's repository becomes publicly listed there, move its
 directory from nrzPrivatStore to nrzStore (bump both store versions, rewrite `icon:`/`submission:`
-URLs to the target store and set `"store"` in the app's `nrzStore.json`). Never move an app the
-other way into the public store before its repo is public. Public apps may depend on `nrz-git`,
+URLs to the target store and set `"store"` in the app's `nrzStore.json`). Never move an app into the public store before its repo is public. In the public store every
+`icon:`, `repo:`, `support:`, `website:`, `submission:` and gallery URL uses `https://git.zweers.ch/nicorenezweers/…`
+(never the Tailscale address or GitHub). Public apps may depend on `nrz-git`,
 which lives in nrzPrivatStore; umbrelOS resolves dependencies by app ID across stores.
 
 `umbrel-app-store.yml` is three lines and every one of them matters:

@@ -4,7 +4,7 @@ category: "files"
 name: "nrzBackup"
 version: "1.0.0"
 tagline: "Backups deiner Apps automatisch und Ende-zu-Ende verschluesselt zu Filen.io"
-icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-backup/icon.png"
+icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-backup/icon.png"
 port: 8510
 path: ""
 description: >-
@@ -54,11 +54,11 @@ description: >-
   Ordner anhaken, Zeitplan waehlen, fertig.
 releaseNotes: "Erste Version."
 developer: nrz
-website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
+website: "https://git.zweers.ch/nicorenezweers/nrzBackup"
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
-support: "http://100.78.107.162:8390/nicorenezweers/nrzBackup/issues"
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: "https://git.zweers.ch/nicorenezweers/nrzBackup"
+support: "https://git.zweers.ch/nicorenezweers/nrzBackup/issues"
 dependencies:
   - nrz-git
 defaultUsername: "admin"

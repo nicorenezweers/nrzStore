@@ -4,7 +4,7 @@ category: gaming
 name: "nrzGamePanel"
 version: "1.0.1"
 tagline: "Minecraft- und Factorio-Server verwalten - in Rust, im Host-Modus"
-icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-gamepanel/icon.png"
+icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-gamepanel/icon.png"
 port: 8700
 path: ""
 description: >-
@@ -59,11 +59,11 @@ description: >-
 releaseNotes: >-
   Allgemeine Fixes und Aufraeumarbeiten an Build und Oberflaeche.
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzGamePanel-umbrel
+website: https://git.zweers.ch/nicorenezweers/nrzGamePanel
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzGamePanel-umbrel
-support: http://100.78.107.162:8390/nicorenezweers/nrzGamePanel-umbrel/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzGamePanel
+support: https://git.zweers.ch/nicorenezweers/nrzGamePanel/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

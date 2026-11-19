@@ -4,7 +4,7 @@ category: Developer
 name: nrzLearn
 version: "1.0.0"
 tagline: Programmieren lernen wie mit Duolingo - 48 Kurse, 40 Sprachen, ohne Konto
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-rust-learn/icon.png?v=3
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-rust-learn/icon.png?v=3
 port: 29090
 path: ""
 description: >-
@@ -75,9 +75,9 @@ releaseNotes: "Erste Version."
 developer: nrz
 website: https://zweers.ch
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzLearn
-support: http://100.78.107.162:8390/nicorenezweers/nrzLearn/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzLearn
+support: https://git.zweers.ch/nicorenezweers/nrzLearn/issues
 dependencies:
   - nrz-git
 defaultUsername: "admin"

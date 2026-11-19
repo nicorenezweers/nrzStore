@@ -4,7 +4,7 @@ category: "networking"
 name: nrzMonitor
 version: "1.0.0"
 tagline: "Ueberwachung wie Netdata: Host, jeder Container, DNS, Cloudflare und NetBird - live und sparsam"
-icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-monitor/icon.png"
+icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-monitor/icon.png"
 port: 8570
 path: ""
 description: >-
@@ -49,11 +49,11 @@ description: >-
   Cloudflare-API-Token (Leserechte) und ein NetBird Personal Access Token.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzMonitor
+website: https://git.zweers.ch/nicorenezweers/nrzMonitor
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzMonitor
-support: http://100.78.107.162:8390/nicorenezweers/nrzMonitor/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzMonitor
+support: https://git.zweers.ch/nicorenezweers/nrzMonitor/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

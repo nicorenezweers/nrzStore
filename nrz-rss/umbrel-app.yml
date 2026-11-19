@@ -4,7 +4,7 @@ category: social
 name: nrzNews
 version: "1.0.0"
 tagline: Ruhiger News- und RSS-Reader in Rust, auch fuers Handy
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-rss/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-rss/icon.png
 port: 8340
 path: ""
 description: >-
@@ -45,11 +45,11 @@ description: >-
   nrzGit muss darum installiert sein.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzNews
+website: https://git.zweers.ch/nicorenezweers/nrzNews
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzNews
-support: http://100.78.107.162:8390/nicorenezweers/nrzNews/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzNews
+support: https://git.zweers.ch/nicorenezweers/nrzNews/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

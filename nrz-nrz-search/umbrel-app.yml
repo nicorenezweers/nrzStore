@@ -4,7 +4,7 @@ category: Utilities
 name: nrzSearch
 version: "1.0.0"
 tagline: "Eigene Suchmaschine wie Google - komplett in Rust, mit eingebautem SearXNG"
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-nrz-search/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-nrz-search/icon.png
 port: 8188
 path: ""
 description: >-
@@ -49,11 +49,11 @@ description: >-
   dauert etwa eine Minute.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzSearch
+website: https://git.zweers.ch/nicorenezweers/nrzSearch
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzSearch
-support: http://100.78.107.162:8390/nicorenezweers/nrzSearch/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzSearch
+support: https://git.zweers.ch/nicorenezweers/nrzSearch/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

@@ -4,7 +4,7 @@ category: files
 name: nrzPlan
 version: "1.0.0"
 tagline: "Todos, Kalender, Kanban-Boards und Fokus-Timer mit REST-API und Webhooks"
-icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-plan/icon.png
+icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-plan/icon.png
 port: 8560
 path: ""
 description: >-
@@ -49,11 +49,11 @@ description: >-
   API-Schluessel, den du in nrzPlan unter Einstellungen -> API-Keys erzeugst.
 releaseNotes: "Erste Version."
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzPlan
+website: https://git.zweers.ch/nicorenezweers/nrzPlan
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzPlan
-support: http://100.78.107.162:8390/nicorenezweers/nrzPlan/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzPlan
+support: https://git.zweers.ch/nicorenezweers/nrzPlan/issues
 dependencies:
   - nrz-git
 defaultUsername: ""
