@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-fitness
 category: files
 name: "nrzFitness"
-version: "1.1.0"
+version: "1.1.1"
 tagline: "Ernaehrung, Training, Koerper, Fasten und Gesundheit - privat und fuers Handy gemacht"
 icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-fitness/icon.png"
 port: 8630
@@ -55,7 +55,7 @@ description: >-
   Der Barcode-Scanner braucht die Kamera; Browser erlauben sie nur ueber HTTPS
   oder localhost. Ohne Kamera laesst sich der Code von Hand eingeben.
 releaseNotes: >-
-  KI-Schaetzung: Mahlzeit fotografieren oder beschreiben - Claude, Grok,
+  KI-Schaetzung: Mahlzeit fotografieren oder beschreiben, Claude, Grok,
   ChatGPT, Gemini, eigener Server oder CLI-Befehl schaetzt Positionen, Mengen
   und Naehrwerte; korrigierbar und mit einem Tipp eintragbar. Einrichtung
   unter Einstellungen > KI-Assistent.
