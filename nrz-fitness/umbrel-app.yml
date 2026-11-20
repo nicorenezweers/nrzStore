@@ -55,7 +55,7 @@ description: >-
   Der Barcode-Scanner braucht die Kamera; Browser erlauben sie nur ueber HTTPS
   oder localhost. Ohne Kamera laesst sich der Code von Hand eingeben.
 releaseNotes: >-
-  KI-Schaetzung: Mahlzeit fotografieren oder beschreiben, Claude, Grok,
+  KI-Schaetzung: Mahlzeit fotografieren oder beschreiben - Claude, Grok,
   ChatGPT, Gemini, eigener Server oder CLI-Befehl schaetzt Positionen, Mengen
   und Naehrwerte; korrigierbar und mit einem Tipp eintragbar. Einrichtung
   unter Einstellungen > KI-Assistent.
