@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-music
 category: media
 name: nrzMusic
-version: "1.4.0"
+version: "1.5.0"
 tagline: Eigene Musik, YouTube Music und Spotify in einem Rust-Client – mit Konten und Android-App
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-music/icon.png
 port: 8350
@@ -57,7 +57,7 @@ description: >-
   **nrzMusic** im Home-Ordner von umbrelOS (Dateien-App Home > nrzMusic).
   Braucht die App nrzGit (laedt das Programm von dort).
 releaseNotes: >-
-  Umbrel-Paket nrzMusic 1.4.0
+  Umbrel-Paket nrzMusic 1.5.0
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzMusic
 submitter: nrz
