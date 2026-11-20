@@ -4,7 +4,7 @@ category: files
 name: "nrzFitness"
 version: "1.0.0"
 tagline: "Ernaehrung, Training, Koerper, Fasten und Gesundheit - privat und fuers Handy gemacht"
-icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-fitness/icon.png"
+icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-fitness/icon.png"
 port: 8630
 path: ""
 description: >-
@@ -60,11 +60,11 @@ releaseNotes: >-
   Koerper-Check-in, Fasten-Timer, Zyklus, Medikamente und Symptome, Ziele mit
   Bedarfsrechner, Berichte, Profile und Datensicherung.
 developer: nrz
-website: http://100.78.107.162:8390/nicorenezweers/nrzFitness
+website: https://git.zweers.ch/nicorenezweers/nrzFitness
 submitter: nrz
-submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
-repo: http://100.78.107.162:8390/nicorenezweers/nrzFitness
-support: http://100.78.107.162:8390/nicorenezweers/nrzFitness/issues
+submission: https://git.zweers.ch/nicorenezweers/nrzStore
+repo: https://git.zweers.ch/nicorenezweers/nrzFitness
+support: https://git.zweers.ch/nicorenezweers/nrzFitness/issues
 dependencies:
   - nrz-git
 defaultUsername: ""

@@ -18,6 +18,7 @@ Most apps download their program from nrzGit and depend on `nrz-git` (from nrzPr
 | nrzCode (`nrz-code`) | https://git.zweers.ch/nicorenezweers/nrzCode |
 | nrzDashboard (`nrz-dashboard`) | https://git.zweers.ch/nicorenezweers/nrzDashboard |
 | nrzNetwork (`nrz-dns`) | https://git.zweers.ch/nicorenezweers/nrzNetwork |
+| nrzFitness (`nrz-fitness`) | https://git.zweers.ch/nicorenezweers/nrzFitness |
 | nrzGamePanel (`nrz-gamepanel`) | https://git.zweers.ch/nicorenezweers/nrzGamePanel |
 | nrzMail (`nrz-mail`) | https://git.zweers.ch/nicorenezweers/nrzMail |
 | nrzMonitor (`nrz-monitor`) | https://git.zweers.ch/nicorenezweers/nrzMonitor |
