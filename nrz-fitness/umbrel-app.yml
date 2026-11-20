@@ -1,0 +1,72 @@
+manifestVersion: 1
+id: nrz-fitness
+category: files
+name: "nrzFitness"
+version: "1.0.0"
+tagline: "Ernaehrung, Training, Koerper, Fasten und Gesundheit - privat und fuers Handy gemacht"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-fitness/icon.png"
+port: 8630
+path: ""
+description: >-
+  nrzFitness ist dein selbst gehosteter Fitness- und Gesundheits-Tracker -
+  komplett in Rust (Dioxus fullstack, nrzUI-Thema, SQLite), gebaut fuers
+  Handy (zum Home-Bildschirm hinzufuegen) und mit voller Desktop-Ansicht.
+  Inspiriert von SparkyFitness.
+
+
+  ## Was die App kann
+
+
+  - **Heute** - Kalorienring mit Restbudget, Makros, Wasser, Mahlzeiten,
+  Training, Schritte, Schlaf, Gewicht und Fasten auf einen Blick; Tage per
+  Wischen wechseln.
+
+
+  - **Essen eintragen** - eigene Datenbank mit ueber 120 Basis-Lebensmitteln,
+  Online-Suche in Open Food Facts, Barcode-Scanner mit der Handykamera,
+  Favoriten, Zuletzt gegessen, Mahlzeiten-Vorlagen, Schnelleintrag und
+  "Wie gestern".
+
+
+  - **Training** - ueber 100 Uebungen, Saetze mit Wiederholungen und Gewicht,
+  Vorlagen, Ruhe-Timer, Kalorien ueber MET, Rekorde, 1RM und Verlauf.
+
+
+  - **Koerper** - taeglicher Check-in mit Gewicht, Koerperfett, Umfaengen,
+  Schritten, Stimmung, Energie, Stress, Schlaf und Ruhepuls, Gewichtsverlauf
+  mit 7-Tage-Schnitt und BMI.
+
+
+  - **Fasten, Zyklus, Medikamente** - Intervallfasten mit Live-Timer und
+  Phasen, Periodenkalender mit Vorhersage, Einnahme-Checkliste und Symptome.
+
+
+  - **Ziele und Berichte** - Bedarfsrechner (Mifflin-St Jeor), Makro-Vorlagen,
+  Berichte ueber 7 Tage bis 1 Jahr, Serien und Heatmap.
+
+
+  - **Profile und Daten** - mehrere Profile (Familie), JSON-Sicherung,
+  CSV-Export und Import.
+
+
+  ## Hinweis
+
+
+  Der Barcode-Scanner braucht die Kamera; Browser erlauben sie nur ueber HTTPS
+  oder localhost. Ohne Kamera laesst sich der Code von Hand eingeben.
+releaseNotes: >-
+  Erste Version: Ernaehrungstagebuch mit Open-Food-Facts-Suche und
+  Barcode-Scanner, Training mit Saetzen, Vorlagen und Rekorden,
+  Koerper-Check-in, Fasten-Timer, Zyklus, Medikamente und Symptome, Ziele mit
+  Bedarfsrechner, Berichte, Profile und Datensicherung.
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzFitness
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzFitness
+support: http://100.78.107.162:8390/nicorenezweers/nrzFitness/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []
