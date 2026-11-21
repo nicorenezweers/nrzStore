@@ -2,9 +2,9 @@ manifestVersion: 1
 id: nrz-tube
 category: media
 name: nrzTube
-version: "1.0.2"
-tagline: YouTube und Twitch ohne Werbung und ohne Tracking – mit Abos, Profilen, SponsorBlock und Live-Chat
-icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-tube/icon.png
+version: "1.1.0"
+tagline: YouTube, Twitch, TikTok, Instagram und X ohne Werbung und ohne Tracking – eine App fuer alles
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-tube/icon.png
 port: 8455
 path: ""
 description: >-
@@ -36,6 +36,11 @@ description: >-
   mitschreiben nach Anmeldung per Code. YouTube- und Twitch-Kanaele derselben Person
   werden automatisch verknuepft, mit Live-Hinweis.
 
+  - **Social: TikTok, Instagram und X** - Konten folgen und ihre neuesten
+  Beitraege in einem gemeinsamen Feed sehen, sortiert nach Plattform-Reitern;
+  Profile, Videos und Bilder laufen ueber deinen Server. Instagram-Profile
+  brauchen eine hinterlegte Anmeldung (cookies.txt), X ist damit zuverlaessiger.
+
   - **Watch-Party** - zusammen schauen per Einladungslink, auch fuer Gaeste
   ohne Konto: synchrone Wiedergabe, Warteschlange und Chat.
 
@@ -58,18 +63,20 @@ description: >-
   Suche abonnieren oder unter Abos & Profile importieren. Braucht die App
   nrzGit (laedt das Programm von dort).
 releaseNotes: >-
-  Better README with screenshots and the full feature list. Codebase is now
-  100% Rust.
+  New: Social – TikTok, Instagram and X inside nrzTube. Follow accounts, one
+  mixed feed with platform tabs, profiles and videos without ads or tracking;
+  paste post or profile links into the search.
 developer: nrz
-website: https://git.zweers.ch/nicorenezweers/nrzTube
+website: http://100.78.107.162:8390/nicorenezweers/nrzTube
 submitter: nrz
-submission: https://git.zweers.ch/nicorenezweers/nrzStore
-repo: https://git.zweers.ch/nicorenezweers/nrzTube
-support: https://git.zweers.ch/nicorenezweers/nrzTube/issues
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzTube
+support: http://100.78.107.162:8390/nicorenezweers/nrzTube/issues
 dependencies:
   - nrz-git
 defaultUsername: ""
 defaultPassword: ""
 gallery:
-  - https://git.zweers.ch/nicorenezweers/nrzTube/raw/branch/main/docs/screenshots/home.jpg
-  - https://git.zweers.ch/nicorenezweers/nrzTube/raw/branch/main/docs/screenshots/twitch.jpg
+  - http://100.78.107.162:8390/nicorenezweers/nrzTube/raw/branch/main/docs/screenshots/home.jpg
+  - http://100.78.107.162:8390/nicorenezweers/nrzTube/raw/branch/main/docs/screenshots/twitch.jpg
+  - http://100.78.107.162:8390/nicorenezweers/nrzTube/raw/branch/main/docs/screenshots/social.jpg
