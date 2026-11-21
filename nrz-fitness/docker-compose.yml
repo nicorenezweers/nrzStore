@@ -4,6 +4,8 @@ services:
     environment:
       APP_HOST: nrz-fitness_web_1
       APP_PORT: 8630
+      # Automatische Synchronisierung (Kurzbefehle, Health-Apps) ohne umbrelOS-Anmeldung; geschuetzt per Profil-Token.
+      PROXY_AUTH_WHITELIST: "/api/health/hook/**"
     container_name: nrz-fitness_app_proxy_1
 
   web:
