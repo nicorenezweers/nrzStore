@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-backup
 category: "files"
 name: "nrzBackup"
-version: "1.1.1"
+version: "1.2.0"
 tagline: "Backups deiner Apps automatisch und Ende-zu-Ende verschluesselt zu Filen.io"
 icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-backup/icon.png"
 port: 8510
@@ -64,14 +64,8 @@ description: >-
   Filen-Konto verbinden und unter Quellen "umbrelOS sichern" waehlen: Apps und
   Ordner anhaken, Zeitplan waehlen, fertig.
 releaseNotes: >-
-  nrzBackup 1.1.1: MCP zeigt gesicherte GB, freien Filen-Speicher und wie viel
-  Prozent der Apps gesichert sind, loest Backups aus (einzeln oder alle) und
-  rechnet den Platzbedarf. Neu: Kalender mit allen Backups und geplanten
-  Sicherungen, Backup-Rechner und Apps-gesichert-Anzeige in der Uebersicht,
-  Knopf Alles jetzt sichern. Hauptschluessel jederzeit mit dem App-Passwort
-  ansehen, ausdrucken, im Google- oder iCloud-Passwortmanager oder als Datei
-  in iCloud/Google Drive sichern. Der Hinweis Hauptschluessel noch nicht
-  gesichert ist jetzt anklickbar.
+  Sicherheits-Updates: rusqlite 0.41 (libsqlite3-sys 0.39), cookie 0.18.3, url
+  2.5.9 (nrzSecurity)
 developer: nrz
 website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
 submitter: nrz
