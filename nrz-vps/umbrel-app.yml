@@ -57,7 +57,7 @@ description: >-
   Hinweis: nrzVPS nutzt den Docker-Dienst des Geraets, um die Apps als eigene
   Container zu starten.
 releaseNotes: >-
-  Sicherheits-Updates: zip 9, cookie 0.18.3, url 2.5.9.
+  Neues Image nicorenezweers/nrz-vps:1.1.0.
 developer: nrz
 website: "http://100.78.107.162:8390/nicorenezweers/nrzVPS"
 submitter: nrz
