@@ -8,7 +8,7 @@ APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 # (Zweig `umbrel`, Tag unten, gebaut mit `cargo xtask umbrel-release` im Repo nrzGamePanel). Beim
 # ersten Start und nach Updates werden sie fuer die Architektur dieses Geraets nach app/ geladen
 # und geprueft.
-RELEASE="umbrel-1.0.1"
+RELEASE="umbrel-1.1.0"
 BASE="http://localhost:8390/nicorenezweers/nrzGamePanel-umbrel/raw/tag/$umbrel-1.1.0"
 
 case "$(uname -m)" in
