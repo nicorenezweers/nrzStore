@@ -1,0 +1,71 @@
+manifestVersion: 1
+id: nrz-security
+category: developer
+name: nrzSecurity
+version: "1.0.0"
+tagline: "Welche Pakete in welchen Projekten stecken, welche CVEs sie betreffen und was zu tun ist - plus Rust-News"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-security/icon.png
+port: 8660
+path: ""
+description: >-
+  nrzSecurity prueft die Abhaengigkeiten aller deiner Projekte auf bekannte
+  Schwachstellen - komplett in Rust (Dioxus fullstack, nrzUI-Thema, SQLite).
+
+
+  ## Was die App kann
+
+
+  - **Projekte aus nrzGit** - liest alle Repositories ueber die nrzGit-API
+  (neue automatisch), dazu lokale Ordner aus deinem Home-Verzeichnis oder
+  eingefuegte Lockfiles.
+
+
+  - **Lockfiles** - Cargo.lock, package-lock.json, pnpm-lock.yaml, yarn.lock,
+  poetry.lock, uv.lock, requirements.txt, go.mod, Gemfile.lock und
+  composer.lock; direkte und transitive Abhaengigkeiten mit Pfad.
+
+
+  - **Mehrere CVE-Quellen** - OSV.dev, GitHub Advisory Database und RustSec
+  (direkt aus dem Original-Repository), der OSV-Export als Ersatz, NVD fuer
+  CVSS-Werte, CISA KEV fuer aktiv ausgenutzte Luecken und FIRST EPSS.
+  Meldungen werden ueber CVE/GHSA/RUSTSEC zusammengefuehrt.
+
+
+  - **Was tun?** - zu jeder Schwachstelle die kleinste Version mit Fix,
+  ob das Update kompatibel ist, ueber welche Abhaengigkeit sie kommt und
+  fertige Befehle (cargo update, npm, pnpm, pip, go ...). Ignorieren mit
+  Begruendung.
+
+
+  - **Pakete** - alle Abhaengigkeiten ueber alle Projekte, verschiedene
+  Versionen im Einsatz, veraltete und zurueckgezogene (yanked) Versionen.
+
+
+  - **News** - Rust-Blog, This Week in Rust, RustSec, Releases, Community
+  und automatisch Release-Feeds der Pakete, die du am meisten benutzt.
+
+
+  - **Benachrichtigung** - neue Schwachstellen per Webhook (ntfy, Discord,
+  Slack, n8n, Home Assistant).
+
+
+  ## Erste Schritte
+
+
+  Die Oberflaeche liegt hinter der umbrelOS-Anmeldung. Unter Einstellungen
+  einen nrzGit-Konto-Token eintragen (sonst nur oeffentliche Repositories des
+  angegebenen Benutzers) und optional einen GitHub-Token fuer die GitHub
+  Advisory Database. Der erste Scan startet kurz nach dem Start von selbst.
+releaseNotes: >-
+  nrzSecurity 1.0.0: Abhaengigkeiten, CVEs aus mehreren Quellen und Rust-News
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/nrzSecurity
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzSecurity
+support: http://100.78.107.162:8390/nicorenezweers/nrzSecurity/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

@@ -1,0 +1,54 @@
+services:
+  # Injected by umbrelOS. Die Oberflaeche bleibt hinter der umbrelOS-Anmeldung.
+  app_proxy:
+    environment:
+      APP_HOST: nrz-security_web_1
+      APP_PORT: 8660
+    container_name: nrz-security_app_proxy_1
+
+  web:
+    # Gepinntes Debian (Multi-Arch-Manifest). nrzSecurity ist kein eigenes Image: hooks/pre-start
+    # laedt Server und Oberflaeche fuer die Architektur dieses Geraets aus dem nrzSecurity-Repo
+    # (Zweig umbrel) nach ${APP_DATA_DIR}/app - ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-security_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/nrzsecurity"]
+    stop_grace_period: 10s
+    # nrzGit laeuft auf dem Geraet (Port 8390)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - TZ=Europe/Zurich
+      - IP=0.0.0.0
+      - PORT=8660
+      - DATABASE_URL=sqlite:///data/nrzsecurity.db
+      - NRZGIT_URL=http://host.docker.internal:8390
+      - LOCAL_ROOT=/scan
+      - RUST_LOG=info
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # SQLite-Datenbank (Projekte, Pakete, Meldungen, News, Einstellungen).
+      - ${APP_DATA_DIR}/data:/data
+      # Quelle "Ordner": dein Home-Verzeichnis, nur lesend.
+      - ${UMBREL_ROOT}/home:/scan:ro
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/nrzsecurity", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
