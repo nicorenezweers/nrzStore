@@ -65,7 +65,7 @@ description: >-
   Ordner anhaken, Zeitplan waehlen, fertig.
 releaseNotes: >-
   Sicherheits-Updates: rusqlite 0.41 (libsqlite3-sys 0.39), cookie 0.18.3, url
-  2.5.9 (nrzSecurity)
+  2.5.9
 developer: nrz
 website: "http://100.78.107.162:8390/nicorenezweers/nrzBackup"
 submitter: nrz
