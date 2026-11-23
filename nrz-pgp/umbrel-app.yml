@@ -2,9 +2,9 @@ manifestVersion: 1
 id: nrz-pgp
 category: developer
 name: nrzPGP
-version: "1.0.0"
+version: "1.1.0"
 tagline: "PGP-Client mit Profilen, Pruefer und Tresor - Schluessel nie im Klartext"
-icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-pgp/icon.png
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-pgp/icon.png
 port: 8540
 path: ""
 description: >-
@@ -62,13 +62,15 @@ description: >-
 
   Mit Benutzer `nrz` und dem hier angezeigten Passwort anmelden, danach das
   Passwort in den Einstellungen der App aendern.
-releaseNotes: "Erste Version."
+releaseNotes: >-
+  Erste Version: Profile, Verschluesseln, Entschluesseln, Signieren,
+  PGP-Pruefer, Kontakte, Tresor mit Raetseln und Cap-Captcha, Protokoll.
 developer: nrz
-website: https://git.zweers.ch/nicorenezweers/nrzPGP
+website: http://100.78.107.162:8390/nicorenezweers/nrzPGP
 submitter: nrz
-submission: https://git.zweers.ch/nicorenezweers/nrzStore
-repo: https://git.zweers.ch/nicorenezweers/nrzPGP
-support: https://git.zweers.ch/nicorenezweers/nrzPGP/issues
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzPGP
+support: http://100.78.107.162:8390/nicorenezweers/nrzPGP/issues
 dependencies:
   - nrz-git
 defaultUsername: "nrz"
