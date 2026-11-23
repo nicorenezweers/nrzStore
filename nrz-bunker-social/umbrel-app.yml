@@ -1,0 +1,66 @@
+manifestVersion: 1
+id: nrz-bunker-social
+category: social
+name: Bunker
+version: "1.1.0"
+tagline: "Sicher posten, privat schreiben – Ende-zu-Ende verschluesselt, KI-moderiert"
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-bunker-social/icon.png
+port: 8542
+path: ""
+description: >-
+  Bunker ist ein soziales Netzwerk im Stil von X/Twitter: Beitraege mit bis zu
+  500 Zeichen, Antworten, Reposts, Zitate, Likes, Lesezeichen, Hashtags,
+  Erwaehnungen und Feeds ("Fuer dich" und "Folge ich"). Direktnachrichten sind
+  Ende-zu-Ende verschluesselt. Komplett in Rust mit nrzUI-Oberflaeche.
+
+
+  ## Was die App kann
+
+
+  - **Feed wie X** - posten, antworten, reposten, zitieren, liken, folgen,
+  Hashtags und Trends, Suche ueber Meilisearch, Mitteilungen in Echtzeit.
+
+
+  - **Privat** - Direktnachrichten Ende-zu-Ende verschluesselt (X25519 und
+  XChaCha20-Poly1305 im Browser), das Passwort verlaesst den Browser nie, alle
+  Inhalte liegen verschluesselt auf dem Server.
+
+
+  - **Keine Uploads** - Profilbilder, Banner und Bilder kommen nur als Link von
+  Cubeupload, Postimages, Catbox, Pixeldrain, Imgbox, Pasteboard,
+  FreeImage.host, Vgy.me, ImgBB oder Imgur und werden vor dem Anzeigen
+  automatisch geprueft (keine Pornografie, keine Gewalt).
+
+
+  - **KI-Moderation ohne Menschen** - ein Team aus KI-Agenten (OpenRouter, xAI
+  Grok oder Anthropic Claude) prueft jeden Beitrag sofort: Triage,
+  Regel-Richter, Strafmass. Verwarnungen, Timeouts und Sperren mit Begruendung,
+  Einsprueche werden automatisch entschieden, alles im Moderationslog.
+
+
+  - **Zwei Oberflaechen** - die oeffentliche Seite (Port 8542, darf ins
+  Internet) hat keinerlei Admin-Funktionen. Die Admin-Oberflaeche laeuft auf
+  Port 8543 und ist nur im eigenen Netz erreichbar.
+
+
+  ## Erste Schritte
+
+
+  Admin-Oberflaeche unter http://umbrel.local:8543 mit Benutzer `nrz` und dem
+  hier angezeigten Passwort oeffnen und unter "KI-Team" einen API-Schluessel
+  (OpenRouter, xAI oder Anthropic) eintragen. Danach moderiert Bunker selbst.
+releaseNotes: >-
+  Sicherheits-Updates: sqlx 0.9.1 (libsqlite3-sys 0.40), url 2.5.9, cookie
+  0.18.3, Version 1.1.0 (nrzSecurity)
+developer: nrz
+website: http://100.78.107.162:8390/nicorenezweers/Bunker
+submitter: nrz
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/Bunker
+support: http://100.78.107.162:8390/nicorenezweers/Bunker/issues
+dependencies:
+  - nrz-git
+defaultUsername: "nrz"
+defaultPassword: "$APP_PASSWORD"
+deterministicPassword: true
+gallery: []

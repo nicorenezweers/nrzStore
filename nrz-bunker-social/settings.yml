@@ -1,0 +1,5 @@
+dependencies: {}
+autoStart: true
+# Bunker hat eigene Konten; die umbrelOS-Anmeldung davor ist aus, damit Gaeste lesen und sich
+# registrieren koennen. Die Admin-Oberflaeche (Port 8543) hat eine eigene Anmeldung.
+appProxyAuthEnabled: false
