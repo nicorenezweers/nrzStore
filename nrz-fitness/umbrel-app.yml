@@ -55,12 +55,8 @@ description: >-
   Der Barcode-Scanner braucht die Kamera; Browser erlauben sie nur ueber HTTPS
   oder localhost. Ohne Kamera laesst sich der Code von Hand eingeben.
 releaseNotes: >-
-  Apple Health und Google Health Connect: Apple-Health-Export importieren
-  (Schritte, Gewicht, Koerperfett, Schlaf, Ruhepuls, Trainings) und
-  automatisch synchronisieren per Kurzbefehl, Health Auto Export oder
-  Android-App; Tages-Naehrwerte zum Zurueckschreiben. Ziele: auch sehr
-  ehrgeiziges Abnehmen bis -2 kg pro Woche, mit Info-Hinweis zum aerztlichen
-  Rat.
+  Sicherheits-Updates: zip 9.8.2, quick-xml 0.41, sqlx 0.9.1, cookie 0.18.3,
+  url 2.5.9
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzFitness
 submitter: nrz
