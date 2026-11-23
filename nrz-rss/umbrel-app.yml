@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-rss
 category: social
 name: nrzNews
-version: "1.0.0"
+version: "1.1.0"
 tagline: Ruhiger News- und RSS-Reader in Rust, auch fuers Handy
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-rss/icon.png
 port: 8340
@@ -43,7 +43,9 @@ description: >-
   Danach ist die Registrierung geschlossen, bis du sie in den Einstellungen
   oeffnest. Das Programm kommt aus dem nrzNews-Repo auf nrzGit, die App
   nrzGit muss darum installiert sein.
-releaseNotes: "Erste Version."
+releaseNotes: >-
+  Sicherheits-Updates: rocket 0.5.4 (h2 0.4), sqlx 0.9.1 (libsqlite3-sys
+  0.40), ammonia 4.2.5, cookie 0.18.3, url 2.5.9
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzNews
 submitter: nrz
