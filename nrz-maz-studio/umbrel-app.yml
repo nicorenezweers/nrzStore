@@ -1,0 +1,48 @@
+manifestVersion: 1
+id: nrz-maz-studio
+category: media
+name: MAZ-Studio
+version: "1.0.6"
+tagline: "Flaggen-Quiz-Shorts per Klick erzeugen und als MP4 speichern"
+icon: "http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-maz-studio/icon.png"
+port: 8430
+path: ""
+description: >-
+  MAZ-Studio erzeugt YouTube-Shorts im Stil "FLAG QUIZ - THESE 10 COUNTRIES"
+  komplett in Rust: ein Klick auf "Neues Quiz generieren" waehlt zehn neue
+  Laender (3 leicht, 3 mittel, 3 schwer, 1 Experte), die Vorschau laeuft
+  sofort im Browser, und der Export schreibt eine fertige MP4 in 1080x1920.
+
+
+  ## Was die App kann
+
+  - **Quiz per Klick** - neue Laender wuerfeln, einzelne Laender per Liste
+  tauschen, Texte, Denkzeit und Aufloesungszeit einstellen.
+
+  - **Hintergrund** - automatisch erzeugte Erde im Weltall oder eigenes Bild.
+
+  - **Ton** - Ticken beim Countdown, Ding bei der Aufloesung, eigene Musik.
+
+  - **Export** - MP4 (H.264/AAC) direkt zum Hochladen, Download aus dem Browser.
+
+
+  ## Erste Schritte
+
+  Die App oeffnen, "Neues Quiz generieren" klicken, "Als MP4 speichern".
+  Die Videos liegen unter `data/videos`. Die Stimme kommt auf dem Umbrel aus
+  fertigen Stimmpaketen (mit Qwen3-TTS erzeugt, Sprecher Ryan, Aiden, Vivian
+  und Serena) in Englisch, Deutsch und Franzoesisch.
+releaseNotes: >-
+  1.0.6: Sicherheits-Updates cookie 0.18.3, url 2.5.9 (nrzSecurity), Umbrel
+  umbrel-1.0.6
+developer: MikeAdam
+website: http://100.78.107.162:8390/MikeAdam/MAZ-Studio
+submitter: MikeAdam
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/MikeAdam/MAZ-Studio
+support: http://100.78.107.162:8390/MikeAdam/MAZ-Studio/issues
+dependencies:
+  - nrz-git
+defaultUsername: ""
+defaultPassword: ""
+gallery: []

@@ -1,0 +1,52 @@
+services:
+  # Injected by umbrelOS. MAZ-Studio hat keine eigene Anmeldung, deshalb bleibt die
+  # umbrelOS-Anmeldung vor dem app_proxy an (kein settings.yml).
+  app_proxy:
+    environment:
+      APP_HOST: nrz-maz-studio_app_1
+      APP_PORT: 8430
+    container_name: nrz-maz-studio_app_proxy_1
+
+  app:
+    # Gepinntes Debian (Multi-Arch-Manifest). MAZ-Studio ist kein eigenes Image: hooks/pre-start
+    # laedt Programm, Oberflaeche, statisches ffmpeg und Schrift fuer die Architektur dieses
+    # Geraets aus dem MAZ-Studio-Repo (Zweig umbrel) nach ${APP_DATA_DIR}/app - ohne Registry-Login.
+    image: debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
+    container_name: nrz-maz-studio_app_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    working_dir: /app
+    command: ["/app/maz-studio"]
+    stop_grace_period: 15s
+    environment:
+      - TZ=Europe/Zurich
+      - FLAGQUIZ_HOST=0.0.0.0
+      - FLAGQUIZ_PORT=8430
+      - FLAGQUIZ_DATA=/data
+      - FLAGQUIZ_OUT=/data/videos
+      - FLAGQUIZ_UI=/app/ui
+      - FLAGQUIZ_VOICES=/app/voices
+      - FLAGQUIZ_NO_BROWSER=1
+      - FFMPEG=/app/ffmpeg
+      # Erzwingt pro Release einen frischen Container.
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/app:/app:ro
+      # Flaggen-Cache, Uploads (Hintergrund, Musik) und die fertigen Videos.
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "/app/maz-studio", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"

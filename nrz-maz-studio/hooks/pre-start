@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+
+# MAZ-Studio kommt ohne eigenes Image und ohne Registry-Login: Programm (mit Oberflaeche),
+# statisches ffmpeg und die Schrift liegen im MAZ-Studio-Repo auf nrzGit auf diesem Geraet
+# (Zweig `umbrel`, Tag unten). Beim ersten Start und nach Updates werden sie fuer die
+# Architektur dieses Geraets nach app/ geladen und geprueft; der Container (gepinntes
+# debian:trixie-slim) startet sie von dort.
+RELEASE="umbrel-1.0.6"
+BASE="http://localhost:8390/MikeAdam/MAZ-Studio/raw/tag/${RELEASE}"
+
+case "$(uname -m)" in
+  x86_64 | amd64) ARCH=amd64 ;;
+  aarch64 | arm64) ARCH=arm64 ;;
+  *) echo "MAZ-Studio: unsupported architecture $(uname -m)" >&2; exit 1 ;;
+esac
+
+mkdir -p "${APP_DIR}/data"
+
+download() {
+  TMP="$(mktemp -d "${APP_DIR}/.download.XXXXXX")"
+  trap 'rm -rf "${TMP}" "${APP_DIR}/app.new"' EXIT
+
+  fetch() {
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL --retry 3 --retry-delay 2 -o "${TMP}/$1" "${BASE}/$1"
+    else
+      wget -q -O "${TMP}/$1" "${BASE}/$1"
+    fi
+  }
+  FILES="maz-studio-${ARCH}.gz ffmpeg-${ARCH}.gz font.ttf ui.tar.gz voices.tar.gz"
+  fetch SHA256SUMS || return 1
+  for f in ${FILES}; do
+    fetch "$f" || return 1
+  done
+  (cd "${TMP}" && grep -E " (maz-studio|ffmpeg)-${ARCH}\.gz$| font\.ttf$| ui\.tar\.gz$| voices\.tar\.gz$" SHA256SUMS | sha256sum -c --quiet -) || return 1
+
+  NEW="${APP_DIR}/app.new"
+  rm -rf "${NEW}"
+  mkdir -p "${NEW}/ui" "${NEW}/voices"
+  # Stimmpaket: auf dem PC mit Qwen3-TTS erzeugte MP3s (EN/DE/FR)
+  tar -xzf "${TMP}/voices.tar.gz" -C "${NEW}/voices"
+  for b in maz-studio ffmpeg; do
+    gunzip -c "${TMP}/${b}-${ARCH}.gz" > "${NEW}/${b}"
+    chmod 755 "${NEW}/${b}"
+  done
+  cp "${TMP}/font.ttf" "${NEW}/font.ttf"
+  tar -xzf "${TMP}/ui.tar.gz" -C "${NEW}/ui"
+  chmod -R a+rX "${NEW}"
+  echo "${RELEASE}-${ARCH}" > "${NEW}/.release"
+
+  rm -rf "${APP_DIR}/app.old"
+  if [ -d "${APP_DIR}/app" ]; then mv "${APP_DIR}/app" "${APP_DIR}/app.old"; fi
+  mv "${NEW}" "${APP_DIR}/app"
+  rm -rf "${APP_DIR}/app.old"
+}
+
+if [ "$(cat "${APP_DIR}/app/.release" 2>/dev/null || true)" != "${RELEASE}-${ARCH}" ]; then
+  if ! download; then
+    # nrzGit nicht erreichbar: mit dem bisherigen Programm weiterlaufen statt gar nicht zu starten
+    if [ -x "${APP_DIR}/app/maz-studio" ]; then
+      echo "MAZ-Studio: ${RELEASE} nicht von nrzGit (Port 8390) ladbar, bisherige Version bleibt" >&2
+    else
+      echo "MAZ-Studio: Programm nicht von nrzGit (Port 8390) ladbar - ist die App nrzGit installiert und gestartet?" >&2
+      exit 1
+    fi
+  fi
+fi
+
+# Flaggen-Cache, Uploads und Videos schreibt der Container als 1000.
+chown -R 1000:1000 "${APP_DIR}/data" 2>/dev/null || true
