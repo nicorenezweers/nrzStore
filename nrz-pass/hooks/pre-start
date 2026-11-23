@@ -7,7 +7,7 @@ APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 # und Downloads (macOS-App, Browser-Erweiterungen) liegen im nrzPass-Repo auf nrzGit auf diesem
 # Geraet (Zweig umbrel, Tag unten). Beim ersten Start und nach Updates werden sie fuer die
 # Architektur dieses Geraets nach app/ geladen und mit SHA256SUMS geprueft.
-RELEASE="umbrel-1.0.0"
+RELEASE="umbrel-1.1.0"
 BASE="http://localhost:8390/nicorenezweers/nrzPass/raw/tag/${RELEASE}"
 
 case "$(uname -m)" in
