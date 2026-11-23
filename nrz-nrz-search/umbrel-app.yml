@@ -2,9 +2,9 @@ manifestVersion: 1
 id: nrz-nrz-search
 category: Utilities
 name: nrzSearch
-version: "1.0.1"
+version: "1.0.2"
 tagline: "Eigene Suchmaschine wie Google - komplett in Rust, mit eingebautem SearXNG"
-icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-nrz-search/icon.png
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-nrz-search/icon.png
 port: 8188
 path: ""
 description: >-
@@ -48,14 +48,13 @@ description: >-
   OpenRouter-Schluessel fuer Dieter). Die erste Installation von SearXNG
   dauert etwa eine Minute.
 releaseNotes: >-
-  Sicherheits-Updates: rustls-webpki 0.103.16, tokio 1.54.1, url 2.5.9, cookie
-  0.18.3
+  Sicherheits-Updates: rustls-webpki 0.103.16, tokio 1.54.1, url 2.5.9, cookie 0.18.3.
 developer: nrz
-website: https://git.zweers.ch/nicorenezweers/nrzSearch
+website: http://100.78.107.162:8390/nicorenezweers/nrzSearch
 submitter: nrz
-submission: https://git.zweers.ch/nicorenezweers/nrzStore
-repo: https://git.zweers.ch/nicorenezweers/nrzSearch
-support: https://git.zweers.ch/nicorenezweers/nrzSearch/issues
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzSearch
+support: http://100.78.107.162:8390/nicorenezweers/nrzSearch/issues
 dependencies:
   - nrz-git
 defaultUsername: ""
