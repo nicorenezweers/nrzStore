@@ -11,7 +11,7 @@ services:
   web:
     # Multi-Arch-Image (amd64 + arm64) aus der Registry von nrzGit. localhost:8390 = nrzGit auf
     # diesem Gerät; Docker erlaubt dort HTTP ohne Einstellung.
-    image: localhost:8390/nicorenezweers/nrz-vps:1.0.1@sha256:046a35cae66a19b5f0f9e76202dcd5b933888ceae74e722024912798a9e483a2
+    image: localhost:8390/nicorenezweers/nrz-vps:1.1.0
     container_name: nrz-vps_web_1
     restart: unless-stopped
     init: true
