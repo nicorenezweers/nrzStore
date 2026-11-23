@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-dashboard
 category: developer
 name: nrzDashboard
-version: "2.3.0"
+version: "2.3.1"
 tagline: "umbrelOS-Startbildschirm mit App Store, Aktivitaet, Domains und Zwei-Faktor-Anmeldung"
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-dashboard/icon.png
 port: 8500
@@ -50,8 +50,7 @@ description: >-
   Danach unter Einstellungen -> Anmeldung ein eigenes Passwort setzen und die
   Zwei-Faktor-Anmeldung einrichten.
 releaseNotes: >-
-  Alles sofort da: Server-Cache, Startdaten im HTML, Live-Updates ohne
-  Ladezustand
+  nrzDashboard 2.3.1: Sicherheits-Updates der Abhaengigkeiten (cookie 0.18.3).
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzDashboard
 submitter: nrz
