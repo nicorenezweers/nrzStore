@@ -49,7 +49,7 @@ description: >-
   API-Schluessel, den du in nrzPlan unter Einstellungen -> API-Keys erzeugst.
 releaseNotes: >-
   Sicherheits-Updates: sqlx 0.9.1 (ohne rsa, libsqlite3-sys 0.40), cookie
-  0.18.3, url 2.5.9, Version 1.1.0 (nrzSecurity)
+  0.18.3, url 2.5.9
 developer: nrz
 website: http://100.78.107.162:8390/nicorenezweers/nrzPlan
 submitter: nrz
