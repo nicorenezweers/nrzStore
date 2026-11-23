@@ -9,7 +9,7 @@ APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 # ersten Start und nach Updates werden sie fuer die Architektur dieses Geraets nach app/ geladen
 # und geprueft.
 RELEASE="umbrel-1.0.1"
-BASE="http://localhost:8390/nicorenezweers/nrzGamePanel-umbrel/raw/tag/$umbrel-1.0.1"
+BASE="http://localhost:8390/nicorenezweers/nrzGamePanel-umbrel/raw/tag/$umbrel-1.1.0"
 
 case "$(uname -m)" in
   x86_64 | amd64) ARCH=amd64 ;;
@@ -45,7 +45,7 @@ download() {
   chmod 755 "${NEW}/nrz-gamepanel"
   tar -xzf "${TMP}/web.tar.gz" -C "${NEW}/web"
   chmod -R a+rX "${NEW}"
-  echo "$umbrel-1.0.1-${ARCH}" > "${NEW}/.release"
+  echo "$umbrel-1.1.0-${ARCH}" > "${NEW}/.release"
 
   rm -rf "${APP_DIR}/app.old"
   if [ -d "${APP_DIR}/app" ]; then mv "${APP_DIR}/app" "${APP_DIR}/app.old"; fi
@@ -53,11 +53,11 @@ download() {
   rm -rf "${APP_DIR}/app.old"
 }
 
-if [ "$(cat "${APP_DIR}/app/.release" 2>/dev/null || true)" != "$umbrel-1.0.1-${ARCH}" ]; then
+if [ "$(cat "${APP_DIR}/app/.release" 2>/dev/null || true)" != "$umbrel-1.1.0-${ARCH}" ]; then
   if ! download; then
     # nrzGit nicht erreichbar: mit dem bisherigen Programm weiterlaufen statt gar nicht zu starten
     if [ -x "${APP_DIR}/app/nrz-gamepanel" ]; then
-      echo "nrzGamePanel: $umbrel-1.0.1 nicht von nrzGit (Port 8390) ladbar, bisherige Version bleibt" >&2
+      echo "nrzGamePanel: $umbrel-1.1.0 nicht von nrzGit (Port 8390) ladbar, bisherige Version bleibt" >&2
     else
       echo "nrzGamePanel: Programm nicht von nrzGit (Port 8390) ladbar - ist die App nrzGit installiert und gestartet?" >&2
       exit 1
