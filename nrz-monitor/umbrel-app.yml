@@ -48,12 +48,8 @@ description: >-
   nrzMonitor unter Einstellungen -> Integrationen eintragen; ebenso ein
   Cloudflare-API-Token (Leserechte) und ein NetBird Personal Access Token.
 releaseNotes: >-
-  1.1.0: Neu - MCP-Server: KI-Programme (Claude, Cursor, n8n ...) und externe
-  Dashboards fragen alles ab - Live-Werte, Zeitreihen, Kennzahlen, Ranglisten,
-  Ereignisse, Container mit Logs, Alarme, DNS, Strom und Speicher. Dazu ein
-  Live-Strom (Server-Sent Events) und die REST-API mit eigenem Schluessel
-  unter /mcp. Adresse, Schluessel und fertige Befehle unter Einstellungen ->
-  MCP-Server & Dashboards.
+  nrzMonitor 1.1.1: Sicherheits-Updates (nrzSecurity) - url 2.5.9, cookie
+  0.18.3
 developer: nrz
 website: http://100.78.107.162:8390/nicorenezweers/nrzMonitor
 submitter: nrz
