@@ -63,8 +63,8 @@ description: >-
   Mit Benutzer `nrz` und dem hier angezeigten Passwort anmelden, danach das
   Passwort in den Einstellungen der App aendern.
 releaseNotes: >-
-  Erste Version: Profile, Verschluesseln, Entschluesseln, Signieren,
-  PGP-Pruefer, Kontakte, Tresor mit Raetseln und Cap-Captcha, Protokoll.
+  Sicherheits-Updates (nrzSecurity): rusqlite 0.42 mit SQLite aus
+  libsqlite3-sys 0.40, url 2.5.9, cookie 0.18.3.
 developer: nrz
 website: http://100.78.107.162:8390/nicorenezweers/nrzPGP
 submitter: nrz
