@@ -2,9 +2,9 @@ manifestVersion: 1
 id: nrz-analytics
 category: developer
 name: nrzAnalytics
-version: "1.0.0"
+version: "1.1.0"
 tagline: "Datenschutzfreundliche Webanalyse wie Plausible - in Rust"
-icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-analytics/icon.png
+icon: http://100.78.107.162:8390/nicorenezweers/nrzStore/raw/branch/main/nrz-analytics/icon.png
 port: 8580
 path: ""
 description: >-
@@ -66,13 +66,15 @@ description: >-
   erreichbar. Diesen Port ueber einen Reverse-Proxy oder NetBird oeffentlich
   machen und die oeffentliche URL in der Verwaltung eintragen, damit das
   Snippet die richtige Adresse nutzt.
-releaseNotes: "Erste Version."
+releaseNotes: >-
+  Sicherheits-Updates: rusqlite 0.41 (libsqlite3-sys 0.39), maxminddb 0.27,
+  cookie 0.18.3, url 2.5.9 (nrzSecurity)
 developer: nrz
-website: https://git.zweers.ch/nicorenezweers/nrzAnalytics
+website: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics
 submitter: nrz
-submission: https://git.zweers.ch/nicorenezweers/nrzStore
-repo: https://git.zweers.ch/nicorenezweers/nrzAnalytics
-support: https://git.zweers.ch/nicorenezweers/nrzAnalytics/issues
+submission: http://100.78.107.162:8390/nicorenezweers/nrzStore
+repo: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics
+support: http://100.78.107.162:8390/nicorenezweers/nrzAnalytics/issues
 dependencies:
   - nrz-git
 defaultUsername: "admin"
