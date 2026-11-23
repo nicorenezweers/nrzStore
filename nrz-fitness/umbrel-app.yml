@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-fitness
 category: files
 name: "nrzFitness"
-version: "1.2.0"
+version: "1.3.0"
 tagline: "Ernaehrung, Training, Koerper, Fasten und Gesundheit - privat und fuers Handy gemacht"
 icon: "https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-fitness/icon.png"
 port: 8630
@@ -55,10 +55,12 @@ description: >-
   Der Barcode-Scanner braucht die Kamera; Browser erlauben sie nur ueber HTTPS
   oder localhost. Ohne Kamera laesst sich der Code von Hand eingeben.
 releaseNotes: >-
-  Apple Health und Google Health Connect: Export importieren und automatisch
-  synchronisieren (Schritte, Gewicht, Koerperfett, Schlaf, Ruhepuls,
-  Trainings), Tages-Naehrwerte zum Zurueckschreiben. Ehrgeizige Abnehmziele
-  bis -2 kg pro Woche mit Info-Hinweis zum aerztlichen Rat.
+  Apple Health und Google Health Connect: Apple-Health-Export importieren
+  (Schritte, Gewicht, Koerperfett, Schlaf, Ruhepuls, Trainings) und
+  automatisch synchronisieren per Kurzbefehl, Health Auto Export oder
+  Android-App; Tages-Naehrwerte zum Zurueckschreiben. Ziele: auch sehr
+  ehrgeiziges Abnehmen bis -2 kg pro Woche, mit Info-Hinweis zum aerztlichen
+  Rat.
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzFitness
 submitter: nrz
