@@ -7,7 +7,7 @@ APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 # Rocket.toml liegen im oeffentlichen nrzCode-Repo auf nrzGit auf diesem Geraet (Zweig umbrel,
 # Tag unten). Beim ersten Start und nach Updates werden sie fuer die Architektur dieses Geraets
 # nach app/ geladen und geprueft; der Container (gepinntes node:22-bookworm) startet sie von dort.
-RELEASE="umbrel-1.0.1"
+RELEASE="umbrel-1.0.2"
 BASE="http://localhost:8390/nicorenezweers/nrzCode/raw/tag/${RELEASE}"
 
 case "$(uname -m)" in

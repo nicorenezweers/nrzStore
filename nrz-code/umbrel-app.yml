@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-code
 category: developer
 name: nrzCode
-version: "1.0.1"
+version: "1.0.2"
 tagline: Coding-Agenten im Browser, verbunden mit nrzGit
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-code/icon.png
 port: 8410
@@ -42,8 +42,7 @@ description: >-
   anmelden. Die Agenten arbeiten ohne Rueckfragen und haben Zugriff auf Docker
   des Geraets.
 releaseNotes: >-
-  Sicherheits-Updates: cookie 0.18.3, ammonia 4.2.5, url 2.5.9, sqlx 0.9.1,
-  libsqlite3-sys 0.40.0
+  Sicherheits-Updates: Rocket 0.5.4 (h2 0.4.20)
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzCode
 submitter: nrz
