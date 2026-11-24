@@ -2,7 +2,7 @@ manifestVersion: 1
 id: nrz-mail
 category: Files
 name: nrzMail
-version: "1.5.0"
+version: "1.5.1"
 tagline: Mail-Client mit Archiv, Statistik und KI-Assistent - verschluesselt in einer Datei
 icon: https://git.zweers.ch/nicorenezweers/nrzStore/raw/branch/main/nrz-mail/icon.png
 port: 8360
@@ -63,8 +63,7 @@ description: >-
   Argon2id-Hash, Zugangsdaten der Postfaecher nur in der verschluesselten
   Datenbank, externe Bilder in Mails erst auf Wunsch.
 releaseNotes: >-
-  Sicherheits-Updates: zip 9.8.2, SQLCipher/SQLite (libsqlite3-sys 0.40.0,
-  sqlx 0.9.1), lettre 0.11.24, ammonia 4.2.5, cookie 0.18.3, url 2.5.9. Keine
+  Sicherheits-Update: Rocket 0.5.4 (h2 0.4.20, GHSA-q83h-524g-xf6h). Keine
   Änderungen an der Bedienung.
 developer: nrz
 website: https://git.zweers.ch/nicorenezweers/nrzMail

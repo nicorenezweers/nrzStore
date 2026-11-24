@@ -7,7 +7,7 @@ APP_DIR="${APP_DATA_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 # Zertifikate und Rocket.toml liegen im oeffentlichen nrzMail-Repo auf nrzGit auf diesem Geraet (Zweig umbrel,
 # Tag unten). Beim ersten Start und nach Updates wird es fuer die Architektur dieses Geraets
 # nach app/ geladen und geprueft; der Container (gepinntes debian:trixie-slim) startet es von dort.
-RELEASE="umbrel-1.5.0"
+RELEASE="umbrel-1.5.1"
 BASE="http://localhost:8390/nicorenezweers/nrzMail/raw/tag/${RELEASE}"
 
 case "$(uname -m)" in
