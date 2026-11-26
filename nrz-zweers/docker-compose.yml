@@ -8,7 +8,7 @@ services:
   web:
     # Multi-Arch-Image (amd64 + arm64) aus der Registry von nrzGit.
     # localhost:8390 ist nrzGit auf dem Gerät; Docker erlaubt dort HTTP.
-    image: localhost:8390/nicorenezweers/nrz-zweers:0.9.0
+    image: localhost:8390/nicorenezweers/nrz-zweers:0.9.0@sha256:d8ec695ed16e02d0a532c0be4438def1e54ac38bbeae561a8851c1c63b5304da
     container_name: nrz-zweers_web_1
     restart: unless-stopped
     init: true

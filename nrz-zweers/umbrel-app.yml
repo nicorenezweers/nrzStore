@@ -20,8 +20,7 @@ description: >-
   Auf dem Gerät liegt dieser Ordner in den App-Daten. Die Website hat kein
   eigenes Login, umbrelOS schützt den Zugang.
 releaseNotes: >-
-  Erste Version. Die Website läuft als Image, der Inhalt bleibt als Markdown
-  im Datenordner.
+  Neues Image nicorenezweers/nrz-zweers:0.9.0.
 developer: "nrz"
 website: "https://zweers.ch"
 submitter: "nrz"
