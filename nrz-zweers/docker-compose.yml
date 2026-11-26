@@ -1,0 +1,38 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: nrz-zweers_web_1
+      APP_PORT: 8441
+    container_name: nrz-zweers_app_proxy_1
+
+  web:
+    # Multi-Arch-Image (amd64 + arm64) aus der Registry von nrzGit.
+    # localhost:8390 ist nrzGit auf dem Gerät; Docker erlaubt dort HTTP.
+    image: localhost:8390/nicorenezweers/nrz-zweers:0.9.0
+    container_name: nrz-zweers_web_1
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    environment:
+      - TZ=Europe/Zurich
+      - ZWEERS_CONTENT_DIR=/data/content
+      - ZWEERS_PUBLIC_PORT=8441
+      - ZWEERS_SCAN_SECS=3
+      - APP_VERSION=${APP_VERSION}
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8441/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s

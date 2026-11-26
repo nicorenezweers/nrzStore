@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if [ -z "${APP_DATA_DIR:-}" ]; then
+  echo "APP_DATA_DIR fehlt" >&2
+  exit 1
+fi
+mkdir -p "${APP_DATA_DIR}/data/content/blog" "${APP_DATA_DIR}/data/content/bilder"
+chown -R 1000:1000 "${APP_DATA_DIR}/data"
