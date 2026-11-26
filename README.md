@@ -32,3 +32,4 @@ Most apps download their program from nrzGit and depend on `nrz-git` (from nrzPr
 | nrzLearn (`nrz-rust-learn`) | https://git.zweers.ch/nicorenezweers/nrzLearn |
 | nrzTube (`nrz-tube`) | https://git.zweers.ch/nicorenezweers/nrzTube |
 | nrzVPS (`nrz-vps`) | https://git.zweers.ch/nicorenezweers/nrzVPS |
+| zweers.ch (`nrz-zweers`) | http://100.78.107.162:8390/nicorenezweers/zweers.ch |
